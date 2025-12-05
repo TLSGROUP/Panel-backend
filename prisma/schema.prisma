@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id    String  @id @default(cuid())
+  email String? @unique
+
+  name       String?
+  password   String?
+  avatarPath String? @map("avatar_path")
+
+  verificationToken String? @default(cuid()) @map("verification_token")
+
+  passwordResetCode    String?   @map("password_reset_code")
+  passwordResetExpires DateTime? @map("password_reset_expires")
+
+  rights Role[] @default([USER])
+  language String @default("en")
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  MANAGER
+  ADMIN
+}

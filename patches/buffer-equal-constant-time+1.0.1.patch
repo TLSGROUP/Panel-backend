@@ -1,0 +1,43 @@
+diff --git a/node_modules/buffer-equal-constant-time/index.js b/node_modules/buffer-equal-constant-time/index.js
+--- a/node_modules/buffer-equal-constant-time/index.js
++++ b/node_modules/buffer-equal-constant-time/index.js
+@@
+-var Buffer = require('buffer').Buffer; // browserify
+-var SlowBuffer = require('buffer').SlowBuffer;
++var Buffer = require('buffer').Buffer; // browserify
++var SlowBuffer = require('buffer').SlowBuffer;
++var slowBufferPrototype = SlowBuffer && SlowBuffer.prototype;
+@@
+-bufferEq.install = function() {
+-  Buffer.prototype.equal = SlowBuffer.prototype.equal = function equal(that) {
+-    return bufferEq(this, that);
+-  };
+-};
+-
+-var origBufEqual = Buffer.prototype.equal;
+-var origSlowBufEqual = SlowBuffer.prototype.equal;
+-bufferEq.restore = function() {
+-  Buffer.prototype.equal = origBufEqual;
+-  SlowBuffer.prototype.equal = origSlowBufEqual;
+-};
++function setEqual(proto) {
++  proto.equal = function equal(that) {
++    return bufferEq(this, that);
++  };
++}
++
++bufferEq.install = function() {
++  setEqual(Buffer.prototype);
++  if (slowBufferPrototype) {
++    setEqual(slowBufferPrototype);
++  }
++};
++
++var origBufEqual = Buffer.prototype.equal;
++var origSlowBufEqual = slowBufferPrototype && slowBufferPrototype.equal;
++bufferEq.restore = function() {
++  Buffer.prototype.equal = origBufEqual;
++  if (slowBufferPrototype) {
++    slowBufferPrototype.equal = origSlowBufEqual;
++  }
++};

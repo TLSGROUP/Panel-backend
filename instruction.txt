@@ -1,0 +1,169 @@
+Инструкция по настройке проекта
+
+- Установить pg admin (postgresql на пк)
+- Создать БД через pg admin и запомнить ее название
+- Получать username, password postgresql
+- Обновить данные в env
+DATABASE_URL=postgresql://postgres:123456@localhost:5432/auth-mk?schema=public
+
+postgres - твой юзернейм postgresql
+123456 - твой пароль postgresql
+localhost - не меняется
+5432 - дефолтный порт, иногда может меняться
+auth-mk - название твое базы
+
+Не забыть сделать 
+	npm install
+	npm prisma db push (ТОЛЬКО НА ЛОКАЛКЕ, на проде migrate)
+
+---
+
+Настройка Google OAuth
+
+Перейдите на [Google Cloud Console](https://console.cloud.google.com/).
+Создайте новый проект или выберите существующий.
+Перейдите в APIs & Services > Credentials.
+Нажмите Create Credentials → OAuth Client ID.
+Настройте экран согласия (выберите External, если еще не настроено).
+В разделе Authorized JavaScript origins добавьте:
+
+   http://localhost:4200
+
+В разделе Authorized redirect URIs добавьте:
+
+   http://localhost:4200/auth/google/redirect
+
+Нажмите Create и получите Client ID и Client Secret.
+Укажите их в `.env`:
+env
+   GOOGLE_CLIENT_ID=ВАШ_CLIENT_ID
+   GOOGLE_CLIENT_SECRET=ВАШ_CLIENT_SECRET
+   GOOGLE_CALLBACK_URL=http://localhost:4200/auth/google/redirect
+
+
+---
+
+Настройка GitHub OAuth
+
+Перейдите на [GitHub Developer Settings](https://github.com/settings/developers).
+В разделе OAuth Apps нажмите New OAuth App.
+Заполните поля:
+   - Application name: `MyAuthApp`
+   - Homepage URL: `http://localhost:4200`
+   - Authorization callback URL: `http://localhost:4200/auth/github/redirect`
+Нажмите Register application.
+Скопируйте Client ID и Client Secret.
+Укажите их в `.env`:
+env
+   GITHUB_CLIENT_ID=ВАШ_CLIENT_ID
+   GITHUB_CLIENT_SECRET=ВАШ_CLIENT_SECRET
+   GITHUB_CALLBACK_URL=http://localhost:4200/auth/github/redirect
+
+
+---
+
+Настройка Apple OAuth
+
+Перейдите на [Apple Developer](https://developer.apple.com/).
+Создайте Service ID в разделе Identifiers.
+Добавьте Redirect URI:
+
+   https://localhost:4200/auth/apple/redirect
+
+Генерируйте Key ID, скачайте `.p8` файл и сохраните Team ID.
+Укажите данные в `.env`:
+env
+   APPLE_CLIENT_ID=ВАШ_CLIENT_ID
+   APPLE_TEAM_ID=ВАШ_TEAM_ID
+   APPLE_KEY_ID=ВАШ_KEY_ID
+   APPLE_PRIVATE_KEY=ВАШ_PRIVATE_KEY
+   APPLE_CALLBACK_URL=https://localhost:4200/auth/apple/redirect
+
+
+---
+
+Настройка Twitch OAuth
+
+> Важно! Twitch требует HTTPS, поэтому нужно запустить ngrok.
+
+Запустите ngrok:
+   npm run ngrok
+
+Скопируйте HTTPS URL и вставьте его в Twitch Developer Console.
+Перейдите на [Twitch Developer](https://dev.twitch.tv/console/apps).
+Создайте новое приложение, добавьте Redirect URI:
+
+   https://ВАШ_NGROK_URL/auth/twitch/redirect
+
+Укажите ключи в `.env`:
+env
+   TWITCH_CLIENT_ID=ВАШ_CLIENT_ID
+   TWITCH_CLIENT_SECRET=ВАШ_CLIENT_SECRET
+   TWITCH_CALLBACK_URL=https://ВАШ_NGROK_URL/auth/twitch/redirect
+
+
+---
+
+Настройка Yandex OAuth
+
+Перейдите на [Yandex OAuth](https://oauth.yandex.ru/client/new).
+Создайте приложение, добавьте Redirect URI:
+
+   http://localhost:4200/auth/yandex/redirect
+
+Укажите ключи в `.env`:
+env
+   YANDEX_CLIENT_ID=ВАШ_CLIENT_ID
+   YANDEX_CLIENT_SECRET=ВАШ_CLIENT_SECRET
+   YANDEX_CALLBACK_URL=http://localhost:4200/auth/yandex/redirect
+
+
+---
+
+Настройка Telegram OAuth
+
+Создайте бота в [BotFather](https://t.me/BotFather).
+Выполните команду `/setdomain` и вставьте ngrok HTTPS URL с FRONT-END.
+Укажите токен в `.env`:
+env
+   TELEGRAM_BOT_TOKEN=ВАШ_BOT_TOKEN
+
+И на front-end в TelegramLoginModal указать botUsername
+
+НЕ обязательно, настройка виджета https://core.telegram.org/widgets/login
+---
+
+Настройка Google reCAPTCHA
+
+Перейдите на [Google reCAPTCHA](https://www.google.com/recaptcha/admin/create).
+Выберите reCAPTCHA v2.
+Укажите localhost и домен проекта.
+Получите Site Key и Secret Key.
+Укажите их в `.env`, первый на Front-END
+   NEXT_PUBLIC_RECAPTCHA_SITE_KEY=ВАШ_SITE_KEY
+А второй на Back-END 
+   RECAPTCHA_SECRET_KEY=ВАШ_SECRET_KEY
+
+---
+
+Настройка SMTP (Mailgun)
+
+Перейдите на [Mailgun](https://www.mailgun.com/).
+Зарегистрируйтесь и получите SMTP credentials.
+Укажите их в `.env`:
+env
+   SMTP_SERVER=smtp.mailgun.org
+   SMTP_LOGIN=ВАШ_LOGIN
+   SMTP_PASSWORD=ВАШ_ПАРОЛЬ
+
+---
+
+Настройка Infobip (SMS & WhatsApp)
+
+Зарегистрируйтесь на [Infobip](https://www.infobip.com/).
+Получите API Key и API URL.
+Укажите их в `.env`:
+env
+   INFOBIP_API_KEY=ВАШ_API_KEY
+   INFOBIP_API_URL=ВАШ_API_URL
+   INFOBIP_WHATSAPP_NUMBER=ВАШ_НОМЕР
