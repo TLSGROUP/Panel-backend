@@ -4,6 +4,8 @@ import { GoogleRecaptchaModule } from '@nestlab/google-recaptcha'
 import { AuthModule } from './auth/auth.module'
 import { getGoogleRecaptchaConfig } from './config/google-recaptcha.config'
 import { UserModule } from './user/user.module'
+import { StatisticsModule } from './statistics/statistics.module'
+import { SettingsModule } from './settings/settings.module'
 
 @Module({
 	imports: [
@@ -16,7 +18,9 @@ import { UserModule } from './user/user.module'
 			inject: [ConfigService]
 		}),
 		AuthModule,
-		UserModule
+		UserModule,
+		StatisticsModule,
+		SettingsModule
 	]
 })
 export class AppModule {}
