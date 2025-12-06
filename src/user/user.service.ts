@@ -27,7 +27,8 @@ export class UserService {
 				email: true,
 				id: true,
 				password: false,
-				language: true
+				language: true,
+				country: true
 			}
 		})
 	}
