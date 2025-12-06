@@ -12,6 +12,10 @@ import type { UserModel as User } from 'prisma/generated/models'
 import { hash } from 'argon2'
 
 import { PrismaService } from 'src/prisma.service'
+import { PaginationArgsWithSearchTerm } from '@/base/pagination/paginations.args'
+import { UserResponse } from './user.response'
+import { isHasMorePagination } from '@/base/pagination/is-has-more'
+import { Prisma } from 'prisma/generated/client'
 
 @Injectable()
 export class UserService {
@@ -47,6 +51,30 @@ export class UserService {
 				email
 			}
 		})
+	}
+
+	async findAll(args?: PaginationArgsWithSearchTerm):Promise<UserResponse> {
+		const SearchTermQuery = args?.searchTerm
+			? this.getSearchTermFilter(args?.searchTerm)
+			:{}
+		const skip = args?.skip ? Number(args.skip) : undefined
+		const take = args?.take ? Number(args.take) : undefined
+
+		const users = await this.prisma.user.findMany({
+			skip,
+			take,
+			where: SearchTermQuery,
+	    })
+		const totalCount = await this.prisma.user.count({
+			where: SearchTermQuery,
+		})
+		
+		const isHasMore = isHasMorePagination(totalCount, skip, take)
+		return {
+			items:
+			users,
+			isHasMore
+		}
 	}
 
 	async findOrCreateSocialUser(
@@ -119,5 +147,13 @@ export class UserService {
 		}
 
 		return user
+	}
+	private getSearchTermFilter(searchTerm: string): Prisma.UserWhereInput {
+		return {
+			OR: [
+				{ name: { contains: searchTerm, mode: 'insensitive' } },
+				{ email: { contains: searchTerm, mode: 'insensitive' } }
+			]
+		}
 	}
 }
