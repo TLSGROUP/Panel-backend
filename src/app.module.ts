@@ -6,6 +6,7 @@ import { getGoogleRecaptchaConfig } from './config/google-recaptcha.config'
 import { UserModule } from './user/user.module'
 import { StatisticsModule } from './statistics/statistics.module'
 import { SettingsModule } from './settings/settings.module'
+import { MediaModule } from './media/media.module'
 
 @Module({
 	imports: [
@@ -20,7 +21,8 @@ import { SettingsModule } from './settings/settings.module'
 		AuthModule,
 		UserModule,
 		StatisticsModule,
-		SettingsModule
+		SettingsModule,
+		MediaModule
 	]
 })
 export class AppModule {}
