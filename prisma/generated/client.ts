@@ -42,3 +42,8 @@ export { Prisma }
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Setting
+ * 
+ */
+export type Setting = Prisma.SettingModel

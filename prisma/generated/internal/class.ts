@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.1.0",
   "engineVersion": "ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"./generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id    String  @id @default(cuid())\n  email String? @unique\n\n  name       String?\n  password   String?\n  avatarPath String? @map(\"avatar_path\")\n\n  verificationToken String? @default(cuid()) @map(\"verification_token\")\n\n  passwordResetCode    String?   @map(\"password_reset_code\")\n  passwordResetExpires DateTime? @map(\"password_reset_expires\")\n\n  rights   Role[] @default([USER])\n  language String @default(\"en\")\n\n  @@map(\"users\")\n}\n\nenum Role {\n  USER\n  MANAGER\n  ADMIN\n}\n",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"./generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id    String  @id @default(cuid())\n  email String? @unique\n\n  name       String?\n  password   String?\n  avatarPath String?  @map(\"avatar_path\")\n  country    String?\n  createdAt  DateTime @default(now()) @map(\"created_at\")\n  updatedAt  DateTime @updatedAt @map(\"updated_at\")\n\n  verificationToken String? @default(cuid()) @map(\"verification_token\")\n\n  passwordResetCode    String?   @map(\"password_reset_code\")\n  passwordResetExpires DateTime? @map(\"password_reset_expires\")\n\n  rights   Role[] @default([USER])\n  language String @default(\"en\")\n\n  @@map(\"users\")\n}\n\nmodel Setting {\n  id    String @id @default(cuid())\n  key   String @unique\n  value String\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nenum Role {\n  USER\n  MANAGER\n  ADMIN\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatarPath\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"avatar_path\"},{\"name\":\"verificationToken\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"verification_token\"},{\"name\":\"passwordResetCode\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"password_reset_code\"},{\"name\":\"passwordResetExpires\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"password_reset_expires\"},{\"name\":\"rights\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"language\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":\"users\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatarPath\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"avatar_path\"},{\"name\":\"country\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"verificationToken\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"verification_token\"},{\"name\":\"passwordResetCode\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"password_reset_code\"},{\"name\":\"passwordResetExpires\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"password_reset_expires\"},{\"name\":\"rights\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"language\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":\"users\"},\"Setting\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"key\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -183,6 +183,16 @@ export interface PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.setting`: Exposes CRUD operations for the **Setting** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Settings
+    * const settings = await prisma.setting.findMany()
+    * ```
+    */
+  get setting(): Prisma.SettingDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

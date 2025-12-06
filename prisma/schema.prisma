@@ -14,6 +14,9 @@ model User {
   name       String?
   password   String?
   avatarPath String? @map("avatar_path")
+  country    String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   verificationToken String? @default(cuid()) @map("verification_token")
 
@@ -24,6 +27,15 @@ model User {
   language String @default("en")
 
   @@map("users")
+}
+
+model Setting {
+id    String  @id @default(cuid())
+key   String  @unique
+value String
+
+createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
 }
 
 enum Role {

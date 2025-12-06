@@ -30,6 +30,9 @@ export type UserMinAggregateOutputType = {
   name: string | null
   password: string | null
   avatarPath: string | null
+  country: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
   verificationToken: string | null
   passwordResetCode: string | null
   passwordResetExpires: Date | null
@@ -42,6 +45,9 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   password: string | null
   avatarPath: string | null
+  country: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
   verificationToken: string | null
   passwordResetCode: string | null
   passwordResetExpires: Date | null
@@ -54,6 +60,9 @@ export type UserCountAggregateOutputType = {
   name: number
   password: number
   avatarPath: number
+  country: number
+  createdAt: number
+  updatedAt: number
   verificationToken: number
   passwordResetCode: number
   passwordResetExpires: number
@@ -69,6 +78,9 @@ export type UserMinAggregateInputType = {
   name?: true
   password?: true
   avatarPath?: true
+  country?: true
+  createdAt?: true
+  updatedAt?: true
   verificationToken?: true
   passwordResetCode?: true
   passwordResetExpires?: true
@@ -81,6 +93,9 @@ export type UserMaxAggregateInputType = {
   name?: true
   password?: true
   avatarPath?: true
+  country?: true
+  createdAt?: true
+  updatedAt?: true
   verificationToken?: true
   passwordResetCode?: true
   passwordResetExpires?: true
@@ -93,6 +108,9 @@ export type UserCountAggregateInputType = {
   name?: true
   password?: true
   avatarPath?: true
+  country?: true
+  createdAt?: true
+  updatedAt?: true
   verificationToken?: true
   passwordResetCode?: true
   passwordResetExpires?: true
@@ -179,6 +197,9 @@ export type UserGroupByOutputType = {
   name: string | null
   password: string | null
   avatarPath: string | null
+  country: string | null
+  createdAt: Date
+  updatedAt: Date
   verificationToken: string | null
   passwordResetCode: string | null
   passwordResetExpires: Date | null
@@ -213,6 +234,9 @@ export type UserWhereInput = {
   name?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringNullableFilter<"User"> | string | null
   avatarPath?: Prisma.StringNullableFilter<"User"> | string | null
+  country?: Prisma.StringNullableFilter<"User"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
   passwordResetCode?: Prisma.StringNullableFilter<"User"> | string | null
   passwordResetExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -226,6 +250,9 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetCode?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetExpires?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -242,6 +269,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringNullableFilter<"User"> | string | null
   avatarPath?: Prisma.StringNullableFilter<"User"> | string | null
+  country?: Prisma.StringNullableFilter<"User"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
   passwordResetCode?: Prisma.StringNullableFilter<"User"> | string | null
   passwordResetExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -255,6 +285,9 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetCode?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetExpires?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -274,6 +307,9 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   password?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   avatarPath?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  country?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   passwordResetCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   passwordResetExpires?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -287,6 +323,9 @@ export type UserCreateInput = {
   name?: string | null
   password?: string | null
   avatarPath?: string | null
+  country?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   verificationToken?: string | null
   passwordResetCode?: string | null
   passwordResetExpires?: Date | string | null
@@ -300,6 +339,9 @@ export type UserUncheckedCreateInput = {
   name?: string | null
   password?: string | null
   avatarPath?: string | null
+  country?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   verificationToken?: string | null
   passwordResetCode?: string | null
   passwordResetExpires?: Date | string | null
@@ -313,6 +355,9 @@ export type UserUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -326,6 +371,9 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -339,6 +387,9 @@ export type UserCreateManyInput = {
   name?: string | null
   password?: string | null
   avatarPath?: string | null
+  country?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   verificationToken?: string | null
   passwordResetCode?: string | null
   passwordResetExpires?: Date | string | null
@@ -352,6 +403,9 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -365,6 +419,9 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -386,6 +443,9 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   password?: Prisma.SortOrder
   avatarPath?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
   passwordResetCode?: Prisma.SortOrder
   passwordResetExpires?: Prisma.SortOrder
@@ -399,6 +459,9 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   password?: Prisma.SortOrder
   avatarPath?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
   passwordResetCode?: Prisma.SortOrder
   passwordResetExpires?: Prisma.SortOrder
@@ -411,6 +474,9 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   password?: Prisma.SortOrder
   avatarPath?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
   passwordResetCode?: Prisma.SortOrder
   passwordResetExpires?: Prisma.SortOrder
@@ -427,6 +493,10 @@ export type StringFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -446,6 +516,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   password?: boolean
   avatarPath?: boolean
+  country?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   verificationToken?: boolean
   passwordResetCode?: boolean
   passwordResetExpires?: boolean
@@ -459,6 +532,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   password?: boolean
   avatarPath?: boolean
+  country?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   verificationToken?: boolean
   passwordResetCode?: boolean
   passwordResetExpires?: boolean
@@ -472,6 +548,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   password?: boolean
   avatarPath?: boolean
+  country?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   verificationToken?: boolean
   passwordResetCode?: boolean
   passwordResetExpires?: boolean
@@ -485,6 +564,9 @@ export type UserSelectScalar = {
   name?: boolean
   password?: boolean
   avatarPath?: boolean
+  country?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   verificationToken?: boolean
   passwordResetCode?: boolean
   passwordResetExpires?: boolean
@@ -492,7 +574,7 @@ export type UserSelectScalar = {
   language?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "avatarPath" | "verificationToken" | "passwordResetCode" | "passwordResetExpires" | "rights" | "language", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "avatarPath" | "country" | "createdAt" | "updatedAt" | "verificationToken" | "passwordResetCode" | "passwordResetExpires" | "rights" | "language", ExtArgs["result"]["user"]>
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
@@ -503,6 +585,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string | null
     password: string | null
     avatarPath: string | null
+    country: string | null
+    createdAt: Date
+    updatedAt: Date
     verificationToken: string | null
     passwordResetCode: string | null
     passwordResetExpires: Date | null
@@ -936,6 +1021,9 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly avatarPath: Prisma.FieldRef<"User", 'String'>
+  readonly country: Prisma.FieldRef<"User", 'String'>
+  readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly verificationToken: Prisma.FieldRef<"User", 'String'>
   readonly passwordResetCode: Prisma.FieldRef<"User", 'String'>
   readonly passwordResetExpires: Prisma.FieldRef<"User", 'DateTime'>
@@ -1135,7 +1223,7 @@ export type UserCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   /**
    * The data needed to create a User.
    */
-  data?: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>
+  data: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>
 }
 
 /**
