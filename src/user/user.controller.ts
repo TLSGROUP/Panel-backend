@@ -3,14 +3,18 @@ import { CurrentUser } from '@/auth/decorators/user.decorator'
 import {
 	Body,
 	Controller,
+	Delete,
 	Get,
 	HttpCode,
+	Param,
 	Patch,
+	Query,
 	UsePipes,
 	ValidationPipe
 } from '@nestjs/common'
 import { Role } from 'prisma/generated/enums'
 import { UserService } from './user.service'
+import { PaginationArgsWithSearchTerm } from '@/base/pagination/paginations.args'
 
 @Controller('users')
 export class UserController {
@@ -33,6 +37,12 @@ export class UserController {
 		return this.userService.update(userId, { email: dto.email })
 	}
 
+	@Auth()
+	@Get()
+	async getPaginatedList(@Query() params: PaginationArgsWithSearchTerm){
+		return this.userService.findAll(params)
+	}
+
 	@Auth([Role.ADMIN, Role.MANAGER])
 	@Get('manager')
 	async getManagerContent() {
@@ -43,5 +53,11 @@ export class UserController {
 	@Get('list')
 	async getList() {
 		return this.userService.getUsers()
+	}
+
+	@Auth(Role.ADMIN)
+	@Delete(':id')
+	async deleteUser(@Param('id') id: string) {
+		return this.userService.delete(id)
 	}
 }

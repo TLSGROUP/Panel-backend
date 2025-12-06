@@ -148,6 +148,15 @@ export class UserService {
 
 		return user
 	}
+
+	async delete(id: string) {
+		return this.prisma.user.delete({
+			where: {
+				id
+			}
+		})
+	}
+
 	private getSearchTermFilter(searchTerm: string): Prisma.UserWhereInput {
 		return {
 			OR: [
