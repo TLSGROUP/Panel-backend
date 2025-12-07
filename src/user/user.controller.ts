@@ -8,6 +8,8 @@ import {
 	HttpCode,
 	Param,
 	Patch,
+	Post,
+	Put,
 	Query,
 	UsePipes,
 	ValidationPipe
@@ -15,6 +17,7 @@ import {
 import { Role } from 'prisma/generated/enums'
 import { UserService } from './user.service'
 import { PaginationArgsWithSearchTerm } from '@/base/pagination/paginations.args'
+import { AdminUserDto, UpdateAdminUserDto } from './dto/admin-user.dto'
 
 @Controller('users')
 export class UserController {
@@ -53,6 +56,29 @@ export class UserController {
 	@Get('list')
 	async getList() {
 		return this.userService.getUsers()
+	}
+
+	@Auth(Role.ADMIN)
+	@Get(':id')
+	async getUser(@Param('id') id: string) {
+		return this.userService.getById(id)
+	}
+
+	@Auth(Role.ADMIN)
+	@UsePipes(new ValidationPipe())
+	@Post()
+	async createUser(@Body() dto: AdminUserDto) {
+		return this.userService.createByAdmin(dto)
+	}
+
+	@Auth(Role.ADMIN)
+	@UsePipes(new ValidationPipe())
+	@Put(':id')
+	async updateUser(
+		@Param('id') id: string,
+		@Body() dto: UpdateAdminUserDto
+	) {
+		return this.userService.updateByAdmin(id, dto)
 	}
 
 	@Auth(Role.ADMIN)

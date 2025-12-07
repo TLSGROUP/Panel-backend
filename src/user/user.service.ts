@@ -16,6 +16,8 @@ import { PaginationArgsWithSearchTerm } from '@/base/pagination/paginations.args
 import { UserResponse } from './user.response'
 import { isHasMorePagination } from '@/base/pagination/is-has-more'
 import { Prisma } from 'prisma/generated/client'
+import { Role } from 'prisma/generated/enums'
+import { AdminUserDto, UpdateAdminUserDto } from './dto/admin-user.dto'
 
 @Injectable()
 export class UserService {
@@ -130,6 +132,21 @@ export class UserService {
 		})
 	}
 
+	async createByAdmin(dto: AdminUserDto) {
+		const password = dto.password ? await hash(dto.password) : null
+		return this.prisma.user.create({
+			data: {
+				email: dto.email,
+				name: dto.name,
+				password,
+				avatarPath: dto.avatarPath,
+				country: dto.country,
+				language: normalizeLanguage(dto.language),
+				rights: dto.rights ?? [Role.USER]
+			}
+		})
+	}
+
 	async update(id: string, data: Partial<User>) {
 		const user = await this.prisma.user.update({
 			where: {
@@ -147,6 +164,26 @@ export class UserService {
 		}
 
 		return user
+	}
+
+	async updateByAdmin(id: string, dto: UpdateAdminUserDto) {
+		const data: Prisma.UserUpdateInput = {
+			email: dto.email,
+			name: dto.name,
+			avatarPath: dto.avatarPath,
+			country: dto.country,
+			language: dto.language ? normalizeLanguage(dto.language) : undefined,
+			rights: dto.rights
+		}
+
+		if (dto.password) {
+			data.password = await hash(dto.password)
+		}
+
+		return this.prisma.user.update({
+			where: { id },
+			data
+		})
 	}
 
 	async delete(id: string) {
