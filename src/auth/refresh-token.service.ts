@@ -15,7 +15,7 @@ export class RefreshTokenService {
 			domain: 'localhost',
 			expires: expiresIn,
 			secure: false, // true if production
-			sameSite: 'none' // lax if production
+			sameSite: 'lax' // lax if production
 		})
 	}
 
@@ -25,7 +25,7 @@ export class RefreshTokenService {
 			domain: 'localhost',
 			expires: new Date(0),
 			secure: false, // true if production
-			sameSite: 'none' // lax if production
+			sameSite: 'lax' // lax if production
 		})
 	}
 }
