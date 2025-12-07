@@ -30,6 +30,7 @@ export class AuthService {
 		private prisma: PrismaService
 	) {}
 
+	// Настройки TTL токенов и длины жизни кода сброса
 	private readonly TOKEN_EXPIRATION_ACCESS = '1h'
 	private readonly TOKEN_EXPIRATION_REFRESH = '7d'
 	private readonly RESET_CODE_EXPIRATION_MINUTES = 15
@@ -56,6 +57,7 @@ export class AuthService {
 	}
 
 	async getNewTokens(refreshToken: string) {
+		// Проверяем refreshToken и возвращаем новую пару токенов
 		const result = await this.jwt.verifyAsync(refreshToken)
 		if (!result) {
 			throw new UnauthorizedException('Invalid refresh token')
@@ -81,6 +83,7 @@ export class AuthService {
 	}
 
 	async buildResponseObject(user: User) {
+		// Общая точка сборки ответа (user + токены)
 		const tokens = await this.issueTokens(user.id, user.rights || [])
 		return { user: this.omitPassword(user), ...tokens }
 	}
