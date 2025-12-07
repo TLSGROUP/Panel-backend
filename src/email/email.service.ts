@@ -4,9 +4,13 @@ import {
 	DEFAULT_LANGUAGE,
 	type Language
 } from '@/language/language.constants'
-import { MailerService } from '@nestjs-modules/mailer'
-import { Injectable } from '@nestjs/common'
+import { Injectable, Inject } from '@nestjs/common'
 import { render } from '@react-email/render'
+import type { Transporter } from 'nodemailer'
+import {
+	MAIL_DEFAULT_FROM,
+	MAIL_TRANSPORTER
+} from './email.constants'
 
 const verificationSubjects: Record<Language, string> = {
 	en: 'Confirm your email',
@@ -20,10 +24,16 @@ const passwordResetSubjects: Record<Language, string> = {
 
 @Injectable()
 export class EmailService {
-	constructor(private readonly mailerService: MailerService) {}
+	constructor(
+		@Inject(MAIL_TRANSPORTER)
+		private readonly mailTransporter: Transporter,
+		@Inject(MAIL_DEFAULT_FROM)
+		private readonly defaultFrom: string
+	) {}
 
 	sendEmail(to: string, subject: string, html: string) {
-		return this.mailerService.sendMail({
+		return this.mailTransporter.sendMail({
+			from: this.defaultFrom,
 			to,
 			subject,
 			html

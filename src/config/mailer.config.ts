@@ -1,17 +1,22 @@
 import { isDev } from '@/utils/is-dev.util'
-import { MailerOptions } from '@nestjs-modules/mailer'
 import { ConfigService } from '@nestjs/config'
+import type { TransportOptions } from 'nodemailer'
 
-export const getMailerConfig = async (
-	configService: ConfigService
-): Promise<MailerOptions> => ({
+export interface MailConfig {
+	transport: TransportOptions
+	defaults: {
+		from: string
+	}
+}
+
+export const getMailerConfig = (configService: ConfigService): MailConfig => ({
 	transport: {
-		host: configService.get('SMTP_SERVER'),
+		host: configService.get<string>('SMTP_SERVER'),
 		port: isDev(configService) ? 587 : 465,
 		secure: !isDev(configService),
 		auth: {
-			user: configService.get('SMTP_LOGIN'),
-			pass: configService.get('SMTP_PASSWORD')
+			user: configService.get<string>('SMTP_LOGIN'),
+			pass: configService.get<string>('SMTP_PASSWORD')
 		}
 	},
 	defaults: {
