@@ -13,11 +13,23 @@ export class AdminUserDto {
 
 	@IsOptional()
 	@IsString()
+	lastName?: string
+
+	@IsOptional()
+	@IsString()
 	avatarPath?: string
 
 	@IsOptional()
 	@IsString()
 	country?: string
+
+	@IsOptional()
+	@IsString()
+	city?: string
+
+	@IsOptional()
+	@IsString()
+	phone?: string
 
 	@IsOptional()
 	@IsString()

@@ -11,6 +11,7 @@ import {
 	Post,
 	Put,
 	Query,
+	Req,
 	UsePipes,
 	ValidationPipe
 } from '@nestjs/common'
@@ -18,6 +19,8 @@ import { Role } from 'prisma/generated/enums'
 import { UserService } from './user.service'
 import { PaginationArgsWithSearchTerm } from '@/base/pagination/paginations.args'
 import { AdminUserDto, UpdateAdminUserDto } from './dto/admin-user.dto'
+import { UpdateProfileDto } from './dto/update-profile.dto'
+import type { Request } from 'express'
 
 @Controller('users')
 export class UserController {
@@ -29,6 +32,24 @@ export class UserController {
 		return this.userService.getById(id)
 	}
 
+	@Auth()
+	@Get('detect-country')
+	detectCountry(@Req() req: Request) {
+		const forwardedFor = req.headers['x-forwarded-for']
+		const forwardedIp = Array.isArray(forwardedFor)
+			? forwardedFor[0]
+			: forwardedFor
+
+		const ip =
+			forwardedIp ||
+			req.ip ||
+			req.socket.remoteAddress ||
+			req.connection.remoteAddress ||
+			null
+
+		return this.userService.detectCountryByIp(ip)
+	}
+
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Auth()
@@ -38,6 +59,17 @@ export class UserController {
 		@Body() dto: { email: string }
 	) {
 		return this.userService.update(userId, { email: dto.email })
+	}
+
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Auth()
+	@Patch('profile')
+	async updateProfile(
+		@CurrentUser('id') userId: string,
+		@Body() dto: UpdateProfileDto
+	) {
+		return this.userService.update(userId, dto)
 	}
 
 	@Auth()

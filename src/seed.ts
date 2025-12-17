@@ -19,14 +19,26 @@ const countries = [
   { name: "Germany", code: "DE" },
 ]
 
+const buildIdPrefix = (source?: string | null) => {
+  const fallback = "user"
+  const normalized = source?.trim().replace(/\s+/g, "") ?? ""
+  const base = normalized || fallback
+
+  return base.slice(0, 2).padEnd(2, "x").toUpperCase()
+}
+
 async function main() {
     const NUM_USERS = 200
+    const prefixCounters: Record<string, number> = {}
     for (let i = 0; i < NUM_USERS; i++) {
         const email = faker.internet.email()
         const name = faker.person.firstName()
+        const lastName = faker.person.lastName()
         const avatarPath = faker.image.avatar()
         const password = await hash('123456')
         const country = faker.helpers.arrayElement(countries)
+        const city = faker.location.city()
+        const phone = faker.helpers.replaceSymbols('+1-###-###-####')
         const createdAt = faker.date.past({ years: 1 })
 
         const updatedAt = new Date(
@@ -34,10 +46,18 @@ async function main() {
             Math.random() * (Date.now() - createdAt.getTime())
         )
 
+        const prefix = buildIdPrefix(name || email)
+        const nextNumber = (prefixCounters[prefix] ?? 0) + 1
+        prefixCounters[prefix] = nextNumber
+
         await prisma.user.create({
             data: {
+                id: `${prefix}${nextNumber}`,
                 email,
                 name,
+                lastName,
+                phone,
+                city,
                 avatarPath,
                 password,
                 country: country.code,

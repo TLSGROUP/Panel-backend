@@ -12,9 +12,12 @@ model User {
   email String? @unique
 
   name       String?
+  lastName   String? @map("last_name")
   password   String?
   avatarPath String? @map("avatar_path")
   country    String?
+  phone      String?
+  city       String?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
