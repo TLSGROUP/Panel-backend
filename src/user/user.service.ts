@@ -1,6 +1,6 @@
 import { AuthDto } from '@/auth/dto/auth.dto'
 import { TUserSocial } from '@/auth/social-media/social-media-auth.types'
-import { VERIFY_EMAIL_URL } from '@/constants'
+import { buildReferralLink, VERIFY_EMAIL_URL } from '@/constants'
 import { EmailService } from '@/email/email.service'
 import {
 	DEFAULT_LANGUAGE,
@@ -46,19 +46,23 @@ export class UserService {
 	}
 
 	async getById(id: string) {
-		return this.prisma.user.findUnique({
+		const user = await this.prisma.user.findUnique({
 			where: {
 				id
 			}
 		})
+
+		return this._ensureReferralData(user)
 	}
 
 	async getByEmail(email: string) {
-		return this.prisma.user.findUnique({
+		const user = await this.prisma.user.findUnique({
 			where: {
 				email
 			}
 		})
+
+		return this._ensureReferralData(user)
 	}
 
 	async findAll(args?: PaginationArgsWithSearchTerm):Promise<UserResponse> {
@@ -307,6 +311,29 @@ export class UserService {
 		}
 	}
 
+	private async _ensureReferralData(user: User | null) {
+		if (!user) {
+			return null
+		}
+
+		if (user.referralCode && user.referralLink) {
+			return user
+		}
+
+		const referralCode = user.referralCode || user.id
+		const referralLink = user.referralLink || buildReferralLink(referralCode)
+
+		return this.prisma.user.update({
+			where: {
+				id: user.id
+			},
+			data: {
+				referralCode,
+				referralLink
+			}
+		})
+	}
+
 	private async _createUserWithGeneratedId(
 		data: Prisma.UserCreateInput,
 		source?: string | null
@@ -317,10 +344,15 @@ export class UserService {
 			const id = await this._generateUserId(source || (typeof data.name === 'string' ? data.name : null))
 
 			try {
+				const referralCode = id
+				const referralLink = buildReferralLink(referralCode)
+
 				return await this.prisma.user.create({
 					data: {
 						...data,
-						id
+						id,
+						referralCode,
+						referralLink
 					}
 				})
 			} catch (error) {

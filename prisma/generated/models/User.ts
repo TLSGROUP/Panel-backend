@@ -34,6 +34,8 @@ export type UserMinAggregateOutputType = {
   country: string | null
   phone: string | null
   city: string | null
+  referralCode: string | null
+  referralLink: string | null
   createdAt: Date | null
   updatedAt: Date | null
   verificationToken: string | null
@@ -52,6 +54,8 @@ export type UserMaxAggregateOutputType = {
   country: string | null
   phone: string | null
   city: string | null
+  referralCode: string | null
+  referralLink: string | null
   createdAt: Date | null
   updatedAt: Date | null
   verificationToken: string | null
@@ -70,6 +74,8 @@ export type UserCountAggregateOutputType = {
   country: number
   phone: number
   city: number
+  referralCode: number
+  referralLink: number
   createdAt: number
   updatedAt: number
   verificationToken: number
@@ -91,6 +97,8 @@ export type UserMinAggregateInputType = {
   country?: true
   phone?: true
   city?: true
+  referralCode?: true
+  referralLink?: true
   createdAt?: true
   updatedAt?: true
   verificationToken?: true
@@ -109,6 +117,8 @@ export type UserMaxAggregateInputType = {
   country?: true
   phone?: true
   city?: true
+  referralCode?: true
+  referralLink?: true
   createdAt?: true
   updatedAt?: true
   verificationToken?: true
@@ -127,6 +137,8 @@ export type UserCountAggregateInputType = {
   country?: true
   phone?: true
   city?: true
+  referralCode?: true
+  referralLink?: true
   createdAt?: true
   updatedAt?: true
   verificationToken?: true
@@ -219,6 +231,8 @@ export type UserGroupByOutputType = {
   country: string | null
   phone: string | null
   city: string | null
+  referralCode: string | null
+  referralLink: string | null
   createdAt: Date
   updatedAt: Date
   verificationToken: string | null
@@ -259,6 +273,8 @@ export type UserWhereInput = {
   country?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   city?: Prisma.StringNullableFilter<"User"> | string | null
+  referralCode?: Prisma.StringNullableFilter<"User"> | string | null
+  referralLink?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
@@ -278,6 +294,8 @@ export type UserOrderByWithRelationInput = {
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
+  referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  referralLink?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -290,6 +308,7 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  referralCode?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -300,6 +319,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   country?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   city?: Prisma.StringNullableFilter<"User"> | string | null
+  referralLink?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
@@ -307,7 +327,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   passwordResetExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   rights?: Prisma.EnumRoleNullableListFilter<"User">
   language?: Prisma.StringFilter<"User"> | string
-}, "id" | "email">
+}, "id" | "email" | "referralCode">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -319,6 +339,8 @@ export type UserOrderByWithAggregationInput = {
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
+  referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  referralLink?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -344,6 +366,8 @@ export type UserScalarWhereWithAggregatesInput = {
   country?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   city?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  referralCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  referralLink?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -363,6 +387,8 @@ export type UserCreateInput = {
   country?: string | null
   phone?: string | null
   city?: string | null
+  referralCode?: string | null
+  referralLink?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -382,6 +408,8 @@ export type UserUncheckedCreateInput = {
   country?: string | null
   phone?: string | null
   city?: string | null
+  referralCode?: string | null
+  referralLink?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -401,6 +429,8 @@ export type UserUpdateInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -420,6 +450,8 @@ export type UserUncheckedUpdateInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -439,6 +471,8 @@ export type UserCreateManyInput = {
   country?: string | null
   phone?: string | null
   city?: string | null
+  referralCode?: string | null
+  referralLink?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -458,6 +492,8 @@ export type UserUpdateManyMutationInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -477,6 +513,8 @@ export type UserUncheckedUpdateManyInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -504,6 +542,8 @@ export type UserCountOrderByAggregateInput = {
   country?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   city?: Prisma.SortOrder
+  referralCode?: Prisma.SortOrder
+  referralLink?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
@@ -523,6 +563,8 @@ export type UserMaxOrderByAggregateInput = {
   country?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   city?: Prisma.SortOrder
+  referralCode?: Prisma.SortOrder
+  referralLink?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
@@ -541,6 +583,8 @@ export type UserMinOrderByAggregateInput = {
   country?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   city?: Prisma.SortOrder
+  referralCode?: Prisma.SortOrder
+  referralLink?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
@@ -586,6 +630,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   country?: boolean
   phone?: boolean
   city?: boolean
+  referralCode?: boolean
+  referralLink?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -605,6 +651,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   country?: boolean
   phone?: boolean
   city?: boolean
+  referralCode?: boolean
+  referralLink?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -624,6 +672,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   country?: boolean
   phone?: boolean
   city?: boolean
+  referralCode?: boolean
+  referralLink?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -643,6 +693,8 @@ export type UserSelectScalar = {
   country?: boolean
   phone?: boolean
   city?: boolean
+  referralCode?: boolean
+  referralLink?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -652,7 +704,7 @@ export type UserSelectScalar = {
   language?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "lastName" | "password" | "avatarPath" | "country" | "phone" | "city" | "createdAt" | "updatedAt" | "verificationToken" | "passwordResetCode" | "passwordResetExpires" | "rights" | "language", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "lastName" | "password" | "avatarPath" | "country" | "phone" | "city" | "referralCode" | "referralLink" | "createdAt" | "updatedAt" | "verificationToken" | "passwordResetCode" | "passwordResetExpires" | "rights" | "language", ExtArgs["result"]["user"]>
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
@@ -667,6 +719,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     country: string | null
     phone: string | null
     city: string | null
+    referralCode: string | null
+    referralLink: string | null
     createdAt: Date
     updatedAt: Date
     verificationToken: string | null
@@ -1106,6 +1160,8 @@ export interface UserFieldRefs {
   readonly country: Prisma.FieldRef<"User", 'String'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly city: Prisma.FieldRef<"User", 'String'>
+  readonly referralCode: Prisma.FieldRef<"User", 'String'>
+  readonly referralLink: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly verificationToken: Prisma.FieldRef<"User", 'String'>

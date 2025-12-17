@@ -18,6 +18,8 @@ model User {
   country    String?
   phone      String?
   city       String?
+  referralCode String? @unique @map("referral_code")
+  referralLink String? @map("referral_link")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 

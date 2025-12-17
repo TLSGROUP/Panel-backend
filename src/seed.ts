@@ -4,6 +4,7 @@ import { hash } from "argon2"
 import 'dotenv/config'
 import { PrismaPg } from "@prisma/adapter-pg"
 import { Pool } from "pg"
+import { buildReferralLink } from "./constants"
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL })
 const adapter = new PrismaPg(pool)
@@ -49,10 +50,14 @@ async function main() {
         const prefix = buildIdPrefix(name || email)
         const nextNumber = (prefixCounters[prefix] ?? 0) + 1
         prefixCounters[prefix] = nextNumber
+        const referralCode = `${prefix}${nextNumber}`
+        const referralLink = buildReferralLink(referralCode)
 
         await prisma.user.create({
             data: {
-                id: `${prefix}${nextNumber}`,
+                id: referralCode,
+                referralCode,
+                referralLink,
                 email,
                 name,
                 lastName,

@@ -81,6 +81,8 @@ export const UserScalarFieldEnum = {
   country: 'country',
   phone: 'phone',
   city: 'city',
+  referralCode: 'referralCode',
+  referralLink: 'referralLink',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   verificationToken: 'verificationToken',
