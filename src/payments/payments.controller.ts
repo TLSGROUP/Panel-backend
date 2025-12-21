@@ -1,14 +1,19 @@
-import { Body, Controller, Get, Headers, HttpCode, Post, Req, UsePipes, ValidationPipe } from '@nestjs/common'
+import { Body, Controller, Get, Headers, HttpCode, Post, Req, Sse, UsePipes, ValidationPipe } from '@nestjs/common'
 import { Auth } from '@/auth/decorators/auth.decorator'
 import { CurrentUser } from '@/auth/decorators/user.decorator'
 import type { Request } from 'express'
+import { fromEvent, map } from 'rxjs'
 import { PaymentsService } from './payments.service'
 import { CreatePaymentIntentDto } from './dto/create-payment-intent.dto'
 import { CancelPaymentDto } from './dto/cancel-payment.dto'
+import { PlansEventsService } from '@/plans/plans-events.service'
 
 @Controller('payments')
 export class PaymentsController {
-	constructor(private readonly paymentsService: PaymentsService) {}
+	constructor(
+		private readonly paymentsService: PaymentsService,
+		private readonly plansEventsService: PlansEventsService
+	) {}
 
 	@Auth()
 	@Get('plans')
@@ -20,6 +25,14 @@ export class PaymentsController {
 	@Get('public-key')
 	async getPublicKey() {
 		return { publicKey: await this.paymentsService.getPublicKey() }
+	}
+
+	@Auth()
+	@Sse('plans/stream')
+	streamPlansUpdates() {
+		return fromEvent(this.plansEventsService.getEmitter(), 'plans-updated').pipe(
+			map((payload) => ({ data: payload }))
+		)
 	}
 
 	@Auth()

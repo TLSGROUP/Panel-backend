@@ -1,10 +1,20 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common'
 import { Auth } from 'src/auth/decorators/auth.decorator'
 import { SettingsService } from './settings.service'
+import { PlansEventsService } from '@/plans/plans-events.service'
+
+const PLAN_SETTINGS_KEYS = new Set([
+	'plans.catalog',
+	'plans.currency',
+	'plans.colors'
+])
 
 @Controller('settings')
 export class SettingsController {
-	constructor(private readonly settingsService: SettingsService) {}
+	constructor(
+		private readonly settingsService: SettingsService,
+		private readonly plansEventsService: PlansEventsService
+	) {}
 
 	@Auth('ADMIN')
 	@Get(':key')
@@ -14,7 +24,14 @@ export class SettingsController {
 
 	@Auth('ADMIN')
 	@Post()
-	setSetting(@Body() settingData: { key: string; value: string }) {
-		return this.settingsService.setSetting(settingData.key, settingData.value)
+	async setSetting(@Body() settingData: { key: string; value: string }) {
+		const setting = await this.settingsService.setSetting(
+			settingData.key,
+			settingData.value
+		)
+		if (PLAN_SETTINGS_KEYS.has(settingData.key)) {
+			this.plansEventsService.emitPlansUpdated()
+		}
+		return setting
 	}
 }
