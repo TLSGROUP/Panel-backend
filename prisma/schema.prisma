@@ -18,8 +18,17 @@ model User {
   country    String?
   phone      String?
   city       String?
+  activePlanId String? @map("active_plan_id")
+  activePlanName String? @map("active_plan_name")
+  activePlanPrice Int? @map("active_plan_price")
+  activePlanCurrency String? @map("active_plan_currency")
+  activePlanPurchasedAt DateTime? @map("active_plan_purchased_at")
   referralCode String? @unique @map("referral_code")
   referralLink String? @map("referral_link")
+  referrerId String? @map("referrer_id")
+  referrer   User? @relation("UserReferrals", fields: [referrerId], references: [id])
+  referrals  User[] @relation("UserReferrals")
+  payments Payment[]
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -32,6 +41,22 @@ model User {
   language String @default("en")
 
   @@map("users")
+}
+
+model Payment {
+  id String @id @default(cuid())
+  userId String @map("user_id")
+  user User @relation(fields: [userId], references: [id])
+  planId String @map("plan_id")
+  planName String @map("plan_name")
+  amount Int
+  currency String
+  status PaymentStatus @default(PENDING)
+  stripePaymentIntentId String? @unique @map("stripe_payment_intent_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("payments")
 }
 
 model Setting {
@@ -47,4 +72,11 @@ enum Role {
   USER
   MANAGER
   ADMIN
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  CANCELED
 }

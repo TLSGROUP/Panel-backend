@@ -28,6 +28,10 @@ export class AuthDto {
 	@IsString()
 	city?: string
 
+	@IsOptional()
+	@IsString()
+	referralCode?: string
+
 	@MinLength(6, {
 		message: 'Password must be at least 6 characters long',
 	})

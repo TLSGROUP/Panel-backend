@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module'
 import { StatisticsModule } from './statistics/statistics.module'
 import { SettingsModule } from './settings/settings.module'
 import { MediaModule } from './media/media.module'
+import { PaymentsModule } from './payments/payments.module'
 
 @Module({
 	imports: [
@@ -22,7 +23,8 @@ import { MediaModule } from './media/media.module'
 		UserModule,
 		StatisticsModule,
 		SettingsModule,
-		MediaModule
+		MediaModule,
+		PaymentsModule
 	]
 })
 export class AppModule {}

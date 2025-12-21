@@ -20,6 +20,7 @@ import { UserService } from './user.service'
 import { PaginationArgsWithSearchTerm } from '@/base/pagination/paginations.args'
 import { AdminUserDto, UpdateAdminUserDto } from './dto/admin-user.dto'
 import { UpdateProfileDto } from './dto/update-profile.dto'
+import { GetReferralsDto } from './dto/get-referrals.dto'
 import type { Request } from 'express'
 
 @Controller('users')
@@ -76,6 +77,15 @@ export class UserController {
 	@Get()
 	async getPaginatedList(@Query() params: PaginationArgsWithSearchTerm){
 		return this.userService.findAll(params)
+	}
+
+	@Auth()
+	@Get('referrals')
+	async getReferrals(
+		@CurrentUser('id') userId: string,
+		@Query() query: GetReferralsDto
+	) {
+		return this.userService.getUserReferrals(userId, query)
 	}
 
 	@Auth([Role.ADMIN, Role.MANAGER])

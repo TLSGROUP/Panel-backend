@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Payment: 'Payment',
   Setting: 'Setting'
 } as const
 
@@ -81,8 +82,14 @@ export const UserScalarFieldEnum = {
   country: 'country',
   phone: 'phone',
   city: 'city',
+  activePlanId: 'activePlanId',
+  activePlanName: 'activePlanName',
+  activePlanPrice: 'activePlanPrice',
+  activePlanCurrency: 'activePlanCurrency',
+  activePlanPurchasedAt: 'activePlanPurchasedAt',
   referralCode: 'referralCode',
   referralLink: 'referralLink',
+  referrerId: 'referrerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   verificationToken: 'verificationToken',
@@ -93,6 +100,22 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  planId: 'planId',
+  planName: 'planName',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const SettingScalarFieldEnum = {

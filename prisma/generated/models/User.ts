@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  activePlanPrice: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  activePlanPrice: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -34,8 +44,14 @@ export type UserMinAggregateOutputType = {
   country: string | null
   phone: string | null
   city: string | null
+  activePlanId: string | null
+  activePlanName: string | null
+  activePlanPrice: number | null
+  activePlanCurrency: string | null
+  activePlanPurchasedAt: Date | null
   referralCode: string | null
   referralLink: string | null
+  referrerId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   verificationToken: string | null
@@ -54,8 +70,14 @@ export type UserMaxAggregateOutputType = {
   country: string | null
   phone: string | null
   city: string | null
+  activePlanId: string | null
+  activePlanName: string | null
+  activePlanPrice: number | null
+  activePlanCurrency: string | null
+  activePlanPurchasedAt: Date | null
   referralCode: string | null
   referralLink: string | null
+  referrerId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   verificationToken: string | null
@@ -74,8 +96,14 @@ export type UserCountAggregateOutputType = {
   country: number
   phone: number
   city: number
+  activePlanId: number
+  activePlanName: number
+  activePlanPrice: number
+  activePlanCurrency: number
+  activePlanPurchasedAt: number
   referralCode: number
   referralLink: number
+  referrerId: number
   createdAt: number
   updatedAt: number
   verificationToken: number
@@ -87,6 +115,14 @@ export type UserCountAggregateOutputType = {
 }
 
 
+export type UserAvgAggregateInputType = {
+  activePlanPrice?: true
+}
+
+export type UserSumAggregateInputType = {
+  activePlanPrice?: true
+}
+
 export type UserMinAggregateInputType = {
   id?: true
   email?: true
@@ -97,8 +133,14 @@ export type UserMinAggregateInputType = {
   country?: true
   phone?: true
   city?: true
+  activePlanId?: true
+  activePlanName?: true
+  activePlanPrice?: true
+  activePlanCurrency?: true
+  activePlanPurchasedAt?: true
   referralCode?: true
   referralLink?: true
+  referrerId?: true
   createdAt?: true
   updatedAt?: true
   verificationToken?: true
@@ -117,8 +159,14 @@ export type UserMaxAggregateInputType = {
   country?: true
   phone?: true
   city?: true
+  activePlanId?: true
+  activePlanName?: true
+  activePlanPrice?: true
+  activePlanCurrency?: true
+  activePlanPurchasedAt?: true
   referralCode?: true
   referralLink?: true
+  referrerId?: true
   createdAt?: true
   updatedAt?: true
   verificationToken?: true
@@ -137,8 +185,14 @@ export type UserCountAggregateInputType = {
   country?: true
   phone?: true
   city?: true
+  activePlanId?: true
+  activePlanName?: true
+  activePlanPrice?: true
+  activePlanCurrency?: true
+  activePlanPurchasedAt?: true
   referralCode?: true
   referralLink?: true
+  referrerId?: true
   createdAt?: true
   updatedAt?: true
   verificationToken?: true
@@ -187,6 +241,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -217,6 +283,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -231,8 +299,14 @@ export type UserGroupByOutputType = {
   country: string | null
   phone: string | null
   city: string | null
+  activePlanId: string | null
+  activePlanName: string | null
+  activePlanPrice: number | null
+  activePlanCurrency: string | null
+  activePlanPurchasedAt: Date | null
   referralCode: string | null
   referralLink: string | null
+  referrerId: string | null
   createdAt: Date
   updatedAt: Date
   verificationToken: string | null
@@ -241,6 +315,8 @@ export type UserGroupByOutputType = {
   rights: $Enums.Role[]
   language: string
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -273,8 +349,14 @@ export type UserWhereInput = {
   country?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   city?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanId?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanName?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanPrice?: Prisma.IntNullableFilter<"User"> | number | null
+  activePlanCurrency?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanPurchasedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   referralCode?: Prisma.StringNullableFilter<"User"> | string | null
   referralLink?: Prisma.StringNullableFilter<"User"> | string | null
+  referrerId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
@@ -282,6 +364,9 @@ export type UserWhereInput = {
   passwordResetExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   rights?: Prisma.EnumRoleNullableListFilter<"User">
   language?: Prisma.StringFilter<"User"> | string
+  referrer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  referrals?: Prisma.UserListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -294,8 +379,14 @@ export type UserOrderByWithRelationInput = {
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
+  activePlanId?: Prisma.SortOrderInput | Prisma.SortOrder
+  activePlanName?: Prisma.SortOrderInput | Prisma.SortOrder
+  activePlanPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  activePlanCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
+  activePlanPurchasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
   referralLink?: Prisma.SortOrderInput | Prisma.SortOrder
+  referrerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -303,6 +394,9 @@ export type UserOrderByWithRelationInput = {
   passwordResetExpires?: Prisma.SortOrderInput | Prisma.SortOrder
   rights?: Prisma.SortOrder
   language?: Prisma.SortOrder
+  referrer?: Prisma.UserOrderByWithRelationInput
+  referrals?: Prisma.UserOrderByRelationAggregateInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -319,7 +413,13 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   country?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   city?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanId?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanName?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanPrice?: Prisma.IntNullableFilter<"User"> | number | null
+  activePlanCurrency?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanPurchasedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   referralLink?: Prisma.StringNullableFilter<"User"> | string | null
+  referrerId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
@@ -327,6 +427,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   passwordResetExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   rights?: Prisma.EnumRoleNullableListFilter<"User">
   language?: Prisma.StringFilter<"User"> | string
+  referrer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  referrals?: Prisma.UserListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }, "id" | "email" | "referralCode">
 
 export type UserOrderByWithAggregationInput = {
@@ -339,8 +442,14 @@ export type UserOrderByWithAggregationInput = {
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
+  activePlanId?: Prisma.SortOrderInput | Prisma.SortOrder
+  activePlanName?: Prisma.SortOrderInput | Prisma.SortOrder
+  activePlanPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  activePlanCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
+  activePlanPurchasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
   referralLink?: Prisma.SortOrderInput | Prisma.SortOrder
+  referrerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -349,8 +458,10 @@ export type UserOrderByWithAggregationInput = {
   rights?: Prisma.SortOrder
   language?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -366,8 +477,14 @@ export type UserScalarWhereWithAggregatesInput = {
   country?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   city?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  activePlanId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  activePlanName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  activePlanPrice?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
+  activePlanCurrency?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  activePlanPurchasedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   referralCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   referralLink?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  referrerId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -387,6 +504,11 @@ export type UserCreateInput = {
   country?: string | null
   phone?: string | null
   city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
   createdAt?: Date | string
@@ -396,6 +518,9 @@ export type UserCreateInput = {
   passwordResetExpires?: Date | string | null
   rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
   language?: string
+  referrer?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -408,8 +533,14 @@ export type UserUncheckedCreateInput = {
   country?: string | null
   phone?: string | null
   city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  referrerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -417,6 +548,8 @@ export type UserUncheckedCreateInput = {
   passwordResetExpires?: Date | string | null
   rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
   language?: string
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -429,6 +562,11 @@ export type UserUpdateInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -438,6 +576,9 @@ export type UserUpdateInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
   language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrer?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -450,8 +591,14 @@ export type UserUncheckedUpdateInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -459,6 +606,8 @@ export type UserUncheckedUpdateInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
   language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -471,8 +620,14 @@ export type UserCreateManyInput = {
   country?: string | null
   phone?: string | null
   city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  referrerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -492,6 +647,11 @@ export type UserUpdateManyMutationInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -513,8 +673,14 @@ export type UserUncheckedUpdateManyInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -532,6 +698,21 @@ export type EnumRoleNullableListFilter<$PrismaModel = never> = {
   isEmpty?: boolean
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
+}
+
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -542,8 +723,14 @@ export type UserCountOrderByAggregateInput = {
   country?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   city?: Prisma.SortOrder
+  activePlanId?: Prisma.SortOrder
+  activePlanName?: Prisma.SortOrder
+  activePlanPrice?: Prisma.SortOrder
+  activePlanCurrency?: Prisma.SortOrder
+  activePlanPurchasedAt?: Prisma.SortOrder
   referralCode?: Prisma.SortOrder
   referralLink?: Prisma.SortOrder
+  referrerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
@@ -551,6 +738,10 @@ export type UserCountOrderByAggregateInput = {
   passwordResetExpires?: Prisma.SortOrder
   rights?: Prisma.SortOrder
   language?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  activePlanPrice?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -563,8 +754,14 @@ export type UserMaxOrderByAggregateInput = {
   country?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   city?: Prisma.SortOrder
+  activePlanId?: Prisma.SortOrder
+  activePlanName?: Prisma.SortOrder
+  activePlanPrice?: Prisma.SortOrder
+  activePlanCurrency?: Prisma.SortOrder
+  activePlanPurchasedAt?: Prisma.SortOrder
   referralCode?: Prisma.SortOrder
   referralLink?: Prisma.SortOrder
+  referrerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
@@ -583,8 +780,14 @@ export type UserMinOrderByAggregateInput = {
   country?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   city?: Prisma.SortOrder
+  activePlanId?: Prisma.SortOrder
+  activePlanName?: Prisma.SortOrder
+  activePlanPrice?: Prisma.SortOrder
+  activePlanCurrency?: Prisma.SortOrder
+  activePlanPurchasedAt?: Prisma.SortOrder
   referralCode?: Prisma.SortOrder
   referralLink?: Prisma.SortOrder
+  referrerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
@@ -593,8 +796,37 @@ export type UserMinOrderByAggregateInput = {
   language?: Prisma.SortOrder
 }
 
+export type UserSumOrderByAggregateInput = {
+  activePlanPrice?: Prisma.SortOrder
+}
+
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
+}
+
 export type UserCreaterightsInput = {
   set: $Enums.Role[]
+}
+
+export type UserCreateNestedOneWithoutReferralsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReferralsInput, Prisma.UserUncheckedCreateWithoutReferralsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReferralsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedManyWithoutReferrerInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReferrerInput, Prisma.UserUncheckedCreateWithoutReferrerInput> | Prisma.UserCreateWithoutReferrerInput[] | Prisma.UserUncheckedCreateWithoutReferrerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReferrerInput | Prisma.UserCreateOrConnectWithoutReferrerInput[]
+  createMany?: Prisma.UserCreateManyReferrerInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutReferrerInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReferrerInput, Prisma.UserUncheckedCreateWithoutReferrerInput> | Prisma.UserCreateWithoutReferrerInput[] | Prisma.UserUncheckedCreateWithoutReferrerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReferrerInput | Prisma.UserCreateOrConnectWithoutReferrerInput[]
+  createMany?: Prisma.UserCreateManyReferrerInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -605,12 +837,20 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type UserUpdaterightsInput = {
@@ -618,6 +858,572 @@ export type UserUpdaterightsInput = {
   push?: $Enums.Role | $Enums.Role[]
 }
 
+export type UserUpdateOneWithoutReferralsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReferralsInput, Prisma.UserUncheckedCreateWithoutReferralsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReferralsInput
+  upsert?: Prisma.UserUpsertWithoutReferralsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReferralsInput, Prisma.UserUpdateWithoutReferralsInput>, Prisma.UserUncheckedUpdateWithoutReferralsInput>
+}
+
+export type UserUpdateManyWithoutReferrerNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReferrerInput, Prisma.UserUncheckedCreateWithoutReferrerInput> | Prisma.UserCreateWithoutReferrerInput[] | Prisma.UserUncheckedCreateWithoutReferrerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReferrerInput | Prisma.UserCreateOrConnectWithoutReferrerInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutReferrerInput | Prisma.UserUpsertWithWhereUniqueWithoutReferrerInput[]
+  createMany?: Prisma.UserCreateManyReferrerInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutReferrerInput | Prisma.UserUpdateWithWhereUniqueWithoutReferrerInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutReferrerInput | Prisma.UserUpdateManyWithWhereWithoutReferrerInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutReferrerNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReferrerInput, Prisma.UserUncheckedCreateWithoutReferrerInput> | Prisma.UserCreateWithoutReferrerInput[] | Prisma.UserUncheckedCreateWithoutReferrerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReferrerInput | Prisma.UserCreateOrConnectWithoutReferrerInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutReferrerInput | Prisma.UserUpsertWithWhereUniqueWithoutReferrerInput[]
+  createMany?: Prisma.UserCreateManyReferrerInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutReferrerInput | Prisma.UserUpdateWithWhereUniqueWithoutReferrerInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutReferrerInput | Prisma.UserUpdateManyWithWhereWithoutReferrerInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.UserUpsertWithoutPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPaymentsInput, Prisma.UserUpdateWithoutPaymentsInput>, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type UserCreateWithoutReferralsInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrer?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReferralsInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  referrerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReferralsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReferralsInput, Prisma.UserUncheckedCreateWithoutReferralsInput>
+}
+
+export type UserCreateWithoutReferrerInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrals?: Prisma.UserCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReferrerInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReferrerInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReferrerInput, Prisma.UserUncheckedCreateWithoutReferrerInput>
+}
+
+export type UserCreateManyReferrerInputEnvelope = {
+  data: Prisma.UserCreateManyReferrerInput | Prisma.UserCreateManyReferrerInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithoutReferralsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReferralsInput, Prisma.UserUncheckedUpdateWithoutReferralsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReferralsInput, Prisma.UserUncheckedCreateWithoutReferralsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReferralsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReferralsInput, Prisma.UserUncheckedUpdateWithoutReferralsInput>
+}
+
+export type UserUpdateWithoutReferralsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrer?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReferralsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithWhereUniqueWithoutReferrerInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReferrerInput, Prisma.UserUncheckedUpdateWithoutReferrerInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReferrerInput, Prisma.UserUncheckedCreateWithoutReferrerInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutReferrerInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReferrerInput, Prisma.UserUncheckedUpdateWithoutReferrerInput>
+}
+
+export type UserUpdateManyWithWhereWithoutReferrerInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutReferrerInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.StringFilter<"User"> | string
+  email?: Prisma.StringNullableFilter<"User"> | string | null
+  name?: Prisma.StringNullableFilter<"User"> | string | null
+  lastName?: Prisma.StringNullableFilter<"User"> | string | null
+  password?: Prisma.StringNullableFilter<"User"> | string | null
+  avatarPath?: Prisma.StringNullableFilter<"User"> | string | null
+  country?: Prisma.StringNullableFilter<"User"> | string | null
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
+  city?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanId?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanName?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanPrice?: Prisma.IntNullableFilter<"User"> | number | null
+  activePlanCurrency?: Prisma.StringNullableFilter<"User"> | string | null
+  activePlanPurchasedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  referralCode?: Prisma.StringNullableFilter<"User"> | string | null
+  referralLink?: Prisma.StringNullableFilter<"User"> | string | null
+  referrerId?: Prisma.StringNullableFilter<"User"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
+  passwordResetCode?: Prisma.StringNullableFilter<"User"> | string | null
+  passwordResetExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  rights?: Prisma.EnumRoleNullableListFilter<"User">
+  language?: Prisma.StringFilter<"User"> | string
+}
+
+export type UserCreateWithoutPaymentsInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrer?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferrerInput
+}
+
+export type UserUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  referrerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferrerInput
+}
+
+export type UserCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+}
+
+export type UserUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPaymentsInput, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPaymentsInput, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type UserUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrer?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferrerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferrerNestedInput
+}
+
+export type UserCreateManyReferrerInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+}
+
+export type UserUpdateWithoutReferrerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrals?: Prisma.UserUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReferrerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutReferrerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+
+/**
+ * Count Type UserCountOutputType
+ */
+
+export type UserCountOutputType = {
+  referrals: number
+  payments: number
+}
+
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  referrals?: boolean | UserCountOutputTypeCountReferralsArgs
+  payments?: boolean | UserCountOutputTypeCountPaymentsArgs
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCountOutputType
+   */
+  select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReferralsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -630,8 +1436,14 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   country?: boolean
   phone?: boolean
   city?: boolean
+  activePlanId?: boolean
+  activePlanName?: boolean
+  activePlanPrice?: boolean
+  activePlanCurrency?: boolean
+  activePlanPurchasedAt?: boolean
   referralCode?: boolean
   referralLink?: boolean
+  referrerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -639,6 +1451,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   passwordResetExpires?: boolean
   rights?: boolean
   language?: boolean
+  referrer?: boolean | Prisma.User$referrerArgs<ExtArgs>
+  referrals?: boolean | Prisma.User$referralsArgs<ExtArgs>
+  payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -651,8 +1467,14 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   country?: boolean
   phone?: boolean
   city?: boolean
+  activePlanId?: boolean
+  activePlanName?: boolean
+  activePlanPrice?: boolean
+  activePlanCurrency?: boolean
+  activePlanPurchasedAt?: boolean
   referralCode?: boolean
   referralLink?: boolean
+  referrerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -660,6 +1482,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordResetExpires?: boolean
   rights?: boolean
   language?: boolean
+  referrer?: boolean | Prisma.User$referrerArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -672,8 +1495,14 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   country?: boolean
   phone?: boolean
   city?: boolean
+  activePlanId?: boolean
+  activePlanName?: boolean
+  activePlanPrice?: boolean
+  activePlanCurrency?: boolean
+  activePlanPurchasedAt?: boolean
   referralCode?: boolean
   referralLink?: boolean
+  referrerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -681,6 +1510,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordResetExpires?: boolean
   rights?: boolean
   language?: boolean
+  referrer?: boolean | Prisma.User$referrerArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -693,8 +1523,14 @@ export type UserSelectScalar = {
   country?: boolean
   phone?: boolean
   city?: boolean
+  activePlanId?: boolean
+  activePlanName?: boolean
+  activePlanPrice?: boolean
+  activePlanCurrency?: boolean
+  activePlanPurchasedAt?: boolean
   referralCode?: boolean
   referralLink?: boolean
+  referrerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -704,11 +1540,27 @@ export type UserSelectScalar = {
   language?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "lastName" | "password" | "avatarPath" | "country" | "phone" | "city" | "referralCode" | "referralLink" | "createdAt" | "updatedAt" | "verificationToken" | "passwordResetCode" | "passwordResetExpires" | "rights" | "language", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "lastName" | "password" | "avatarPath" | "country" | "phone" | "city" | "activePlanId" | "activePlanName" | "activePlanPrice" | "activePlanCurrency" | "activePlanPurchasedAt" | "referralCode" | "referralLink" | "referrerId" | "createdAt" | "updatedAt" | "verificationToken" | "passwordResetCode" | "passwordResetExpires" | "rights" | "language", ExtArgs["result"]["user"]>
+export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  referrer?: boolean | Prisma.User$referrerArgs<ExtArgs>
+  referrals?: boolean | Prisma.User$referralsArgs<ExtArgs>
+  payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  referrer?: boolean | Prisma.User$referrerArgs<ExtArgs>
+}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  referrer?: boolean | Prisma.User$referrerArgs<ExtArgs>
+}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
-  objects: {}
+  objects: {
+    referrer: Prisma.$UserPayload<ExtArgs> | null
+    referrals: Prisma.$UserPayload<ExtArgs>[]
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     email: string | null
@@ -719,8 +1571,14 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     country: string | null
     phone: string | null
     city: string | null
+    activePlanId: string | null
+    activePlanName: string | null
+    activePlanPrice: number | null
+    activePlanCurrency: string | null
+    activePlanPurchasedAt: Date | null
     referralCode: string | null
     referralLink: string | null
+    referrerId: string | null
     createdAt: Date
     updatedAt: Date
     verificationToken: string | null
@@ -1122,6 +1980,9 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  referrer<T extends Prisma.User$referrerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$referrerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  referrals<T extends Prisma.User$referralsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$referralsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1160,8 +2021,14 @@ export interface UserFieldRefs {
   readonly country: Prisma.FieldRef<"User", 'String'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly city: Prisma.FieldRef<"User", 'String'>
+  readonly activePlanId: Prisma.FieldRef<"User", 'String'>
+  readonly activePlanName: Prisma.FieldRef<"User", 'String'>
+  readonly activePlanPrice: Prisma.FieldRef<"User", 'Int'>
+  readonly activePlanCurrency: Prisma.FieldRef<"User", 'String'>
+  readonly activePlanPurchasedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly referralCode: Prisma.FieldRef<"User", 'String'>
   readonly referralLink: Prisma.FieldRef<"User", 'String'>
+  readonly referrerId: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly verificationToken: Prisma.FieldRef<"User", 'String'>
@@ -1186,6 +2053,10 @@ export type UserFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1204,6 +2075,10 @@ export type UserFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1221,6 +2096,10 @@ export type UserFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which User to fetch.
    */
@@ -1270,6 +2149,10 @@ export type UserFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where?: Prisma.UserWhereInput
@@ -1318,6 +2201,10 @@ export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which Users to fetch.
    */
   where?: Prisma.UserWhereInput
@@ -1361,6 +2248,10 @@ export type UserCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * The data needed to create a User.
    */
   data: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>
@@ -1394,6 +2285,10 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1408,6 +2303,10 @@ export type UserUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * The data needed to update a User.
    */
@@ -1460,6 +2359,10 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1474,6 +2377,10 @@ export type UserUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * The filter to search for the User to update in case it exists.
    */
@@ -1501,6 +2408,10 @@ export type UserDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter which User to delete.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1521,6 +2432,73 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.referrer
+ */
+export type User$referrerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * User.referrals
+ */
+export type User$referralsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
+  cursor?: Prisma.UserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+}
+
+/**
+ * User.payments
+ */
+export type User$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
  * User without action
  */
 export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1532,4 +2510,8 @@ export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
 }

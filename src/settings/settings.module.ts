@@ -6,6 +6,7 @@ import { SettingsService } from './settings.service'
 
 @Module({
 	controllers: [SettingsController],
-	providers: [SettingsService, SettingsService, PrismaService],
+	providers: [SettingsService, PrismaService],
+	exports: [SettingsService],
 })
 export class SettingsModule {}

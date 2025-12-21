@@ -31,6 +31,7 @@ const buildIdPrefix = (source?: string | null) => {
 async function main() {
     const NUM_USERS = 200
     const prefixCounters: Record<string, number> = {}
+    const createdUserIds: string[] = []
     for (let i = 0; i < NUM_USERS; i++) {
         const email = faker.internet.email()
         const name = faker.person.firstName()
@@ -53,6 +54,11 @@ async function main() {
         const referralCode = `${prefix}${nextNumber}`
         const referralLink = buildReferralLink(referralCode)
 
+        const referrerId =
+            createdUserIds.length > 0
+                ? faker.helpers.arrayElement(createdUserIds)
+                : null
+
         await prisma.user.create({
             data: {
                 id: referralCode,
@@ -68,8 +74,17 @@ async function main() {
                 country: country.code,
                 createdAt,
                 updatedAt,
+                ...(referrerId && {
+                    referrer: {
+                        connect: {
+                            id: referrerId,
+                        },
+                    },
+                }),
             },
         })
+
+        createdUserIds.push(referralCode)
 
     }
 }

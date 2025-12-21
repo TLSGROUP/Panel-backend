@@ -1,5 +1,6 @@
 import { RequestMethod } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
+import { raw } from 'express'
 import * as cookieParser from 'cookie-parser'
 import { AppModule } from './app.module'
 
@@ -15,6 +16,7 @@ async function bootstrap() {
 	})
 
 	app.use(cookieParser())
+	app.use('/api/payments/webhook', raw({ type: 'application/json' }))
 	app.enableCors({
 		origin: [
 			'http://localhost:3000',

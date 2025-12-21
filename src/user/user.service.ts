@@ -20,6 +20,7 @@ import { isHasMorePagination } from '@/base/pagination/is-has-more'
 import { Prisma } from 'prisma/generated/client'
 import { Role } from 'prisma/generated/enums'
 import { AdminUserDto, UpdateAdminUserDto } from './dto/admin-user.dto'
+import { GetReferralsDto } from './dto/get-referrals.dto'
 import * as geoipLite from 'geoip-lite'
 
 @Injectable()
@@ -43,6 +44,99 @@ export class UserService {
 				phone: true
 			}
 		})
+	}
+
+	async getUserReferrals(userId: string, query: GetReferralsDto) {
+		const page = Math.max(Number(query.page) || 1, 1)
+		const limit = Math.min(Math.max(Number(query.limit) || 10, 1), 100)
+		const skip = (page - 1) * limit
+
+		const where: Prisma.UserWhereInput = {
+			referrerId: userId
+		}
+
+		const search = query.search?.trim()
+		if (search) {
+			const contains = () => ({
+				contains: search,
+				mode: Prisma.QueryMode.insensitive
+			})
+
+			where.OR = [
+				{ id: contains() },
+				{ name: contains() },
+				{ lastName: contains() },
+				{ email: contains() },
+				{ phone: contains() },
+				{ country: contains() },
+				{ city: contains() }
+			]
+		}
+
+		const createdAtFilter: Prisma.DateTimeFilter = {}
+		const fromDate = this._parseDate(query.from_date)
+		if (fromDate) {
+			createdAtFilter.gte = fromDate
+		}
+
+		const toDate = this._parseDate(query.to_date, true)
+		if (toDate) {
+			createdAtFilter.lte = toDate
+		}
+
+		if (Object.keys(createdAtFilter).length > 0) {
+			where.createdAt = createdAtFilter
+		}
+
+		const allowedSortFields: (keyof Prisma.UserOrderByWithRelationInput)[] = [
+			'id',
+			'name',
+			'lastName',
+			'email',
+			'phone',
+			'country',
+			'city',
+			'createdAt'
+		]
+		const sortField = allowedSortFields.includes(
+			query.sort_by as keyof Prisma.UserOrderByWithRelationInput
+		)
+			? (query.sort_by as keyof Prisma.UserOrderByWithRelationInput)
+			: 'createdAt'
+		const sortOrder = query.sort_order === 'asc' ? 'asc' : 'desc'
+
+		const [items, totalItems] = await this.prisma.$transaction([
+			this.prisma.user.findMany({
+				where,
+				skip,
+				take: limit,
+				orderBy: {
+					[sortField]: sortOrder
+				},
+				select: {
+					id: true,
+					name: true,
+					lastName: true,
+					email: true,
+					phone: true,
+					country: true,
+					city: true,
+					createdAt: true
+				}
+			}),
+			this.prisma.user.count({ where })
+		])
+
+		return {
+			success: true,
+			data: items,
+			pagination: {
+				page,
+				limit,
+				total_pages: Math.max(1, Math.ceil(totalItems / limit)),
+				total_items: totalItems
+			}
+		}
 	}
 
 	async getById(id: string) {
@@ -134,8 +228,11 @@ export class UserService {
 	}
 
 	async create(dto: AuthDto) {
+		const { referralCode, ...restDto } = dto
+		const referrerId = await this._resolveReferrerId(referralCode)
+
 		const payload: Prisma.UserCreateInput = {
-			...dto,
+			...restDto,
 			lastName: dto.lastName,
 			phone: dto.phone,
 			city: dto.city,
@@ -143,7 +240,7 @@ export class UserService {
 			language: dto.language ?? DEFAULT_LANGUAGE
 		}
 
-		return this._createUserWithGeneratedId(payload, dto.name || dto.email)
+		return this._createUserWithGeneratedId(payload, dto.name || dto.email, referrerId)
 	}
 
 	async createByAdmin(dto: AdminUserDto) {
@@ -161,7 +258,8 @@ export class UserService {
 				language: normalizeLanguage(dto.language),
 				rights: dto.rights ?? [Role.USER]
 			},
-			dto.name || dto.email
+			dto.name || dto.email,
+			undefined
 		)
 	}
 
@@ -334,9 +432,30 @@ export class UserService {
 		})
 	}
 
+	private async _resolveReferrerId(referralCode?: string | null) {
+		if (!referralCode) {
+			return null
+		}
+
+		const referrer = await this.prisma.user.findFirst({
+			where: {
+				OR: [
+					{ referralCode },
+					{ id: referralCode }
+				]
+			},
+			select: {
+				id: true
+			}
+		})
+
+		return referrer?.id ?? null
+	}
+
 	private async _createUserWithGeneratedId(
 		data: Prisma.UserCreateInput,
-		source?: string | null
+		source?: string | null,
+		referrerId?: string | null
 	) {
 		let attempts = 0
 
@@ -347,14 +466,24 @@ export class UserService {
 				const referralCode = id
 				const referralLink = buildReferralLink(referralCode)
 
-				return await this.prisma.user.create({
-					data: {
+					const createData: Prisma.UserCreateInput = {
 						...data,
 						id,
 						referralCode,
 						referralLink
 					}
-				})
+
+					if (referrerId) {
+						createData.referrer = {
+							connect: {
+								id: referrerId
+							}
+						}
+					}
+
+					return await this.prisma.user.create({
+						data: createData
+					})
 			} catch (error) {
 				if (
 					error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -369,6 +498,25 @@ export class UserService {
 		}
 
 		throw new Error('Failed to generate unique user id')
+	}
+
+	private _parseDate(value?: string, endOfDay = false): Date | null {
+		if (!value) {
+			return null
+		}
+
+		const parsed = new Date(value)
+		if (isNaN(parsed.getTime())) {
+			return null
+		}
+
+		if (endOfDay) {
+			parsed.setHours(23, 59, 59, 999)
+		} else {
+			parsed.setHours(0, 0, 0, 0)
+		}
+
+		return parsed
 	}
 
 	private async _generateUserId(source?: string | null) {
