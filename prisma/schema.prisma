@@ -52,7 +52,9 @@ model Payment {
   amount Int
   currency String
   status PaymentStatus @default(PENDING)
+  provider PaymentProvider @default(STRIPE)
   stripePaymentIntentId String? @unique @map("stripe_payment_intent_id")
+  paypalOrderId String? @unique @map("paypal_order_id")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -79,4 +81,9 @@ enum PaymentStatus {
   SUCCEEDED
   FAILED
   CANCELED
+}
+
+enum PaymentProvider {
+  STRIPE
+  PAYPAL
 }

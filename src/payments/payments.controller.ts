@@ -7,6 +7,9 @@ import { PaymentsService } from './payments.service'
 import { CreatePaymentIntentDto } from './dto/create-payment-intent.dto'
 import { CancelPaymentDto } from './dto/cancel-payment.dto'
 import { PlansEventsService } from '@/plans/plans-events.service'
+import { CreatePayPalOrderDto } from './dto/create-paypal-order.dto'
+import { CapturePayPalOrderDto } from './dto/capture-paypal-order.dto'
+import { CancelPayPalOrderDto } from './dto/cancel-paypal-order.dto'
 
 @Controller('payments')
 export class PaymentsController {
@@ -28,6 +31,11 @@ export class PaymentsController {
 	}
 
 	@Auth()
+	@Get('paypal/client-id')
+	async getPayPalClientId() {
+		return { clientId: await this.paymentsService.getPayPalClientId() }
+	}
+
 	@Sse('plans/stream')
 	streamPlansUpdates() {
 		return fromEvent(this.plansEventsService.getEmitter(), 'plans-updated').pipe(
@@ -43,6 +51,36 @@ export class PaymentsController {
 		@Body() dto: CreatePaymentIntentDto
 	) {
 		return this.paymentsService.createPaymentIntent(userId, dto.planId)
+	}
+
+	@Auth()
+	@UsePipes(new ValidationPipe())
+	@Post('paypal/order')
+	async createPayPalOrder(
+		@CurrentUser('id') userId: string,
+		@Body() dto: CreatePayPalOrderDto
+	) {
+		return this.paymentsService.createPayPalOrder(userId, dto.planId)
+	}
+
+	@Auth()
+	@UsePipes(new ValidationPipe())
+	@Post('paypal/capture')
+	async capturePayPalOrder(
+		@CurrentUser('id') userId: string,
+		@Body() dto: CapturePayPalOrderDto
+	) {
+		return this.paymentsService.capturePayPalOrder(userId, dto.orderId)
+	}
+
+	@Auth()
+	@UsePipes(new ValidationPipe())
+	@Post('paypal/cancel')
+	async cancelPayPalOrder(
+		@CurrentUser('id') userId: string,
+		@Body() dto: CancelPayPalOrderDto
+	) {
+		return this.paymentsService.cancelPayPalOrder(userId, dto.orderId)
 	}
 
 	@Auth()

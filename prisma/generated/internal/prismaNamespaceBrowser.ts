@@ -110,7 +110,9 @@ export const PaymentScalarFieldEnum = {
   amount: 'amount',
   currency: 'currency',
   status: 'status',
+  provider: 'provider',
   stripePaymentIntentId: 'stripePaymentIntentId',
+  paypalOrderId: 'paypalOrderId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

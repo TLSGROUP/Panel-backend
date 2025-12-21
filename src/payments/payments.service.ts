@@ -9,7 +9,10 @@ const SETTINGS_KEYS = {
 	STRIPE_WEBHOOK_SECRET: 'stripe.webhook_secret',
 	PLAN_CATALOG: 'plans.catalog',
 	PLAN_CURRENCY: 'plans.currency',
-	PLAN_COLORS: 'plans.colors'
+	PLAN_COLORS: 'plans.colors',
+	PAYPAL_CLIENT_ID: 'paypal.client_id',
+	PAYPAL_SECRET: 'paypal.secret',
+	PAYPAL_MODE: 'paypal.mode'
 }
 
 type PlanCatalogItem = {
@@ -115,6 +118,16 @@ export class PaymentsService {
 		return setting
 	}
 
+	async getPayPalClientId(): Promise<string> {
+		const setting = await this.settingsService.getSettingValue(
+			SETTINGS_KEYS.PAYPAL_CLIENT_ID
+		)
+		if (!setting) {
+			throw new InternalServerErrorException('PayPal client id is not configured')
+		}
+		return setting
+	}
+
 	private async getStripeClient(): Promise<Stripe> {
 		const setting = await this.settingsService.getSettingValue(
 			SETTINGS_KEYS.STRIPE_SECRET_KEY
@@ -145,7 +158,8 @@ export class PaymentsService {
 				planName: plan.name,
 				amount: plan.amount,
 				currency: plan.currency,
-				status: 'PENDING'
+				status: 'PENDING',
+				provider: 'STRIPE'
 			}
 		})
 
@@ -183,6 +197,212 @@ export class PaymentsService {
 			throw new InternalServerErrorException('Stripe webhook secret is not configured')
 		}
 		return setting
+	}
+
+	private async getPayPalConfig() {
+		const [clientId, secret, mode] = await Promise.all([
+			this.settingsService.getSettingValue(SETTINGS_KEYS.PAYPAL_CLIENT_ID),
+			this.settingsService.getSettingValue(SETTINGS_KEYS.PAYPAL_SECRET),
+			this.settingsService.getSettingValue(SETTINGS_KEYS.PAYPAL_MODE)
+		])
+
+		if (!clientId || !secret) {
+			throw new InternalServerErrorException('PayPal credentials are not configured')
+		}
+
+		const environment = mode?.toLowerCase() === 'live' ? 'live' : 'sandbox'
+		const baseUrl =
+			environment === 'live'
+				? 'https://api-m.paypal.com'
+				: 'https://api-m.sandbox.paypal.com'
+
+		return { clientId, secret, baseUrl }
+	}
+
+	private async getPayPalAccessToken() {
+		const { clientId, secret, baseUrl } = await this.getPayPalConfig()
+		const auth = Buffer.from(`${clientId}:${secret}`).toString('base64')
+
+		const response = await fetch(`${baseUrl}/v1/oauth2/token`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Basic ${auth}`,
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			body: 'grant_type=client_credentials'
+		})
+
+		if (!response.ok) {
+			throw new InternalServerErrorException('PayPal auth failed')
+		}
+
+		const data = (await response.json()) as { access_token?: string }
+		if (!data.access_token) {
+			throw new InternalServerErrorException('PayPal access token missing')
+		}
+
+		return { accessToken: data.access_token, baseUrl }
+	}
+
+	async createPayPalOrder(userId: string, planId: string) {
+		const plans = await this.getPlans()
+		const plan = plans.find((item) => item.id === planId)
+		if (!plan) {
+			throw new BadRequestException('Unknown plan')
+		}
+
+		const payment = await this.prisma.payment.create({
+			data: {
+				userId,
+				planId: plan.id,
+				planName: plan.name,
+				amount: plan.amount,
+				currency: plan.currency,
+				status: 'PENDING',
+				provider: 'PAYPAL'
+			}
+		})
+
+		try {
+			const { accessToken, baseUrl } = await this.getPayPalAccessToken()
+			const response = await fetch(`${baseUrl}/v2/checkout/orders`, {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					intent: 'CAPTURE',
+					purchase_units: [
+						{
+							custom_id: payment.id,
+							amount: {
+								currency_code: plan.currency,
+								value: (plan.amount / 100).toFixed(2)
+							},
+							description: plan.name
+						}
+					]
+				})
+			})
+
+			if (!response.ok) {
+				throw new Error('PayPal order creation failed')
+			}
+
+			const data = (await response.json()) as { id?: string }
+			if (!data.id) {
+				throw new Error('PayPal order id missing')
+			}
+
+			await this.prisma.payment.update({
+				where: { id: payment.id },
+				data: { paypalOrderId: data.id }
+			})
+
+			return { orderId: data.id }
+		} catch (error) {
+			await this.prisma.payment.update({
+				where: { id: payment.id },
+				data: { status: 'FAILED' }
+			})
+			throw new InternalServerErrorException('PayPal order creation failed')
+		}
+	}
+
+	async capturePayPalOrder(userId: string, orderId: string) {
+		const payment = await this.prisma.payment.findUnique({
+			where: { paypalOrderId: orderId }
+		})
+
+		if (!payment || payment.userId !== userId) {
+			throw new BadRequestException('Payment not found')
+		}
+
+		if (payment.status === 'SUCCEEDED') {
+			return { status: payment.status }
+		}
+
+		const { accessToken, baseUrl } = await this.getPayPalAccessToken()
+		const response = await fetch(`${baseUrl}/v2/checkout/orders/${orderId}/capture`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				'Content-Type': 'application/json'
+			}
+		})
+
+		if (!response.ok) {
+			await this.prisma.payment.update({
+				where: { id: payment.id },
+				data: { status: 'FAILED' }
+			})
+			throw new InternalServerErrorException('PayPal capture failed')
+		}
+
+		const data = (await response.json()) as { status?: string }
+		if (data.status !== 'COMPLETED') {
+			await this.prisma.payment.update({
+				where: { id: payment.id },
+				data: { status: 'FAILED' }
+			})
+			throw new InternalServerErrorException('PayPal capture incomplete')
+		}
+
+		await this.prisma.payment.update({
+			where: { id: payment.id },
+			data: { status: 'SUCCEEDED' }
+		})
+
+		const plan = (await this.getPlans()).find((item) => item.id === payment.planId)
+		if (plan) {
+			await this.prisma.user.update({
+				where: { id: userId },
+				data: {
+					activePlanId: plan.id,
+					activePlanName: plan.name,
+					activePlanPrice: plan.amount,
+					activePlanCurrency: plan.currency,
+					activePlanPurchasedAt: new Date()
+				}
+			})
+		}
+
+		return { status: 'SUCCEEDED' }
+	}
+
+	async cancelPayPalOrder(userId: string, orderId: string) {
+		const payment = await this.prisma.payment.findUnique({
+			where: { paypalOrderId: orderId }
+		})
+
+		if (!payment || payment.userId !== userId) {
+			throw new BadRequestException('Payment not found')
+		}
+
+		if (payment.status !== 'PENDING') {
+			return { status: payment.status }
+		}
+
+		try {
+			const { accessToken, baseUrl } = await this.getPayPalAccessToken()
+			await fetch(`${baseUrl}/v2/checkout/orders/${orderId}/void`, {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					'Content-Type': 'application/json'
+				}
+			})
+		} catch {
+			// ignore PayPal void errors
+		}
+
+		const updated = await this.prisma.payment.update({
+			where: { id: payment.id },
+			data: { status: 'CANCELED' }
+		})
+
+		return { status: updated.status }
 	}
 
 	async handleWebhook(signature: string | string[] | undefined, payload: Buffer) {

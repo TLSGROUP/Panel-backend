@@ -25,10 +25,11 @@ export class SettingsController {
 	@Auth('ADMIN')
 	@Post()
 	async setSetting(@Body() settingData: { key: string; value: string }) {
-		const setting = await this.settingsService.setSetting(
+		await this.settingsService.setSetting(
 			settingData.key,
 			settingData.value
 		)
+		const setting = await this.settingsService.getSettingByKey(settingData.key)
 		if (PLAN_SETTINGS_KEYS.has(settingData.key)) {
 			this.plansEventsService.emitPlansUpdated()
 		}

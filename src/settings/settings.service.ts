@@ -11,7 +11,9 @@ export class SettingsService {
 	private readonly protectedKeys = new Set([
 		'stripe.secret_key',
 		'stripe.public_key',
-		'stripe.webhook_secret'
+		'stripe.webhook_secret',
+		'paypal.client_id',
+		'paypal.secret'
 	])
 
 	async getSettingByKey(key: string): Promise<Setting | null> {
@@ -21,7 +23,7 @@ export class SettingsService {
 		if (!setting) return null
 
 		if (this.protectedKeys.has(key)) {
-			const decrypted = this.decryptIfNeeded(setting.value)
+			const decrypted = await this.decryptAndMaybeEncrypt(key, setting.value)
 			return { ...setting, value: this.maskValue(decrypted) }
 		}
 
@@ -35,7 +37,7 @@ export class SettingsService {
 		if (!setting?.value) return null
 
 		if (this.protectedKeys.has(key)) {
-			return this.decryptIfNeeded(setting.value)
+			return this.decryptAndMaybeEncrypt(key, setting.value)
 		}
 
 		return setting.value
@@ -99,6 +101,20 @@ export class SettingsService {
 		decipher.setAuthTag(tag)
 		const decrypted = Buffer.concat([decipher.update(data), decipher.final()])
 		return decrypted.toString('utf8')
+	}
+
+	private async decryptAndMaybeEncrypt(key: string, value: string): Promise<string> {
+		if (value.startsWith('enc:')) {
+			return this.decryptIfNeeded(value)
+		}
+
+		const encrypted = this.encryptValue(value)
+		await this.prisma.setting.update({
+			where: { key },
+			data: { value: encrypted }
+		})
+
+		return value
 	}
 
 	private maskValue(value: string): string {
