@@ -67,10 +67,7 @@ export class SettingsService {
 	}
 
 	private getEncryptionKey(): Buffer {
-		const secret =
-			process.env.SETTINGS_ENCRYPTION_KEY ||
-			process.env.JWT_SECRET ||
-			''
+		const secret = process.env.SETTINGS_ENCRYPTION_KEY || ''
 
 		if (!secret) {
 			throw new Error('SETTINGS_ENCRYPTION_KEY is not configured')

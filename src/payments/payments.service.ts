@@ -7,7 +7,9 @@ const SETTINGS_KEYS = {
 	STRIPE_SECRET_KEY: 'stripe.secret_key',
 	STRIPE_PUBLIC_KEY: 'stripe.public_key',
 	STRIPE_WEBHOOK_SECRET: 'stripe.webhook_secret',
-	PLAN_CATALOG: 'plans.catalog'
+	PLAN_CATALOG: 'plans.catalog',
+	PLAN_CURRENCY: 'plans.currency',
+	PLAN_COLORS: 'plans.colors'
 }
 
 type PlanCatalogItem = {
@@ -17,6 +19,7 @@ type PlanCatalogItem = {
 	currency: string
 	description?: string
 	features?: string[]
+	color?: string
 }
 
 const DEFAULT_PLANS: PlanCatalogItem[] = [
@@ -62,18 +65,44 @@ export class PaymentsService {
 	) {}
 
 	async getPlans(): Promise<PlanCatalogItem[]> {
-		const setting = await this.settingsService.getSettingValue(
-			SETTINGS_KEYS.PLAN_CATALOG
-		)
-		if (!setting) return DEFAULT_PLANS
+		const [catalogSetting, currencySetting, colorsSetting] = await Promise.all([
+			this.settingsService.getSettingValue(SETTINGS_KEYS.PLAN_CATALOG),
+			this.settingsService.getSettingValue(SETTINGS_KEYS.PLAN_CURRENCY),
+			this.settingsService.getSettingValue(SETTINGS_KEYS.PLAN_COLORS)
+		])
 
+		let plans = DEFAULT_PLANS
 		try {
-			const parsed = JSON.parse(setting) as PlanCatalogItem[]
-			if (!Array.isArray(parsed)) return DEFAULT_PLANS
-			return parsed
+			if (catalogSetting) {
+				const parsed = JSON.parse(catalogSetting) as PlanCatalogItem[]
+				if (Array.isArray(parsed) && parsed.length > 0) {
+					plans = parsed
+				}
+			}
 		} catch {
-			return DEFAULT_PLANS
+			plans = DEFAULT_PLANS
 		}
+
+		const normalizedCurrency =
+			currencySetting?.trim() || plans[0]?.currency || 'EUR'
+
+		let colorMap: Record<string, string> = {}
+		try {
+			if (colorsSetting) {
+				const parsed = JSON.parse(colorsSetting) as Record<string, string>
+				if (parsed && typeof parsed === 'object') {
+					colorMap = parsed
+				}
+			}
+		} catch {
+			colorMap = {}
+		}
+
+		return plans.map((plan) => ({
+			...plan,
+			currency: normalizedCurrency,
+			color: colorMap[plan.id]
+		}))
 	}
 
 	async getPublicKey(): Promise<string> {

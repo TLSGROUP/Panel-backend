@@ -167,3 +167,6 @@ env
    INFOBIP_API_KEY=ВАШ_API_KEY
    INFOBIP_API_URL=ВАШ_API_URL
    INFOBIP_WHATSAPP_NUMBER=ВАШ_НОМЕР
+
+Генерация masterkey для шифрования ключей stripe
+openssl rand -base64 32
