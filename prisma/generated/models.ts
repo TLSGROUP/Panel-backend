@@ -11,4 +11,8 @@
 export type * from './models/User'
 export type * from './models/Payment'
 export type * from './models/Setting'
+export type * from './models/MlmEngineSetting'
+export type * from './models/MlmPayout'
+export type * from './models/Wallet'
+export type * from './models/WalletTransaction'
 export type * from './commonInputTypes'

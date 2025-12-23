@@ -273,6 +273,7 @@ export type PaymentWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  mlmPayouts?: Prisma.MlmPayoutListRelationFilter
 }
 
 export type PaymentOrderByWithRelationInput = {
@@ -289,6 +290,7 @@ export type PaymentOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  mlmPayouts?: Prisma.MlmPayoutOrderByRelationAggregateInput
 }
 
 export type PaymentWhereUniqueInput = Prisma.AtLeast<{
@@ -308,6 +310,7 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  mlmPayouts?: Prisma.MlmPayoutListRelationFilter
 }, "id" | "stripePaymentIntentId" | "paypalOrderId">
 
 export type PaymentOrderByWithAggregationInput = {
@@ -361,6 +364,7 @@ export type PaymentCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPaymentsInput
+  mlmPayouts?: Prisma.MlmPayoutCreateNestedManyWithoutPaymentInput
 }
 
 export type PaymentUncheckedCreateInput = {
@@ -376,6 +380,7 @@ export type PaymentUncheckedCreateInput = {
   paypalOrderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mlmPayouts?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutPaymentInput
 }
 
 export type PaymentUpdateInput = {
@@ -391,6 +396,7 @@ export type PaymentUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPaymentsNestedInput
+  mlmPayouts?: Prisma.MlmPayoutUpdateManyWithoutPaymentNestedInput
 }
 
 export type PaymentUncheckedUpdateInput = {
@@ -406,6 +412,7 @@ export type PaymentUncheckedUpdateInput = {
   paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mlmPayouts?: Prisma.MlmPayoutUncheckedUpdateManyWithoutPaymentNestedInput
 }
 
 export type PaymentCreateManyInput = {
@@ -515,6 +522,11 @@ export type PaymentSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
 }
 
+export type PaymentScalarRelationFilter = {
+  is?: Prisma.PaymentWhereInput
+  isNot?: Prisma.PaymentWhereInput
+}
+
 export type PaymentCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.PaymentCreateWithoutUserInput, Prisma.PaymentUncheckedCreateWithoutUserInput> | Prisma.PaymentCreateWithoutUserInput[] | Prisma.PaymentUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutUserInput | Prisma.PaymentCreateOrConnectWithoutUserInput[]
@@ -573,6 +585,20 @@ export type EnumPaymentProviderFieldUpdateOperationsInput = {
   set?: $Enums.PaymentProvider
 }
 
+export type PaymentCreateNestedOneWithoutMlmPayoutsInput = {
+  create?: Prisma.XOR<Prisma.PaymentCreateWithoutMlmPayoutsInput, Prisma.PaymentUncheckedCreateWithoutMlmPayoutsInput>
+  connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutMlmPayoutsInput
+  connect?: Prisma.PaymentWhereUniqueInput
+}
+
+export type PaymentUpdateOneRequiredWithoutMlmPayoutsNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentCreateWithoutMlmPayoutsInput, Prisma.PaymentUncheckedCreateWithoutMlmPayoutsInput>
+  connectOrCreate?: Prisma.PaymentCreateOrConnectWithoutMlmPayoutsInput
+  upsert?: Prisma.PaymentUpsertWithoutMlmPayoutsInput
+  connect?: Prisma.PaymentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PaymentUpdateToOneWithWhereWithoutMlmPayoutsInput, Prisma.PaymentUpdateWithoutMlmPayoutsInput>, Prisma.PaymentUncheckedUpdateWithoutMlmPayoutsInput>
+}
+
 export type PaymentCreateWithoutUserInput = {
   id?: string
   planId: string
@@ -585,6 +611,7 @@ export type PaymentCreateWithoutUserInput = {
   paypalOrderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mlmPayouts?: Prisma.MlmPayoutCreateNestedManyWithoutPaymentInput
 }
 
 export type PaymentUncheckedCreateWithoutUserInput = {
@@ -599,6 +626,7 @@ export type PaymentUncheckedCreateWithoutUserInput = {
   paypalOrderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mlmPayouts?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutPaymentInput
 }
 
 export type PaymentCreateOrConnectWithoutUserInput = {
@@ -645,6 +673,82 @@ export type PaymentScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
 }
 
+export type PaymentCreateWithoutMlmPayoutsInput = {
+  id?: string
+  planId: string
+  planName: string
+  amount: number
+  currency: string
+  status?: $Enums.PaymentStatus
+  provider?: $Enums.PaymentProvider
+  stripePaymentIntentId?: string | null
+  paypalOrderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutPaymentsInput
+}
+
+export type PaymentUncheckedCreateWithoutMlmPayoutsInput = {
+  id?: string
+  userId: string
+  planId: string
+  planName: string
+  amount: number
+  currency: string
+  status?: $Enums.PaymentStatus
+  provider?: $Enums.PaymentProvider
+  stripePaymentIntentId?: string | null
+  paypalOrderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PaymentCreateOrConnectWithoutMlmPayoutsInput = {
+  where: Prisma.PaymentWhereUniqueInput
+  create: Prisma.XOR<Prisma.PaymentCreateWithoutMlmPayoutsInput, Prisma.PaymentUncheckedCreateWithoutMlmPayoutsInput>
+}
+
+export type PaymentUpsertWithoutMlmPayoutsInput = {
+  update: Prisma.XOR<Prisma.PaymentUpdateWithoutMlmPayoutsInput, Prisma.PaymentUncheckedUpdateWithoutMlmPayoutsInput>
+  create: Prisma.XOR<Prisma.PaymentCreateWithoutMlmPayoutsInput, Prisma.PaymentUncheckedCreateWithoutMlmPayoutsInput>
+  where?: Prisma.PaymentWhereInput
+}
+
+export type PaymentUpdateToOneWithWhereWithoutMlmPayoutsInput = {
+  where?: Prisma.PaymentWhereInput
+  data: Prisma.XOR<Prisma.PaymentUpdateWithoutMlmPayoutsInput, Prisma.PaymentUncheckedUpdateWithoutMlmPayoutsInput>
+}
+
+export type PaymentUpdateWithoutMlmPayoutsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  provider?: Prisma.EnumPaymentProviderFieldUpdateOperationsInput | $Enums.PaymentProvider
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutPaymentsNestedInput
+}
+
+export type PaymentUncheckedUpdateWithoutMlmPayoutsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  provider?: Prisma.EnumPaymentProviderFieldUpdateOperationsInput | $Enums.PaymentProvider
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type PaymentCreateManyUserInput = {
   id?: string
   planId: string
@@ -671,6 +775,7 @@ export type PaymentUpdateWithoutUserInput = {
   paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mlmPayouts?: Prisma.MlmPayoutUpdateManyWithoutPaymentNestedInput
 }
 
 export type PaymentUncheckedUpdateWithoutUserInput = {
@@ -685,6 +790,7 @@ export type PaymentUncheckedUpdateWithoutUserInput = {
   paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mlmPayouts?: Prisma.MlmPayoutUncheckedUpdateManyWithoutPaymentNestedInput
 }
 
 export type PaymentUncheckedUpdateManyWithoutUserInput = {
@@ -702,6 +808,35 @@ export type PaymentUncheckedUpdateManyWithoutUserInput = {
 }
 
 
+/**
+ * Count Type PaymentCountOutputType
+ */
+
+export type PaymentCountOutputType = {
+  mlmPayouts: number
+}
+
+export type PaymentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  mlmPayouts?: boolean | PaymentCountOutputTypeCountMlmPayoutsArgs
+}
+
+/**
+ * PaymentCountOutputType without action
+ */
+export type PaymentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PaymentCountOutputType
+   */
+  select?: Prisma.PaymentCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PaymentCountOutputType without action
+ */
+export type PaymentCountOutputTypeCountMlmPayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MlmPayoutWhereInput
+}
+
 
 export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -717,6 +852,8 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  mlmPayouts?: boolean | Prisma.Payment$mlmPayoutsArgs<ExtArgs>
+  _count?: boolean | Prisma.PaymentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["payment"]>
 
 export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -769,6 +906,8 @@ export type PaymentSelectScalar = {
 export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "planId" | "planName" | "amount" | "currency" | "status" | "provider" | "stripePaymentIntentId" | "paypalOrderId" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  mlmPayouts?: boolean | Prisma.Payment$mlmPayoutsArgs<ExtArgs>
+  _count?: boolean | Prisma.PaymentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PaymentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -781,6 +920,7 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Payment"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    mlmPayouts: Prisma.$MlmPayoutPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1190,6 +1330,7 @@ readonly fields: PaymentFieldRefs;
 export interface Prisma__PaymentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  mlmPayouts<T extends Prisma.Payment$mlmPayoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Payment$mlmPayoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MlmPayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1624,6 +1765,30 @@ export type PaymentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Payments to delete.
    */
   limit?: number
+}
+
+/**
+ * Payment.mlmPayouts
+ */
+export type Payment$mlmPayoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MlmPayout
+   */
+  select?: Prisma.MlmPayoutSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MlmPayout
+   */
+  omit?: Prisma.MlmPayoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MlmPayoutInclude<ExtArgs> | null
+  where?: Prisma.MlmPayoutWhereInput
+  orderBy?: Prisma.MlmPayoutOrderByWithRelationInput | Prisma.MlmPayoutOrderByWithRelationInput[]
+  cursor?: Prisma.MlmPayoutWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MlmPayoutScalarFieldEnum | Prisma.MlmPayoutScalarFieldEnum[]
 }
 
 /**

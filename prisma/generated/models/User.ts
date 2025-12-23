@@ -367,6 +367,9 @@ export type UserWhereInput = {
   referrer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   referrals?: Prisma.UserListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
+  mlmPayoutsReceived?: Prisma.MlmPayoutListRelationFilter
+  mlmPayoutsSource?: Prisma.MlmPayoutListRelationFilter
+  wallet?: Prisma.XOR<Prisma.WalletNullableScalarRelationFilter, Prisma.WalletWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -397,6 +400,9 @@ export type UserOrderByWithRelationInput = {
   referrer?: Prisma.UserOrderByWithRelationInput
   referrals?: Prisma.UserOrderByRelationAggregateInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutOrderByRelationAggregateInput
+  mlmPayoutsSource?: Prisma.MlmPayoutOrderByRelationAggregateInput
+  wallet?: Prisma.WalletOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -430,6 +436,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   referrer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   referrals?: Prisma.UserListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
+  mlmPayoutsReceived?: Prisma.MlmPayoutListRelationFilter
+  mlmPayoutsSource?: Prisma.MlmPayoutListRelationFilter
+  wallet?: Prisma.XOR<Prisma.WalletNullableScalarRelationFilter, Prisma.WalletWhereInput> | null
 }, "id" | "email" | "referralCode">
 
 export type UserOrderByWithAggregationInput = {
@@ -521,6 +530,9 @@ export type UserCreateInput = {
   referrer?: Prisma.UserCreateNestedOneWithoutReferralsInput
   referrals?: Prisma.UserCreateNestedManyWithoutReferrerInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -550,6 +562,9 @@ export type UserUncheckedCreateInput = {
   language?: string
   referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferrerInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -579,6 +594,9 @@ export type UserUpdateInput = {
   referrer?: Prisma.UserUpdateOneWithoutReferralsNestedInput
   referrals?: Prisma.UserUpdateManyWithoutReferrerNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -608,6 +626,9 @@ export type UserUncheckedUpdateInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   referrals?: Prisma.UserUncheckedUpdateManyWithoutReferrerNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -910,6 +931,48 @@ export type UserUpdateOneRequiredWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPaymentsInput, Prisma.UserUpdateWithoutPaymentsInput>, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
 }
 
+export type UserCreateNestedOneWithoutMlmPayoutsReceivedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMlmPayoutsReceivedInput, Prisma.UserUncheckedCreateWithoutMlmPayoutsReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMlmPayoutsReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutMlmPayoutsSourceInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMlmPayoutsSourceInput, Prisma.UserUncheckedCreateWithoutMlmPayoutsSourceInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMlmPayoutsSourceInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMlmPayoutsReceivedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMlmPayoutsReceivedInput, Prisma.UserUncheckedCreateWithoutMlmPayoutsReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMlmPayoutsReceivedInput
+  upsert?: Prisma.UserUpsertWithoutMlmPayoutsReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMlmPayoutsReceivedInput, Prisma.UserUpdateWithoutMlmPayoutsReceivedInput>, Prisma.UserUncheckedUpdateWithoutMlmPayoutsReceivedInput>
+}
+
+export type UserUpdateOneRequiredWithoutMlmPayoutsSourceNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMlmPayoutsSourceInput, Prisma.UserUncheckedCreateWithoutMlmPayoutsSourceInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMlmPayoutsSourceInput
+  upsert?: Prisma.UserUpsertWithoutMlmPayoutsSourceInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMlmPayoutsSourceInput, Prisma.UserUpdateWithoutMlmPayoutsSourceInput>, Prisma.UserUncheckedUpdateWithoutMlmPayoutsSourceInput>
+}
+
+export type UserCreateNestedOneWithoutWalletInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWalletInput, Prisma.UserUncheckedCreateWithoutWalletInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWalletInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWalletNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWalletInput, Prisma.UserUncheckedCreateWithoutWalletInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWalletInput
+  upsert?: Prisma.UserUpsertWithoutWalletInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWalletInput, Prisma.UserUpdateWithoutWalletInput>, Prisma.UserUncheckedUpdateWithoutWalletInput>
+}
+
 export type UserCreateWithoutReferralsInput = {
   id?: string
   email?: string | null
@@ -936,6 +999,9 @@ export type UserCreateWithoutReferralsInput = {
   language?: string
   referrer?: Prisma.UserCreateNestedOneWithoutReferralsInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferralsInput = {
@@ -964,6 +1030,9 @@ export type UserUncheckedCreateWithoutReferralsInput = {
   rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
   language?: string
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferralsInput = {
@@ -997,6 +1066,9 @@ export type UserCreateWithoutReferrerInput = {
   language?: string
   referrals?: Prisma.UserCreateNestedManyWithoutReferrerInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferrerInput = {
@@ -1025,6 +1097,9 @@ export type UserUncheckedCreateWithoutReferrerInput = {
   language?: string
   referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferrerInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferrerInput = {
@@ -1074,6 +1149,9 @@ export type UserUpdateWithoutReferralsInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   referrer?: Prisma.UserUpdateOneWithoutReferralsNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferralsInput = {
@@ -1102,6 +1180,9 @@ export type UserUncheckedUpdateWithoutReferralsInput = {
   rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
   language?: Prisma.StringFieldUpdateOperationsInput | string
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutReferrerInput = {
@@ -1176,6 +1257,9 @@ export type UserCreateWithoutPaymentsInput = {
   language?: string
   referrer?: Prisma.UserCreateNestedOneWithoutReferralsInput
   referrals?: Prisma.UserCreateNestedManyWithoutReferrerInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -1204,6 +1288,9 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
   language?: string
   referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferrerInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -1248,6 +1335,9 @@ export type UserUpdateWithoutPaymentsInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   referrer?: Prisma.UserUpdateOneWithoutReferralsNestedInput
   referrals?: Prisma.UserUpdateManyWithoutReferrerNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -1276,6 +1366,429 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
   language?: Prisma.StringFieldUpdateOperationsInput | string
   referrals?: Prisma.UserUncheckedUpdateManyWithoutReferrerNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutMlmPayoutsReceivedInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrer?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutMlmPayoutsReceivedInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  referrerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutMlmPayoutsReceivedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMlmPayoutsReceivedInput, Prisma.UserUncheckedCreateWithoutMlmPayoutsReceivedInput>
+}
+
+export type UserCreateWithoutMlmPayoutsSourceInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrer?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutMlmPayoutsSourceInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  referrerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutMlmPayoutsSourceInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMlmPayoutsSourceInput, Prisma.UserUncheckedCreateWithoutMlmPayoutsSourceInput>
+}
+
+export type UserUpsertWithoutMlmPayoutsReceivedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMlmPayoutsReceivedInput, Prisma.UserUncheckedUpdateWithoutMlmPayoutsReceivedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMlmPayoutsReceivedInput, Prisma.UserUncheckedCreateWithoutMlmPayoutsReceivedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMlmPayoutsReceivedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMlmPayoutsReceivedInput, Prisma.UserUncheckedUpdateWithoutMlmPayoutsReceivedInput>
+}
+
+export type UserUpdateWithoutMlmPayoutsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrer?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMlmPayoutsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutMlmPayoutsSourceInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMlmPayoutsSourceInput, Prisma.UserUncheckedUpdateWithoutMlmPayoutsSourceInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMlmPayoutsSourceInput, Prisma.UserUncheckedCreateWithoutMlmPayoutsSourceInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMlmPayoutsSourceInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMlmPayoutsSourceInput, Prisma.UserUncheckedUpdateWithoutMlmPayoutsSourceInput>
+}
+
+export type UserUpdateWithoutMlmPayoutsSourceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrer?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMlmPayoutsSourceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutWalletInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrer?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
+}
+
+export type UserUncheckedCreateWithoutWalletInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  referrerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
+}
+
+export type UserCreateOrConnectWithoutWalletInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWalletInput, Prisma.UserUncheckedCreateWithoutWalletInput>
+}
+
+export type UserUpsertWithoutWalletInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWalletInput, Prisma.UserUncheckedUpdateWithoutWalletInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWalletInput, Prisma.UserUncheckedCreateWithoutWalletInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWalletInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWalletInput, Prisma.UserUncheckedUpdateWithoutWalletInput>
+}
+
+export type UserUpdateWithoutWalletInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrer?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWalletInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
 }
 
 export type UserCreateManyReferrerInput = {
@@ -1330,6 +1843,9 @@ export type UserUpdateWithoutReferrerInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   referrals?: Prisma.UserUpdateManyWithoutReferrerNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferrerInput = {
@@ -1358,6 +1874,9 @@ export type UserUncheckedUpdateWithoutReferrerInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   referrals?: Prisma.UserUncheckedUpdateManyWithoutReferrerNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutReferrerInput = {
@@ -1394,11 +1913,15 @@ export type UserUncheckedUpdateManyWithoutReferrerInput = {
 export type UserCountOutputType = {
   referrals: number
   payments: number
+  mlmPayoutsReceived: number
+  mlmPayoutsSource: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   referrals?: boolean | UserCountOutputTypeCountReferralsArgs
   payments?: boolean | UserCountOutputTypeCountPaymentsArgs
+  mlmPayoutsReceived?: boolean | UserCountOutputTypeCountMlmPayoutsReceivedArgs
+  mlmPayoutsSource?: boolean | UserCountOutputTypeCountMlmPayoutsSourceArgs
 }
 
 /**
@@ -1423,6 +1946,20 @@ export type UserCountOutputTypeCountReferralsArgs<ExtArgs extends runtime.Types.
  */
 export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PaymentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMlmPayoutsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MlmPayoutWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMlmPayoutsSourceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MlmPayoutWhereInput
 }
 
 
@@ -1454,6 +1991,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   referrer?: boolean | Prisma.User$referrerArgs<ExtArgs>
   referrals?: boolean | Prisma.User$referralsArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  mlmPayoutsReceived?: boolean | Prisma.User$mlmPayoutsReceivedArgs<ExtArgs>
+  mlmPayoutsSource?: boolean | Prisma.User$mlmPayoutsSourceArgs<ExtArgs>
+  wallet?: boolean | Prisma.User$walletArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1545,6 +2085,9 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   referrer?: boolean | Prisma.User$referrerArgs<ExtArgs>
   referrals?: boolean | Prisma.User$referralsArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  mlmPayoutsReceived?: boolean | Prisma.User$mlmPayoutsReceivedArgs<ExtArgs>
+  mlmPayoutsSource?: boolean | Prisma.User$mlmPayoutsSourceArgs<ExtArgs>
+  wallet?: boolean | Prisma.User$walletArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1560,6 +2103,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     referrer: Prisma.$UserPayload<ExtArgs> | null
     referrals: Prisma.$UserPayload<ExtArgs>[]
     payments: Prisma.$PaymentPayload<ExtArgs>[]
+    mlmPayoutsReceived: Prisma.$MlmPayoutPayload<ExtArgs>[]
+    mlmPayoutsSource: Prisma.$MlmPayoutPayload<ExtArgs>[]
+    wallet: Prisma.$WalletPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1983,6 +2529,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   referrer<T extends Prisma.User$referrerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$referrerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   referrals<T extends Prisma.User$referralsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$referralsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mlmPayoutsReceived<T extends Prisma.User$mlmPayoutsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mlmPayoutsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MlmPayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mlmPayoutsSource<T extends Prisma.User$mlmPayoutsSourceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mlmPayoutsSourceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MlmPayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  wallet<T extends Prisma.User$walletArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$walletArgs<ExtArgs>>): Prisma.Prisma__WalletClient<runtime.Types.Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2496,6 +3045,73 @@ export type User$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * User.mlmPayoutsReceived
+ */
+export type User$mlmPayoutsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MlmPayout
+   */
+  select?: Prisma.MlmPayoutSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MlmPayout
+   */
+  omit?: Prisma.MlmPayoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MlmPayoutInclude<ExtArgs> | null
+  where?: Prisma.MlmPayoutWhereInput
+  orderBy?: Prisma.MlmPayoutOrderByWithRelationInput | Prisma.MlmPayoutOrderByWithRelationInput[]
+  cursor?: Prisma.MlmPayoutWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MlmPayoutScalarFieldEnum | Prisma.MlmPayoutScalarFieldEnum[]
+}
+
+/**
+ * User.mlmPayoutsSource
+ */
+export type User$mlmPayoutsSourceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MlmPayout
+   */
+  select?: Prisma.MlmPayoutSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MlmPayout
+   */
+  omit?: Prisma.MlmPayoutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MlmPayoutInclude<ExtArgs> | null
+  where?: Prisma.MlmPayoutWhereInput
+  orderBy?: Prisma.MlmPayoutOrderByWithRelationInput | Prisma.MlmPayoutOrderByWithRelationInput[]
+  cursor?: Prisma.MlmPayoutWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MlmPayoutScalarFieldEnum | Prisma.MlmPayoutScalarFieldEnum[]
+}
+
+/**
+ * User.wallet
+ */
+export type User$walletArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Wallet
+   */
+  select?: Prisma.WalletSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Wallet
+   */
+  omit?: Prisma.WalletOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WalletInclude<ExtArgs> | null
+  where?: Prisma.WalletWhereInput
 }
 
 /**

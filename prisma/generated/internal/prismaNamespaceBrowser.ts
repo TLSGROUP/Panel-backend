@@ -53,7 +53,11 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Payment: 'Payment',
-  Setting: 'Setting'
+  Setting: 'Setting',
+  MlmEngineSetting: 'MlmEngineSetting',
+  MlmPayout: 'MlmPayout',
+  Wallet: 'Wallet',
+  WalletTransaction: 'WalletTransaction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -131,12 +135,73 @@ export const SettingScalarFieldEnum = {
 export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
 
 
+export const MlmEngineSettingScalarFieldEnum = {
+  id: 'id',
+  moduleKey: 'moduleKey',
+  settings: 'settings',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MlmEngineSettingScalarFieldEnum = (typeof MlmEngineSettingScalarFieldEnum)[keyof typeof MlmEngineSettingScalarFieldEnum]
+
+
+export const MlmPayoutScalarFieldEnum = {
+  id: 'id',
+  paymentId: 'paymentId',
+  receiverId: 'receiverId',
+  sourceUserId: 'sourceUserId',
+  planId: 'planId',
+  level: 'level',
+  percent: 'percent',
+  amount: 'amount',
+  currency: 'currency',
+  moduleKey: 'moduleKey',
+  createdAt: 'createdAt'
+} as const
+
+export type MlmPayoutScalarFieldEnum = (typeof MlmPayoutScalarFieldEnum)[keyof typeof MlmPayoutScalarFieldEnum]
+
+
+export const WalletScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  balance: 'balance',
+  currency: 'currency',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WalletScalarFieldEnum = (typeof WalletScalarFieldEnum)[keyof typeof WalletScalarFieldEnum]
+
+
+export const WalletTransactionScalarFieldEnum = {
+  id: 'id',
+  walletId: 'walletId',
+  type: 'type',
+  amount: 'amount',
+  currency: 'currency',
+  payoutId: 'payoutId',
+  paymentId: 'paymentId',
+  createdAt: 'createdAt'
+} as const
+
+export type WalletTransactionScalarFieldEnum = (typeof WalletTransactionScalarFieldEnum)[keyof typeof WalletTransactionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: 'JsonNull'
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -153,4 +218,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull',
+  AnyNull: 'AnyNull'
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

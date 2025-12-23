@@ -52,3 +52,23 @@ export type Payment = Prisma.PaymentModel
  * 
  */
 export type Setting = Prisma.SettingModel
+/**
+ * Model MlmEngineSetting
+ * 
+ */
+export type MlmEngineSetting = Prisma.MlmEngineSettingModel
+/**
+ * Model MlmPayout
+ * 
+ */
+export type MlmPayout = Prisma.MlmPayoutModel
+/**
+ * Model Wallet
+ * 
+ */
+export type Wallet = Prisma.WalletModel
+/**
+ * Model WalletTransaction
+ * 
+ */
+export type WalletTransaction = Prisma.WalletTransactionModel

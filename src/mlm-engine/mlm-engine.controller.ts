@@ -1,0 +1,23 @@
+import { Body, Controller, Get, Post } from '@nestjs/common'
+import { Auth } from '@/auth/decorators/auth.decorator'
+import { MlmEngineService } from './mlm-engine.service'
+import type { MlmSettingValue } from './mlm-engine.types'
+
+@Controller('mlm-engine')
+export class MlmEngineController {
+	constructor(private readonly mlmEngineService: MlmEngineService) {}
+
+	@Auth('ADMIN')
+	@Get('modules')
+	getModules() {
+		return this.mlmEngineService.getAvailableModules()
+	}
+
+	@Auth('ADMIN')
+	@Post('modules/settings')
+	saveModuleSettings(
+		@Body() payload: { key: string; settings: Record<string, MlmSettingValue> }
+	) {
+		return this.mlmEngineService.saveModuleSettings(payload.key, payload.settings ?? {})
+	}
+}

@@ -10,6 +10,7 @@ import { PlansEventsService } from '@/plans/plans-events.service'
 import { CreatePayPalOrderDto } from './dto/create-paypal-order.dto'
 import { CapturePayPalOrderDto } from './dto/capture-paypal-order.dto'
 import { CancelPayPalOrderDto } from './dto/cancel-paypal-order.dto'
+import { ConfirmStripePaymentDto } from './dto/confirm-stripe-payment.dto'
 
 @Controller('payments')
 export class PaymentsController {
@@ -81,6 +82,16 @@ export class PaymentsController {
 		@Body() dto: CancelPayPalOrderDto
 	) {
 		return this.paymentsService.cancelPayPalOrder(userId, dto.orderId)
+	}
+
+	@Auth()
+	@UsePipes(new ValidationPipe())
+	@Post('stripe/confirm')
+	async confirmStripePayment(
+		@CurrentUser('id') userId: string,
+		@Body() dto: ConfirmStripePaymentDto
+	) {
+		return this.paymentsService.confirmStripePayment(userId, dto.paymentId)
 	}
 
 	@Auth()

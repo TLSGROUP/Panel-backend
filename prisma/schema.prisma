@@ -29,6 +29,9 @@ model User {
   referrer   User? @relation("UserReferrals", fields: [referrerId], references: [id])
   referrals  User[] @relation("UserReferrals")
   payments Payment[]
+  mlmPayoutsReceived MlmPayout[] @relation("MlmPayoutReceiver")
+  mlmPayoutsSource MlmPayout[] @relation("MlmPayoutSource")
+  wallet Wallet?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -55,6 +58,7 @@ model Payment {
   provider PaymentProvider @default(STRIPE)
   stripePaymentIntentId String? @unique @map("stripe_payment_intent_id")
   paypalOrderId String? @unique @map("paypal_order_id")
+  mlmPayouts MlmPayout[]
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -68,6 +72,65 @@ value String
 
 createdAt DateTime @default(now())
 updatedAt DateTime @updatedAt
+}
+
+model MlmEngineSetting {
+  id        String   @id @default(cuid())
+  moduleKey String   @unique @map("module_key")
+  settings  Json
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("mlm_engine_settings")
+}
+
+model MlmPayout {
+  id           String   @id @default(cuid())
+  paymentId    String   @map("payment_id")
+  payment      Payment  @relation(fields: [paymentId], references: [id])
+  receiverId   String   @map("receiver_id")
+  receiver     User     @relation("MlmPayoutReceiver", fields: [receiverId], references: [id])
+  sourceUserId String   @map("source_user_id")
+  sourceUser   User     @relation("MlmPayoutSource", fields: [sourceUserId], references: [id])
+  planId       String   @map("plan_id")
+  level        Int
+  percent      Float
+  amount       Int
+  currency     String
+  moduleKey    String   @default("unilevel") @map("module_key")
+  createdAt    DateTime @default(now()) @map("created_at")
+  walletTransaction WalletTransaction?
+
+  @@unique([paymentId, receiverId, level], name: "payment_receiver_level")
+  @@map("mlm_payouts")
+}
+
+model Wallet {
+  id        String  @id @default(cuid())
+  userId    String  @unique @map("user_id")
+  user      User    @relation(fields: [userId], references: [id])
+  balance   Int     @default(0)
+  currency  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  transactions WalletTransaction[]
+
+  @@map("wallets")
+}
+
+model WalletTransaction {
+  id        String   @id @default(cuid())
+  walletId  String   @map("wallet_id")
+  wallet    Wallet   @relation(fields: [walletId], references: [id])
+  type      WalletTransactionType
+  amount    Int
+  currency  String
+  payoutId  String?  @unique @map("payout_id")
+  payout    MlmPayout? @relation(fields: [payoutId], references: [id])
+  paymentId String?  @map("payment_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("wallet_transactions")
 }
 
 enum Role {
@@ -86,4 +149,9 @@ enum PaymentStatus {
 enum PaymentProvider {
   STRIPE
   PAYPAL
+}
+
+enum WalletTransactionType {
+  CREDIT
+  DEBIT
 }

@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException } from '@
 import { SettingsService } from '@/settings/settings.service'
 import { PrismaService } from '@/prisma.service'
 import Stripe from 'stripe'
+import { MlmEngineService } from '@/mlm-engine/mlm-engine.service'
 
 const SETTINGS_KEYS = {
 	STRIPE_SECRET_KEY: 'stripe.secret_key',
@@ -25,46 +26,12 @@ type PlanCatalogItem = {
 	color?: string
 }
 
-const DEFAULT_PLANS: PlanCatalogItem[] = [
-	{
-		id: 'bronze',
-		name: 'Bronze',
-		amount: 1900,
-		currency: 'EUR',
-		description: 'Ideal for freelancers and mini teams.',
-		features: ['1 project', 'Basic analytics', 'Email support']
-	},
-	{
-		id: 'silver',
-		name: 'Silver',
-		amount: 4900,
-		currency: 'EUR',
-		description: 'For teams that grow steadily.',
-		features: ['5 projects', 'Advanced analytics', 'Priority support']
-	},
-	{
-		id: 'gold',
-		name: 'Gold',
-		amount: 9900,
-		currency: 'EUR',
-		description: 'Optimized for agencies and startups.',
-		features: ['Unlimited projects', 'Automation tools', 'Account manager']
-	},
-	{
-		id: 'brilliant',
-		name: 'Brilliant',
-		amount: 19900,
-		currency: 'EUR',
-		description: 'Complete toolkit for enterprises.',
-		features: ['All Pro features', '99.9% SLA', 'Custom onboarding']
-	}
-]
-
 @Injectable()
 export class PaymentsService {
 	constructor(
 		private readonly settingsService: SettingsService,
-		private readonly prisma: PrismaService
+		private readonly prisma: PrismaService,
+		private readonly mlmEngineService: MlmEngineService
 	) {}
 
 	async getPlans(): Promise<PlanCatalogItem[]> {
@@ -74,20 +41,21 @@ export class PaymentsService {
 			this.settingsService.getSettingValue(SETTINGS_KEYS.PLAN_COLORS)
 		])
 
-		let plans = DEFAULT_PLANS
+		let plans: PlanCatalogItem[] = []
 		try {
 			if (catalogSetting) {
 				const parsed = JSON.parse(catalogSetting) as PlanCatalogItem[]
-				if (Array.isArray(parsed) && parsed.length > 0) {
+				if (Array.isArray(parsed)) {
 					plans = parsed
 				}
 			}
 		} catch {
-			plans = DEFAULT_PLANS
+			plans = []
 		}
 
-		const normalizedCurrency =
-			currencySetting?.trim() || plans[0]?.currency || 'EUR'
+		if (plans.length === 0) return []
+
+		const normalizedCurrency = currencySetting?.trim() || plans[0]?.currency || 'EUR'
 
 		let colorMap: Record<string, string> = {}
 		try {
@@ -354,19 +322,7 @@ export class PaymentsService {
 			data: { status: 'SUCCEEDED' }
 		})
 
-		const plan = (await this.getPlans()).find((item) => item.id === payment.planId)
-		if (plan) {
-			await this.prisma.user.update({
-				where: { id: userId },
-				data: {
-					activePlanId: plan.id,
-					activePlanName: plan.name,
-					activePlanPrice: plan.amount,
-					activePlanCurrency: plan.currency,
-					activePlanPurchasedAt: new Date()
-				}
-			})
-		}
+		await this.handleSuccessfulPayment(payment)
 
 		return { status: 'SUCCEEDED' }
 	}
@@ -457,15 +413,19 @@ export class PaymentsService {
 			return
 		}
 
+		const payment = await this.prisma.payment.update({
+			where: { id: paymentId },
+			data: { status: 'SUCCEEDED' }
+		})
+
+		await this.handleSuccessfulPayment(payment)
+	}
+
+	private async applyPlanToUser(userId: string, planId: string) {
 		const plan = (await this.getPlans()).find((item) => item.id === planId)
 		if (!plan) {
 			return
 		}
-
-		await this.prisma.payment.update({
-			where: { id: paymentId },
-			data: { status: 'SUCCEEDED' }
-		})
 
 		await this.prisma.user.update({
 			where: { id: userId },
@@ -477,6 +437,58 @@ export class PaymentsService {
 				activePlanPurchasedAt: new Date()
 			}
 		})
+	}
+
+	private async handleSuccessfulPayment(payment: {
+		id: string
+		userId: string
+		planId: string
+		amount: number
+		currency: string
+	}) {
+		await this.applyPlanToUser(payment.userId, payment.planId)
+		await this.mlmEngineService.createUnilevelPayouts({
+			paymentId: payment.id,
+			buyerId: payment.userId,
+			amount: payment.amount,
+			currency: payment.currency
+		})
+	}
+
+	async confirmStripePayment(userId: string, paymentId: string) {
+		const payment = await this.prisma.payment.findUnique({
+			where: { id: paymentId }
+		})
+
+		if (!payment || payment.userId !== userId) {
+			throw new BadRequestException('Payment not found')
+		}
+
+		if (!payment.stripePaymentIntentId) {
+			throw new BadRequestException('Stripe payment intent missing')
+		}
+
+		if (payment.status === 'SUCCEEDED') {
+			return { status: payment.status }
+		}
+
+		const stripe = await this.getStripeClient()
+		const intent = await stripe.paymentIntents.retrieve(
+			payment.stripePaymentIntentId
+		)
+
+		if (intent.status !== 'succeeded') {
+			return { status: intent.status }
+		}
+
+		await this.prisma.payment.update({
+			where: { id: payment.id },
+			data: { status: 'SUCCEEDED' }
+		})
+
+		await this.handleSuccessfulPayment(payment)
+
+		return { status: 'SUCCEEDED' }
 	}
 
 	async cancelPayment(userId: string, paymentId: string) {

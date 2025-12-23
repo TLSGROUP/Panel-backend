@@ -8,6 +8,8 @@ import { StatisticsModule } from './statistics/statistics.module'
 import { SettingsModule } from './settings/settings.module'
 import { MediaModule } from './media/media.module'
 import { PaymentsModule } from './payments/payments.module'
+import { MlmEngineModule } from './mlm-engine/mlm-engine.module'
+import { WalletModule } from './wallet/wallet.module'
 
 @Module({
 	imports: [
@@ -24,7 +26,9 @@ import { PaymentsModule } from './payments/payments.module'
 		StatisticsModule,
 		SettingsModule,
 		MediaModule,
-		PaymentsModule
+		PaymentsModule,
+		MlmEngineModule,
+		WalletModule
 	]
 })
 export class AppModule {}
