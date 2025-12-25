@@ -301,6 +301,23 @@ export type FloatWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
 }
 
+export type EnumBinaryLegNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.BinaryLeg | Prisma.EnumBinaryLegFieldRefInput<$PrismaModel> | null
+  in?: $Enums.BinaryLeg[] | Prisma.ListEnumBinaryLegFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.BinaryLeg[] | Prisma.ListEnumBinaryLegFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumBinaryLegNullableFilter<$PrismaModel> | $Enums.BinaryLeg | null
+}
+
+export type EnumBinaryLegNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BinaryLeg | Prisma.EnumBinaryLegFieldRefInput<$PrismaModel> | null
+  in?: $Enums.BinaryLeg[] | Prisma.ListEnumBinaryLegFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.BinaryLeg[] | Prisma.ListEnumBinaryLegFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumBinaryLegNullableWithAggregatesFilter<$PrismaModel> | $Enums.BinaryLeg | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBinaryLegNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBinaryLegNullableFilter<$PrismaModel>
+}
+
 export type EnumWalletTransactionTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.WalletTransactionType | Prisma.EnumWalletTransactionTypeFieldRefInput<$PrismaModel>
   in?: $Enums.WalletTransactionType[] | Prisma.ListEnumWalletTransactionTypeFieldRefInput<$PrismaModel>
@@ -578,6 +595,23 @@ export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedFloatFilter<$PrismaModel>
   _min?: Prisma.NestedFloatFilter<$PrismaModel>
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
+}
+
+export type NestedEnumBinaryLegNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.BinaryLeg | Prisma.EnumBinaryLegFieldRefInput<$PrismaModel> | null
+  in?: $Enums.BinaryLeg[] | Prisma.ListEnumBinaryLegFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.BinaryLeg[] | Prisma.ListEnumBinaryLegFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumBinaryLegNullableFilter<$PrismaModel> | $Enums.BinaryLeg | null
+}
+
+export type NestedEnumBinaryLegNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BinaryLeg | Prisma.EnumBinaryLegFieldRefInput<$PrismaModel> | null
+  in?: $Enums.BinaryLeg[] | Prisma.ListEnumBinaryLegFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.BinaryLeg[] | Prisma.ListEnumBinaryLegFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumBinaryLegNullableWithAggregatesFilter<$PrismaModel> | $Enums.BinaryLeg | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBinaryLegNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBinaryLegNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumWalletTransactionTypeFilter<$PrismaModel = never> = {

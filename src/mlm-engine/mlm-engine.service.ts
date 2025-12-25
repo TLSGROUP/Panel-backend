@@ -299,4 +299,51 @@ export class MlmEngineService {
 			})
 		}
 	}
+
+	async recordBinaryVolume(params: { buyerId: string; binaryVolume: number }) {
+		const enabled = new Set(await this.getEnabledKeys())
+		if (!enabled.has('binary')) return
+		if (!params.binaryVolume || params.binaryVolume <= 0) return
+
+		await this.prisma.$transaction(async (tx) => {
+			await tx.mlmBinaryNode.upsert({
+				where: { userId: params.buyerId },
+				update: {},
+				create: {
+					userId: params.buyerId,
+					parentUserId: null,
+					leg: null
+				}
+			})
+
+			const buyerNode = await tx.mlmBinaryNode.findUnique({
+				where: { userId: params.buyerId },
+				select: { parentUserId: true, leg: true }
+			})
+
+			if (!buyerNode?.parentUserId || !buyerNode.leg) return
+
+			let currentParentId: string | null = buyerNode.parentUserId
+			let currentLeg: 'LEFT' | 'RIGHT' | null = buyerNode.leg
+
+			while (currentParentId && currentLeg) {
+				await tx.mlmBinaryNode.update({
+					where: { userId: currentParentId },
+					data:
+						currentLeg === 'LEFT'
+							? { leftBvTotal: { increment: params.binaryVolume } }
+							: { rightBvTotal: { increment: params.binaryVolume } }
+				})
+
+				const parentNode = await tx.mlmBinaryNode.findUnique({
+					where: { userId: currentParentId },
+					select: { parentUserId: true, leg: true }
+				})
+
+				if (!parentNode?.parentUserId || !parentNode.leg) break
+				currentLeg = parentNode.leg
+				currentParentId = parentNode.parentUserId
+			}
+		})
+	}
 }

@@ -56,6 +56,7 @@ export const ModelName = {
   Setting: 'Setting',
   MlmEngineSetting: 'MlmEngineSetting',
   MlmPayout: 'MlmPayout',
+  MlmBinaryNode: 'MlmBinaryNode',
   Wallet: 'Wallet',
   WalletTransaction: 'WalletTransaction'
 } as const
@@ -161,6 +162,22 @@ export const MlmPayoutScalarFieldEnum = {
 } as const
 
 export type MlmPayoutScalarFieldEnum = (typeof MlmPayoutScalarFieldEnum)[keyof typeof MlmPayoutScalarFieldEnum]
+
+
+export const MlmBinaryNodeScalarFieldEnum = {
+  userId: 'userId',
+  parentUserId: 'parentUserId',
+  leg: 'leg',
+  leftCount: 'leftCount',
+  rightCount: 'rightCount',
+  leftBvTotal: 'leftBvTotal',
+  rightBvTotal: 'rightBvTotal',
+  lastAssignLeg: 'lastAssignLeg',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MlmBinaryNodeScalarFieldEnum = (typeof MlmBinaryNodeScalarFieldEnum)[keyof typeof MlmBinaryNodeScalarFieldEnum]
 
 
 export const WalletScalarFieldEnum = {

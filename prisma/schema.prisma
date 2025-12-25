@@ -32,6 +32,7 @@ model User {
   mlmPayoutsReceived MlmPayout[] @relation("MlmPayoutReceiver")
   mlmPayoutsSource MlmPayout[] @relation("MlmPayoutSource")
   wallet Wallet?
+  binaryNode MlmBinaryNode?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -105,6 +106,29 @@ model MlmPayout {
   @@map("mlm_payouts")
 }
 
+model MlmBinaryNode {
+  userId       String   @id @map("user_id")
+  user         User     @relation(fields: [userId], references: [id])
+
+  parentUserId String?  @map("parent_user_id")
+  parent       MlmBinaryNode? @relation("BinaryParent", fields: [parentUserId], references: [userId])
+  children     MlmBinaryNode[] @relation("BinaryParent")
+
+  leg          BinaryLeg? @map("leg")
+  leftCount    Int @default(0) @map("left_count")
+  rightCount   Int @default(0) @map("right_count")
+  leftBvTotal  Int @default(0) @map("left_bv_total")
+  rightBvTotal Int @default(0) @map("right_bv_total")
+  lastAssignLeg BinaryLeg? @map("last_assign_leg")
+
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@unique([parentUserId, leg], name: "binary_parent_leg_unique")
+  @@index([parentUserId])
+  @@map("mlm_binary_nodes")
+}
+
 model Wallet {
   id        String  @id @default(cuid())
   userId    String  @unique @map("user_id")
@@ -137,6 +161,11 @@ enum Role {
   USER
   MANAGER
   ADMIN
+}
+
+enum BinaryLeg {
+  LEFT
+  RIGHT
 }
 
 enum PaymentStatus {

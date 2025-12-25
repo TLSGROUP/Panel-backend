@@ -15,7 +15,13 @@ export const BinaryModule: MlmModuleDefinition = {
 		weeklyBinaryCap: 5000,
 		maxPercentFromOneLegForRank: 40,
 		trackPersonalVsSpillover: true,
-		minPersonalShareInWeakLeg: 30
+		minPersonalShareInWeakLeg: 30,
+		placementMode: 'auto_weak',
+		spilloverMode: 'weak_leg_bfs',
+		alternateMode: 'by_referrer',
+		weakMetric: 'count',
+		tieBreaker: 'hash',
+		maxBfsVisited: 50000
 	},
 	schema: [
 		{
@@ -80,6 +86,62 @@ export const BinaryModule: MlmModuleDefinition = {
 			required: true,
 			min: 0,
 			max: 100
+		},
+		{
+			key: 'placementMode',
+			label: 'Placement mode',
+			type: 'select',
+			options: [
+				{ label: 'Auto weak', value: 'auto_weak' },
+				{ label: 'Alternate', value: 'alternate' },
+				{ label: 'Strict left', value: 'strict_left' },
+				{ label: 'Strict right', value: 'strict_right' }
+			]
+		},
+		{
+			key: 'spilloverMode',
+			label: 'Spillover mode',
+			type: 'select',
+			options: [
+				{ label: 'BFS (level-by-level)', value: 'bfs' },
+				{ label: 'Weak leg first', value: 'weak_leg_bfs' }
+			]
+		},
+		{
+			key: 'alternateMode',
+			label: 'Alternate mode',
+			type: 'select',
+			options: [
+				{ label: 'By sponsor history', value: 'by_referrer' },
+				{ label: 'Stable automatic', value: 'by_hash' }
+			]
+		},
+		{
+			key: 'weakMetric',
+			label: 'Weak metric',
+			type: 'select',
+			options: [
+				{ label: 'Count', value: 'count' },
+				{ label: 'BV (Business Volume)', value: 'bv' }
+			]
+		},
+		{
+			key: 'tieBreaker',
+			label: 'Tie breaker',
+			type: 'select',
+			options: [
+				{ label: 'Left', value: 'left' },
+				{ label: 'Right', value: 'right' },
+				{ label: 'Stable automatic', value: 'hash' }
+			]
+		},
+		{
+			key: 'maxBfsVisited',
+			label: 'Max BFS visited',
+			type: 'number',
+			required: true,
+			min: 100,
+			max: 500000
 		},
 		{
 			key: 'trackPersonalVsSpillover',

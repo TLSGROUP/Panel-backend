@@ -389,6 +389,7 @@ export const ModelName = {
   Setting: 'Setting',
   MlmEngineSetting: 'MlmEngineSetting',
   MlmPayout: 'MlmPayout',
+  MlmBinaryNode: 'MlmBinaryNode',
   Wallet: 'Wallet',
   WalletTransaction: 'WalletTransaction'
 } as const
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "payment" | "setting" | "mlmEngineSetting" | "mlmPayout" | "wallet" | "walletTransaction"
+    modelProps: "user" | "payment" | "setting" | "mlmEngineSetting" | "mlmPayout" | "mlmBinaryNode" | "wallet" | "walletTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -780,6 +781,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MlmBinaryNode: {
+      payload: Prisma.$MlmBinaryNodePayload<ExtArgs>
+      fields: Prisma.MlmBinaryNodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MlmBinaryNodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MlmBinaryNodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MlmBinaryNodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MlmBinaryNodePayload>
+        }
+        findFirst: {
+          args: Prisma.MlmBinaryNodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MlmBinaryNodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MlmBinaryNodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MlmBinaryNodePayload>
+        }
+        findMany: {
+          args: Prisma.MlmBinaryNodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MlmBinaryNodePayload>[]
+        }
+        create: {
+          args: Prisma.MlmBinaryNodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MlmBinaryNodePayload>
+        }
+        createMany: {
+          args: Prisma.MlmBinaryNodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MlmBinaryNodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MlmBinaryNodePayload>[]
+        }
+        delete: {
+          args: Prisma.MlmBinaryNodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MlmBinaryNodePayload>
+        }
+        update: {
+          args: Prisma.MlmBinaryNodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MlmBinaryNodePayload>
+        }
+        deleteMany: {
+          args: Prisma.MlmBinaryNodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MlmBinaryNodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MlmBinaryNodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MlmBinaryNodePayload>[]
+        }
+        upsert: {
+          args: Prisma.MlmBinaryNodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MlmBinaryNodePayload>
+        }
+        aggregate: {
+          args: Prisma.MlmBinaryNodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMlmBinaryNode>
+        }
+        groupBy: {
+          args: Prisma.MlmBinaryNodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MlmBinaryNodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MlmBinaryNodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MlmBinaryNodeCountAggregateOutputType> | number
+        }
+      }
+    }
     Wallet: {
       payload: Prisma.$WalletPayload<ExtArgs>
       fields: Prisma.WalletFieldRefs
@@ -1054,6 +1129,22 @@ export const MlmPayoutScalarFieldEnum = {
 export type MlmPayoutScalarFieldEnum = (typeof MlmPayoutScalarFieldEnum)[keyof typeof MlmPayoutScalarFieldEnum]
 
 
+export const MlmBinaryNodeScalarFieldEnum = {
+  userId: 'userId',
+  parentUserId: 'parentUserId',
+  leg: 'leg',
+  leftCount: 'leftCount',
+  rightCount: 'rightCount',
+  leftBvTotal: 'leftBvTotal',
+  rightBvTotal: 'rightBvTotal',
+  lastAssignLeg: 'lastAssignLeg',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MlmBinaryNodeScalarFieldEnum = (typeof MlmBinaryNodeScalarFieldEnum)[keyof typeof MlmBinaryNodeScalarFieldEnum]
+
+
 export const WalletScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1239,6 +1330,20 @@ export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMode
 
 
 /**
+ * Reference to a field of type 'BinaryLeg'
+ */
+export type EnumBinaryLegFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BinaryLeg'>
+    
+
+
+/**
+ * Reference to a field of type 'BinaryLeg[]'
+ */
+export type ListEnumBinaryLegFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BinaryLeg[]'>
+    
+
+
+/**
  * Reference to a field of type 'WalletTransactionType'
  */
 export type EnumWalletTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WalletTransactionType'>
@@ -1351,6 +1456,7 @@ export type GlobalOmitConfig = {
   setting?: Prisma.SettingOmit
   mlmEngineSetting?: Prisma.MlmEngineSettingOmit
   mlmPayout?: Prisma.MlmPayoutOmit
+  mlmBinaryNode?: Prisma.MlmBinaryNodeOmit
   wallet?: Prisma.WalletOmit
   walletTransaction?: Prisma.WalletTransactionOmit
 }

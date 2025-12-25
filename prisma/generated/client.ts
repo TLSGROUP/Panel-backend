@@ -63,6 +63,11 @@ export type MlmEngineSetting = Prisma.MlmEngineSettingModel
  */
 export type MlmPayout = Prisma.MlmPayoutModel
 /**
+ * Model MlmBinaryNode
+ * 
+ */
+export type MlmBinaryNode = Prisma.MlmBinaryNodeModel
+/**
  * Model Wallet
  * 
  */

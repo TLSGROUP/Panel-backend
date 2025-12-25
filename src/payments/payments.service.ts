@@ -453,6 +453,10 @@ export class PaymentsService {
 			amount: payment.amount,
 			currency: payment.currency
 		})
+		await this.mlmEngineService.recordBinaryVolume({
+			buyerId: payment.userId,
+			binaryVolume: payment.amount
+		})
 	}
 
 	async confirmStripePayment(userId: string, paymentId: string) {

@@ -18,6 +18,14 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const BinaryLeg = {
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT'
+} as const
+
+export type BinaryLeg = (typeof BinaryLeg)[keyof typeof BinaryLeg]
+
+
 export const PaymentStatus = {
   PENDING: 'PENDING',
   SUCCEEDED: 'SUCCEEDED',

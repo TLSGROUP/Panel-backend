@@ -370,6 +370,7 @@ export type UserWhereInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutListRelationFilter
   mlmPayoutsSource?: Prisma.MlmPayoutListRelationFilter
   wallet?: Prisma.XOR<Prisma.WalletNullableScalarRelationFilter, Prisma.WalletWhereInput> | null
+  binaryNode?: Prisma.XOR<Prisma.MlmBinaryNodeNullableScalarRelationFilter, Prisma.MlmBinaryNodeWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -403,6 +404,7 @@ export type UserOrderByWithRelationInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutOrderByRelationAggregateInput
   mlmPayoutsSource?: Prisma.MlmPayoutOrderByRelationAggregateInput
   wallet?: Prisma.WalletOrderByWithRelationInput
+  binaryNode?: Prisma.MlmBinaryNodeOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -439,6 +441,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   mlmPayoutsReceived?: Prisma.MlmPayoutListRelationFilter
   mlmPayoutsSource?: Prisma.MlmPayoutListRelationFilter
   wallet?: Prisma.XOR<Prisma.WalletNullableScalarRelationFilter, Prisma.WalletWhereInput> | null
+  binaryNode?: Prisma.XOR<Prisma.MlmBinaryNodeNullableScalarRelationFilter, Prisma.MlmBinaryNodeWhereInput> | null
 }, "id" | "email" | "referralCode">
 
 export type UserOrderByWithAggregationInput = {
@@ -533,6 +536,7 @@ export type UserCreateInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
   mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
   wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -565,6 +569,7 @@ export type UserUncheckedCreateInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
   wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -597,6 +602,7 @@ export type UserUpdateInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
   wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -629,6 +635,7 @@ export type UserUncheckedUpdateInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
   wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -959,6 +966,20 @@ export type UserUpdateOneRequiredWithoutMlmPayoutsSourceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMlmPayoutsSourceInput, Prisma.UserUpdateWithoutMlmPayoutsSourceInput>, Prisma.UserUncheckedUpdateWithoutMlmPayoutsSourceInput>
 }
 
+export type UserCreateNestedOneWithoutBinaryNodeInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBinaryNodeInput, Prisma.UserUncheckedCreateWithoutBinaryNodeInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBinaryNodeInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutBinaryNodeNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBinaryNodeInput, Prisma.UserUncheckedCreateWithoutBinaryNodeInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBinaryNodeInput
+  upsert?: Prisma.UserUpsertWithoutBinaryNodeInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBinaryNodeInput, Prisma.UserUpdateWithoutBinaryNodeInput>, Prisma.UserUncheckedUpdateWithoutBinaryNodeInput>
+}
+
 export type UserCreateNestedOneWithoutWalletInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutWalletInput, Prisma.UserUncheckedCreateWithoutWalletInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutWalletInput
@@ -1002,6 +1023,7 @@ export type UserCreateWithoutReferralsInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
   mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
   wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferralsInput = {
@@ -1033,6 +1055,7 @@ export type UserUncheckedCreateWithoutReferralsInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
   wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferralsInput = {
@@ -1069,6 +1092,7 @@ export type UserCreateWithoutReferrerInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
   mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
   wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferrerInput = {
@@ -1100,6 +1124,7 @@ export type UserUncheckedCreateWithoutReferrerInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
   wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferrerInput = {
@@ -1152,6 +1177,7 @@ export type UserUpdateWithoutReferralsInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
   wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferralsInput = {
@@ -1183,6 +1209,7 @@ export type UserUncheckedUpdateWithoutReferralsInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
   wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutReferrerInput = {
@@ -1260,6 +1287,7 @@ export type UserCreateWithoutPaymentsInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
   mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
   wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -1291,6 +1319,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
   wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -1338,6 +1367,7 @@ export type UserUpdateWithoutPaymentsInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
   wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -1369,6 +1399,7 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
   wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMlmPayoutsReceivedInput = {
@@ -1400,6 +1431,7 @@ export type UserCreateWithoutMlmPayoutsReceivedInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
   wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMlmPayoutsReceivedInput = {
@@ -1431,6 +1463,7 @@ export type UserUncheckedCreateWithoutMlmPayoutsReceivedInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
   wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMlmPayoutsReceivedInput = {
@@ -1467,6 +1500,7 @@ export type UserCreateWithoutMlmPayoutsSourceInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
   wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMlmPayoutsSourceInput = {
@@ -1498,6 +1532,7 @@ export type UserUncheckedCreateWithoutMlmPayoutsSourceInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
   wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMlmPayoutsSourceInput = {
@@ -1545,6 +1580,7 @@ export type UserUpdateWithoutMlmPayoutsReceivedInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
   wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMlmPayoutsReceivedInput = {
@@ -1576,6 +1612,7 @@ export type UserUncheckedUpdateWithoutMlmPayoutsReceivedInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
   wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutMlmPayoutsSourceInput = {
@@ -1618,6 +1655,7 @@ export type UserUpdateWithoutMlmPayoutsSourceInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
   wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMlmPayoutsSourceInput = {
@@ -1648,6 +1686,151 @@ export type UserUncheckedUpdateWithoutMlmPayoutsSourceInput = {
   referrals?: Prisma.UserUncheckedUpdateManyWithoutReferrerNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
+  wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutBinaryNodeInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrer?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutBinaryNodeInput = {
+  id?: string
+  email?: string | null
+  name?: string | null
+  lastName?: string | null
+  password?: string | null
+  avatarPath?: string | null
+  country?: string | null
+  phone?: string | null
+  city?: string | null
+  activePlanId?: string | null
+  activePlanName?: string | null
+  activePlanPrice?: number | null
+  activePlanCurrency?: string | null
+  activePlanPurchasedAt?: Date | string | null
+  referralCode?: string | null
+  referralLink?: string | null
+  referrerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  verificationToken?: string | null
+  passwordResetCode?: string | null
+  passwordResetExpires?: Date | string | null
+  rights?: Prisma.UserCreaterightsInput | $Enums.Role[]
+  language?: string
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferrerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
+  wallet?: Prisma.WalletUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutBinaryNodeInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBinaryNodeInput, Prisma.UserUncheckedCreateWithoutBinaryNodeInput>
+}
+
+export type UserUpsertWithoutBinaryNodeInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBinaryNodeInput, Prisma.UserUncheckedUpdateWithoutBinaryNodeInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBinaryNodeInput, Prisma.UserUncheckedCreateWithoutBinaryNodeInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutBinaryNodeInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBinaryNodeInput, Prisma.UserUncheckedUpdateWithoutBinaryNodeInput>
+}
+
+export type UserUpdateWithoutBinaryNodeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrer?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
+  wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBinaryNodeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  activePlanCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rights?: Prisma.UserUpdaterightsInput | $Enums.Role[]
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferrerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
+  mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
   wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -1680,6 +1863,7 @@ export type UserCreateWithoutWalletInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   mlmPayoutsReceived?: Prisma.MlmPayoutCreateNestedManyWithoutReceiverInput
   mlmPayoutsSource?: Prisma.MlmPayoutCreateNestedManyWithoutSourceUserInput
+  binaryNode?: Prisma.MlmBinaryNodeCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWalletInput = {
@@ -1711,6 +1895,7 @@ export type UserUncheckedCreateWithoutWalletInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutReceiverInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedCreateNestedManyWithoutSourceUserInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWalletInput = {
@@ -1758,6 +1943,7 @@ export type UserUpdateWithoutWalletInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWalletInput = {
@@ -1789,6 +1975,7 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyReferrerInput = {
@@ -1846,6 +2033,7 @@ export type UserUpdateWithoutReferrerInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUpdateManyWithoutReceiverNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUpdateManyWithoutSourceUserNestedInput
   wallet?: Prisma.WalletUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferrerInput = {
@@ -1877,6 +2065,7 @@ export type UserUncheckedUpdateWithoutReferrerInput = {
   mlmPayoutsReceived?: Prisma.MlmPayoutUncheckedUpdateManyWithoutReceiverNestedInput
   mlmPayoutsSource?: Prisma.MlmPayoutUncheckedUpdateManyWithoutSourceUserNestedInput
   wallet?: Prisma.WalletUncheckedUpdateOneWithoutUserNestedInput
+  binaryNode?: Prisma.MlmBinaryNodeUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutReferrerInput = {
@@ -1994,6 +2183,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   mlmPayoutsReceived?: boolean | Prisma.User$mlmPayoutsReceivedArgs<ExtArgs>
   mlmPayoutsSource?: boolean | Prisma.User$mlmPayoutsSourceArgs<ExtArgs>
   wallet?: boolean | Prisma.User$walletArgs<ExtArgs>
+  binaryNode?: boolean | Prisma.User$binaryNodeArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2088,6 +2278,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   mlmPayoutsReceived?: boolean | Prisma.User$mlmPayoutsReceivedArgs<ExtArgs>
   mlmPayoutsSource?: boolean | Prisma.User$mlmPayoutsSourceArgs<ExtArgs>
   wallet?: boolean | Prisma.User$walletArgs<ExtArgs>
+  binaryNode?: boolean | Prisma.User$binaryNodeArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2106,6 +2297,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     mlmPayoutsReceived: Prisma.$MlmPayoutPayload<ExtArgs>[]
     mlmPayoutsSource: Prisma.$MlmPayoutPayload<ExtArgs>[]
     wallet: Prisma.$WalletPayload<ExtArgs> | null
+    binaryNode: Prisma.$MlmBinaryNodePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2532,6 +2724,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   mlmPayoutsReceived<T extends Prisma.User$mlmPayoutsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mlmPayoutsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MlmPayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   mlmPayoutsSource<T extends Prisma.User$mlmPayoutsSourceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mlmPayoutsSourceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MlmPayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   wallet<T extends Prisma.User$walletArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$walletArgs<ExtArgs>>): Prisma.Prisma__WalletClient<runtime.Types.Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  binaryNode<T extends Prisma.User$binaryNodeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$binaryNodeArgs<ExtArgs>>): Prisma.Prisma__MlmBinaryNodeClient<runtime.Types.Result.GetResult<Prisma.$MlmBinaryNodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3112,6 +3305,25 @@ export type User$walletArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.WalletInclude<ExtArgs> | null
   where?: Prisma.WalletWhereInput
+}
+
+/**
+ * User.binaryNode
+ */
+export type User$binaryNodeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MlmBinaryNode
+   */
+  select?: Prisma.MlmBinaryNodeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MlmBinaryNode
+   */
+  omit?: Prisma.MlmBinaryNodeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MlmBinaryNodeInclude<ExtArgs> | null
+  where?: Prisma.MlmBinaryNodeWhereInput
 }
 
 /**
