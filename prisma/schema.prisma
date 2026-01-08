@@ -28,6 +28,9 @@ model User {
   referrerId String? @map("referrer_id")
   referrer   User? @relation("UserReferrals", fields: [referrerId], references: [id])
   referrals  User[] @relation("UserReferrals")
+  payoutCreditCard String? @map("payout_credit_card")
+  payoutPaypal String? @map("payout_paypal")
+  payoutUsdt String? @map("payout_usdt")
   payments Payment[]
   mlmPayoutsReceived MlmPayout[] @relation("MlmPayoutReceiver")
   mlmPayoutsSource MlmPayout[] @relation("MlmPayoutSource")

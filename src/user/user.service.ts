@@ -140,6 +140,112 @@ export class UserService {
 		}
 	}
 
+	async getBinaryPartners(userId: string, query: GetReferralsDto) {
+		const page = Math.max(Number(query.page) || 1, 1)
+		const limit = Math.min(Math.max(Number(query.limit) || 10, 1), 100)
+		const skip = (page - 1) * limit
+
+		const userWhere: Prisma.UserWhereInput = {}
+
+		const search = query.search?.trim()
+		if (search) {
+			const contains = () => ({
+				contains: search,
+				mode: Prisma.QueryMode.insensitive
+			})
+
+			userWhere.OR = [
+				{ id: contains() },
+				{ name: contains() },
+				{ lastName: contains() },
+				{ email: contains() },
+				{ phone: contains() },
+				{ country: contains() },
+				{ city: contains() }
+			]
+		}
+
+		const createdAtFilter: Prisma.DateTimeFilter = {}
+		const fromDate = this._parseDate(query.from_date)
+		if (fromDate) {
+			createdAtFilter.gte = fromDate
+		}
+
+		const toDate = this._parseDate(query.to_date, true)
+		if (toDate) {
+			createdAtFilter.lte = toDate
+		}
+
+		if (Object.keys(createdAtFilter).length > 0) {
+			userWhere.createdAt = createdAtFilter
+		}
+
+		const where: Prisma.MlmBinaryNodeWhereInput = {
+			parentUserId: userId,
+			user: userWhere
+		}
+
+		const allowedSortFields: (keyof Prisma.UserOrderByWithRelationInput)[] = [
+			'id',
+			'name',
+			'lastName',
+			'email',
+			'phone',
+			'country',
+			'city',
+			'createdAt'
+		]
+		const sortField = allowedSortFields.includes(
+			query.sort_by as keyof Prisma.UserOrderByWithRelationInput
+		)
+			? (query.sort_by as keyof Prisma.UserOrderByWithRelationInput)
+			: 'createdAt'
+		const sortOrder = query.sort_order === 'asc' ? 'asc' : 'desc'
+
+		const orderBy: Prisma.MlmBinaryNodeOrderByWithRelationInput = {
+			user: {
+				[sortField]: sortOrder
+			}
+		}
+
+		const [items, totalItems] = await this.prisma.$transaction([
+			this.prisma.mlmBinaryNode.findMany({
+				where,
+				skip,
+				take: limit,
+				orderBy,
+				select: {
+					user: {
+						select: {
+							id: true,
+							name: true,
+							lastName: true,
+							email: true,
+							phone: true,
+							country: true,
+							city: true,
+							createdAt: true
+						}
+					}
+				}
+			}),
+			this.prisma.mlmBinaryNode.count({ where })
+		])
+
+		const data = items.map((item) => item.user)
+
+		return {
+			success: true,
+			data,
+			pagination: {
+				page,
+				limit,
+				total_pages: Math.max(1, Math.ceil(totalItems / limit)),
+				total_items: totalItems
+			}
+		}
+	}
+
 	async getById(id: string) {
 		const user = await this.prisma.user.findUnique({
 			where: {

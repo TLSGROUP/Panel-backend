@@ -17,12 +17,17 @@ export class WalletController {
 	@Get('transactions')
 	async getTransactions(
 		@CurrentUser('id') userId: string,
-		@Query('limit') limit?: string
+		@Query('limit') limit?: string,
+		@Query('page') page?: string
 	) {
 		const parsedLimit = limit ? Number.parseInt(limit, 10) : 20
 		const safeLimit = Number.isNaN(parsedLimit)
 			? 20
 			: Math.min(Math.max(parsedLimit, 1), 100)
-		return this.walletService.getRecentTransactions(userId, safeLimit)
+		const parsedPage = page ? Number.parseInt(page, 10) : 1
+		const safePage = Number.isNaN(parsedPage)
+			? 1
+			: Math.max(parsedPage, 1)
+		return this.walletService.getRecentTransactions(userId, safeLimit, safePage)
 	}
 }

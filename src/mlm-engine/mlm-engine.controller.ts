@@ -13,6 +13,12 @@ export class MlmEngineController {
 		return this.mlmEngineService.getAvailableModules()
 	}
 
+	@Auth()
+	@Get('enabled')
+	getEnabledModules() {
+		return this.mlmEngineService.getEnabledModuleKeys()
+	}
+
 	@Auth('ADMIN')
 	@Post('modules/settings')
 	saveModuleSettings(

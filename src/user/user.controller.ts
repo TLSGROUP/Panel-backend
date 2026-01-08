@@ -88,6 +88,15 @@ export class UserController {
 		return this.userService.getUserReferrals(userId, query)
 	}
 
+	@Auth()
+	@Get('binary-partners')
+	async getBinaryPartners(
+		@CurrentUser('id') userId: string,
+		@Query() query: GetReferralsDto
+	) {
+		return this.userService.getBinaryPartners(userId, query)
+	}
+
 	@Auth([Role.ADMIN, Role.MANAGER])
 	@Get('manager')
 	async getManagerContent() {

@@ -23,15 +23,29 @@ export class WalletService {
 		}
 	}
 
-	async getRecentTransactions(userId: string, limit = 20) {
+	async getRecentTransactions(userId: string, limit = 20, page = 1) {
 		const wallet = await this.prisma.wallet.findUnique({
 			where: { userId }
 		})
-		if (!wallet) return []
+		if (!wallet) {
+			return {
+				items: [],
+				total: 0,
+				page,
+				limit
+			}
+		}
 
+		const safePage = Number.isFinite(page) && page > 0 ? page : 1
+		const skip = (safePage - 1) * limit
+
+		const total = await this.prisma.walletTransaction.count({
+			where: { walletId: wallet.id }
+		})
 		const items = await this.prisma.walletTransaction.findMany({
 			where: { walletId: wallet.id },
 			orderBy: { createdAt: 'desc' },
+			skip,
 			take: limit,
 			select: {
 				id: true,
@@ -58,21 +72,26 @@ export class WalletService {
 			}
 		})
 
-		return items.map((item) => ({
-			id: item.id,
-			type: item.type,
-			amount: item.amount,
-			currency: item.currency,
-			createdAt: item.createdAt,
-			paymentId: item.paymentId,
-			payout: item.payout
-				? {
-						level: item.payout.level,
-						percent: item.payout.percent,
-						planId: item.payout.planId,
-						sourceUser: item.payout.sourceUser
-					}
-				: null
-		}))
+		return {
+			items: items.map((item) => ({
+				id: item.id,
+				type: item.type,
+				amount: item.amount,
+				currency: item.currency,
+				createdAt: item.createdAt,
+				paymentId: item.paymentId,
+				payout: item.payout
+					? {
+							level: item.payout.level,
+							percent: item.payout.percent,
+							planId: item.payout.planId,
+							sourceUser: item.payout.sourceUser
+						}
+					: null
+			})),
+			total,
+			page: safePage,
+			limit
+		}
 	}
 }

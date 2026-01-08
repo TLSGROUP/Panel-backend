@@ -52,6 +52,9 @@ export type UserMinAggregateOutputType = {
   referralCode: string | null
   referralLink: string | null
   referrerId: string | null
+  payoutCreditCard: string | null
+  payoutPaypal: string | null
+  payoutUsdt: string | null
   createdAt: Date | null
   updatedAt: Date | null
   verificationToken: string | null
@@ -78,6 +81,9 @@ export type UserMaxAggregateOutputType = {
   referralCode: string | null
   referralLink: string | null
   referrerId: string | null
+  payoutCreditCard: string | null
+  payoutPaypal: string | null
+  payoutUsdt: string | null
   createdAt: Date | null
   updatedAt: Date | null
   verificationToken: string | null
@@ -104,6 +110,9 @@ export type UserCountAggregateOutputType = {
   referralCode: number
   referralLink: number
   referrerId: number
+  payoutCreditCard: number
+  payoutPaypal: number
+  payoutUsdt: number
   createdAt: number
   updatedAt: number
   verificationToken: number
@@ -141,6 +150,9 @@ export type UserMinAggregateInputType = {
   referralCode?: true
   referralLink?: true
   referrerId?: true
+  payoutCreditCard?: true
+  payoutPaypal?: true
+  payoutUsdt?: true
   createdAt?: true
   updatedAt?: true
   verificationToken?: true
@@ -167,6 +179,9 @@ export type UserMaxAggregateInputType = {
   referralCode?: true
   referralLink?: true
   referrerId?: true
+  payoutCreditCard?: true
+  payoutPaypal?: true
+  payoutUsdt?: true
   createdAt?: true
   updatedAt?: true
   verificationToken?: true
@@ -193,6 +208,9 @@ export type UserCountAggregateInputType = {
   referralCode?: true
   referralLink?: true
   referrerId?: true
+  payoutCreditCard?: true
+  payoutPaypal?: true
+  payoutUsdt?: true
   createdAt?: true
   updatedAt?: true
   verificationToken?: true
@@ -307,6 +325,9 @@ export type UserGroupByOutputType = {
   referralCode: string | null
   referralLink: string | null
   referrerId: string | null
+  payoutCreditCard: string | null
+  payoutPaypal: string | null
+  payoutUsdt: string | null
   createdAt: Date
   updatedAt: Date
   verificationToken: string | null
@@ -357,6 +378,9 @@ export type UserWhereInput = {
   referralCode?: Prisma.StringNullableFilter<"User"> | string | null
   referralLink?: Prisma.StringNullableFilter<"User"> | string | null
   referrerId?: Prisma.StringNullableFilter<"User"> | string | null
+  payoutCreditCard?: Prisma.StringNullableFilter<"User"> | string | null
+  payoutPaypal?: Prisma.StringNullableFilter<"User"> | string | null
+  payoutUsdt?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
@@ -391,6 +415,9 @@ export type UserOrderByWithRelationInput = {
   referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
   referralLink?: Prisma.SortOrderInput | Prisma.SortOrder
   referrerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutCreditCard?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutPaypal?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutUsdt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -428,6 +455,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   activePlanPurchasedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   referralLink?: Prisma.StringNullableFilter<"User"> | string | null
   referrerId?: Prisma.StringNullableFilter<"User"> | string | null
+  payoutCreditCard?: Prisma.StringNullableFilter<"User"> | string | null
+  payoutPaypal?: Prisma.StringNullableFilter<"User"> | string | null
+  payoutUsdt?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
@@ -462,6 +492,9 @@ export type UserOrderByWithAggregationInput = {
   referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
   referralLink?: Prisma.SortOrderInput | Prisma.SortOrder
   referrerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutCreditCard?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutPaypal?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutUsdt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -497,6 +530,9 @@ export type UserScalarWhereWithAggregatesInput = {
   referralCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   referralLink?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   referrerId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  payoutCreditCard?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  payoutPaypal?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  payoutUsdt?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -523,6 +559,9 @@ export type UserCreateInput = {
   activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -557,6 +596,9 @@ export type UserUncheckedCreateInput = {
   referralCode?: string | null
   referralLink?: string | null
   referrerId?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -589,6 +631,9 @@ export type UserUpdateInput = {
   activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -623,6 +668,9 @@ export type UserUncheckedUpdateInput = {
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -656,6 +704,9 @@ export type UserCreateManyInput = {
   referralCode?: string | null
   referralLink?: string | null
   referrerId?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -682,6 +733,9 @@ export type UserUpdateManyMutationInput = {
   activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -709,6 +763,9 @@ export type UserUncheckedUpdateManyInput = {
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -759,6 +816,9 @@ export type UserCountOrderByAggregateInput = {
   referralCode?: Prisma.SortOrder
   referralLink?: Prisma.SortOrder
   referrerId?: Prisma.SortOrder
+  payoutCreditCard?: Prisma.SortOrder
+  payoutPaypal?: Prisma.SortOrder
+  payoutUsdt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
@@ -790,6 +850,9 @@ export type UserMaxOrderByAggregateInput = {
   referralCode?: Prisma.SortOrder
   referralLink?: Prisma.SortOrder
   referrerId?: Prisma.SortOrder
+  payoutCreditCard?: Prisma.SortOrder
+  payoutPaypal?: Prisma.SortOrder
+  payoutUsdt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
@@ -816,6 +879,9 @@ export type UserMinOrderByAggregateInput = {
   referralCode?: Prisma.SortOrder
   referralLink?: Prisma.SortOrder
   referrerId?: Prisma.SortOrder
+  payoutCreditCard?: Prisma.SortOrder
+  payoutPaypal?: Prisma.SortOrder
+  payoutUsdt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
@@ -1011,6 +1077,9 @@ export type UserCreateWithoutReferralsInput = {
   activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1044,6 +1113,9 @@ export type UserUncheckedCreateWithoutReferralsInput = {
   referralCode?: string | null
   referralLink?: string | null
   referrerId?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1080,6 +1152,9 @@ export type UserCreateWithoutReferrerInput = {
   activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1112,6 +1187,9 @@ export type UserUncheckedCreateWithoutReferrerInput = {
   activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1165,6 +1243,9 @@ export type UserUpdateWithoutReferralsInput = {
   activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1198,6 +1279,9 @@ export type UserUncheckedUpdateWithoutReferralsInput = {
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1249,6 +1333,9 @@ export type UserScalarWhereInput = {
   referralCode?: Prisma.StringNullableFilter<"User"> | string | null
   referralLink?: Prisma.StringNullableFilter<"User"> | string | null
   referrerId?: Prisma.StringNullableFilter<"User"> | string | null
+  payoutCreditCard?: Prisma.StringNullableFilter<"User"> | string | null
+  payoutPaypal?: Prisma.StringNullableFilter<"User"> | string | null
+  payoutUsdt?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
@@ -1275,6 +1362,9 @@ export type UserCreateWithoutPaymentsInput = {
   activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1308,6 +1398,9 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   referralCode?: string | null
   referralLink?: string | null
   referrerId?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1355,6 +1448,9 @@ export type UserUpdateWithoutPaymentsInput = {
   activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1388,6 +1484,9 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1419,6 +1518,9 @@ export type UserCreateWithoutMlmPayoutsReceivedInput = {
   activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1452,6 +1554,9 @@ export type UserUncheckedCreateWithoutMlmPayoutsReceivedInput = {
   referralCode?: string | null
   referralLink?: string | null
   referrerId?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1488,6 +1593,9 @@ export type UserCreateWithoutMlmPayoutsSourceInput = {
   activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1521,6 +1629,9 @@ export type UserUncheckedCreateWithoutMlmPayoutsSourceInput = {
   referralCode?: string | null
   referralLink?: string | null
   referrerId?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1568,6 +1679,9 @@ export type UserUpdateWithoutMlmPayoutsReceivedInput = {
   activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1601,6 +1715,9 @@ export type UserUncheckedUpdateWithoutMlmPayoutsReceivedInput = {
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1643,6 +1760,9 @@ export type UserUpdateWithoutMlmPayoutsSourceInput = {
   activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1676,6 +1796,9 @@ export type UserUncheckedUpdateWithoutMlmPayoutsSourceInput = {
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1707,6 +1830,9 @@ export type UserCreateWithoutBinaryNodeInput = {
   activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1740,6 +1866,9 @@ export type UserUncheckedCreateWithoutBinaryNodeInput = {
   referralCode?: string | null
   referralLink?: string | null
   referrerId?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1787,6 +1916,9 @@ export type UserUpdateWithoutBinaryNodeInput = {
   activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1820,6 +1952,9 @@ export type UserUncheckedUpdateWithoutBinaryNodeInput = {
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1851,6 +1986,9 @@ export type UserCreateWithoutWalletInput = {
   activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1884,6 +2022,9 @@ export type UserUncheckedCreateWithoutWalletInput = {
   referralCode?: string | null
   referralLink?: string | null
   referrerId?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -1931,6 +2072,9 @@ export type UserUpdateWithoutWalletInput = {
   activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1964,6 +2108,9 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referrerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1995,6 +2142,9 @@ export type UserCreateManyReferrerInput = {
   activePlanPurchasedAt?: Date | string | null
   referralCode?: string | null
   referralLink?: string | null
+  payoutCreditCard?: string | null
+  payoutPaypal?: string | null
+  payoutUsdt?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   verificationToken?: string | null
@@ -2021,6 +2171,9 @@ export type UserUpdateWithoutReferrerInput = {
   activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2053,6 +2206,9 @@ export type UserUncheckedUpdateWithoutReferrerInput = {
   activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2085,6 +2241,9 @@ export type UserUncheckedUpdateManyWithoutReferrerInput = {
   activePlanPurchasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutCreditCard?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutPaypal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutUsdt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2170,6 +2329,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   referralCode?: boolean
   referralLink?: boolean
   referrerId?: boolean
+  payoutCreditCard?: boolean
+  payoutPaypal?: boolean
+  payoutUsdt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -2205,6 +2367,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   referralCode?: boolean
   referralLink?: boolean
   referrerId?: boolean
+  payoutCreditCard?: boolean
+  payoutPaypal?: boolean
+  payoutUsdt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -2233,6 +2398,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   referralCode?: boolean
   referralLink?: boolean
   referrerId?: boolean
+  payoutCreditCard?: boolean
+  payoutPaypal?: boolean
+  payoutUsdt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -2261,6 +2429,9 @@ export type UserSelectScalar = {
   referralCode?: boolean
   referralLink?: boolean
   referrerId?: boolean
+  payoutCreditCard?: boolean
+  payoutPaypal?: boolean
+  payoutUsdt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   verificationToken?: boolean
@@ -2270,7 +2441,7 @@ export type UserSelectScalar = {
   language?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "lastName" | "password" | "avatarPath" | "country" | "phone" | "city" | "activePlanId" | "activePlanName" | "activePlanPrice" | "activePlanCurrency" | "activePlanPurchasedAt" | "referralCode" | "referralLink" | "referrerId" | "createdAt" | "updatedAt" | "verificationToken" | "passwordResetCode" | "passwordResetExpires" | "rights" | "language", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "lastName" | "password" | "avatarPath" | "country" | "phone" | "city" | "activePlanId" | "activePlanName" | "activePlanPrice" | "activePlanCurrency" | "activePlanPurchasedAt" | "referralCode" | "referralLink" | "referrerId" | "payoutCreditCard" | "payoutPaypal" | "payoutUsdt" | "createdAt" | "updatedAt" | "verificationToken" | "passwordResetCode" | "passwordResetExpires" | "rights" | "language", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   referrer?: boolean | Prisma.User$referrerArgs<ExtArgs>
   referrals?: boolean | Prisma.User$referralsArgs<ExtArgs>
@@ -2317,6 +2488,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     referralCode: string | null
     referralLink: string | null
     referrerId: string | null
+    payoutCreditCard: string | null
+    payoutPaypal: string | null
+    payoutUsdt: string | null
     createdAt: Date
     updatedAt: Date
     verificationToken: string | null
@@ -2771,6 +2945,9 @@ export interface UserFieldRefs {
   readonly referralCode: Prisma.FieldRef<"User", 'String'>
   readonly referralLink: Prisma.FieldRef<"User", 'String'>
   readonly referrerId: Prisma.FieldRef<"User", 'String'>
+  readonly payoutCreditCard: Prisma.FieldRef<"User", 'String'>
+  readonly payoutPaypal: Prisma.FieldRef<"User", 'String'>
+  readonly payoutUsdt: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly verificationToken: Prisma.FieldRef<"User", 'String'>

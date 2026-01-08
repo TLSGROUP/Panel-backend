@@ -24,4 +24,16 @@ export class UpdateProfileDto {
 	@IsOptional()
 	@IsString()
 	avatarPath?: string
+
+	@IsOptional()
+	@IsString()
+	payoutCreditCard?: string
+
+	@IsOptional()
+	@IsString()
+	payoutPaypal?: string
+
+	@IsOptional()
+	@IsString()
+	payoutUsdt?: string
 }

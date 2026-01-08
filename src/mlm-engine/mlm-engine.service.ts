@@ -28,6 +28,10 @@ export class MlmEngineService {
 			.filter(Boolean)
 	}
 
+	async getEnabledModuleKeys(): Promise<string[]> {
+		return this.getEnabledKeys()
+	}
+
 	private async getModuleSettings(module: MlmModuleDefinition) {
 		const persisted = await this.prisma.mlmEngineSetting.findUnique({
 			where: { moduleKey: module.key }
