@@ -5,7 +5,7 @@ import {
 	PipeTransform,
 } from '@nestjs/common'
 
-const allowedFolders = ['default', 'users']
+const allowedFolders = ['default', 'users', 'withdrawals']
 
 @Injectable()
 export class FolderValidationPipe implements PipeTransform {

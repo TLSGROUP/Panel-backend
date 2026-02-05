@@ -23,6 +23,7 @@ import { AdminUserDto, UpdateAdminUserDto } from './dto/admin-user.dto'
 import { GetReferralsDto } from './dto/get-referrals.dto'
 import * as geoipLite from 'geoip-lite'
 import { BinaryModule } from '@/mlm-engine/modules/binary.module'
+import { randomUUID } from 'crypto'
 
 @Injectable()
 export class UserService {
@@ -272,21 +273,40 @@ export class UserService {
 			:{}
 		const skip = args?.skip ? Number(args.skip) : undefined
 		const take = args?.take ? Number(args.take) : undefined
+		const createdAtFilter: Prisma.DateTimeFilter = {}
+		const fromDate = this._parseDate(args?.from_date)
+		if (fromDate) {
+			createdAtFilter.gte = fromDate
+		}
+
+		const toDate = this._parseDate(args?.to_date, true)
+		if (toDate) {
+			createdAtFilter.lte = toDate
+		}
+
+		const where: Prisma.UserWhereInput = {
+			...SearchTermQuery
+		}
+
+		if (Object.keys(createdAtFilter).length > 0) {
+			where.createdAt = createdAtFilter
+		}
 
 		const users = await this.prisma.user.findMany({
 			skip,
 			take,
-			where: SearchTermQuery,
+			where,
 	    })
 		const totalCount = await this.prisma.user.count({
-			where: SearchTermQuery,
+			where,
 		})
 		
 		const isHasMore = isHasMorePagination(totalCount, skip, take)
 		return {
 			items:
 			users,
-			isHasMore
+			isHasMore,
+			totalCount
 		}
 	}
 
@@ -352,6 +372,12 @@ export class UserService {
 
 	async createByAdmin(dto: AdminUserDto) {
 		const password = dto.password ? await hash(dto.password) : null
+		const verificationToken =
+			dto.isVerified === true
+				? null
+				: dto.isVerified === false
+					? randomUUID()
+					: undefined
 		return this._createUserWithGeneratedId(
 			{
 				email: dto.email,
@@ -363,7 +389,8 @@ export class UserService {
 				avatarPath: dto.avatarPath,
 				country: dto.country,
 				language: normalizeLanguage(dto.language),
-				rights: dto.rights ?? [Role.USER]
+				rights: dto.rights ?? [Role.USER],
+				verificationToken
 			},
 			dto.name || dto.email,
 			undefined
@@ -399,7 +426,7 @@ export class UserService {
 	async updateByAdmin(id: string, dto: UpdateAdminUserDto) {
 		const previousUser = await this.prisma.user.findUnique({
 			where: { id },
-			select: { avatarPath: true }
+			select: { avatarPath: true, verificationToken: true }
 		})
 
 		const data: Prisma.UserUpdateInput = {
@@ -418,6 +445,12 @@ export class UserService {
 			data.password = await hash(dto.password)
 		}
 
+		if (dto.isVerified === true) {
+			data.verificationToken = null
+		} else if (dto.isVerified === false) {
+			data.verificationToken = previousUser?.verificationToken ?? randomUUID()
+		}
+
 		const updatedUser = await this.prisma.user.update({
 			where: { id },
 			data
@@ -429,21 +462,53 @@ export class UserService {
 	}
 
 	async delete(id: string) {
-		return this.prisma.user.delete({
-			where: {
-				id
+		return this.prisma.user.update({
+			where: { id },
+			data: {
+				name: 'Technical',
+				lastName: 'Account',
+				email: `technical+${id}@account.com`,
+				phone: null,
+				country: null,
+				city: null,
+				avatarPath: null,
+				payoutCreditCard: null,
+				payoutPaypal: null,
+				payoutUsdt: null
 			}
 		})
 	}
 
 	private getSearchTermFilter(searchTerm: string): Prisma.UserWhereInput {
+		const orFilters: Prisma.UserWhereInput[] = [
+			{ name: { contains: searchTerm, mode: 'insensitive' } },
+			{ lastName: { contains: searchTerm, mode: 'insensitive' } },
+			{ email: { contains: searchTerm, mode: 'insensitive' } },
+			{ phone: { contains: searchTerm, mode: 'insensitive' } },
+			{ country: { contains: searchTerm, mode: 'insensitive' } },
+			{ city: { contains: searchTerm, mode: 'insensitive' } }
+		]
+
+		const normalizedRole = searchTerm.trim().toUpperCase()
+		const roleAliases: Record<string, Role> = {
+			ADMIN: Role.ADMIN,
+			ADMINISTRATOR: Role.ADMIN,
+			MANAGER: Role.MANAGER,
+			MGR: Role.MANAGER,
+			USER: Role.USER,
+			MEMBER: Role.USER
+		}
+		const role = roleAliases[normalizedRole]
+		if (role) {
+			orFilters.push({
+				rights: {
+					has: role
+				}
+			})
+		}
+
 		return {
-			OR: [
-				{ name: { contains: searchTerm, mode: 'insensitive' } },
-				{ lastName: { contains: searchTerm, mode: 'insensitive' } },
-				{ email: { contains: searchTerm, mode: 'insensitive' } },
-				{ phone: { contains: searchTerm, mode: 'insensitive' } }
-			]
+			OR: orFilters
 		}
 	}
 

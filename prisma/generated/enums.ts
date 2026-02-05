@@ -50,3 +50,21 @@ export const WalletTransactionType = {
 } as const
 
 export type WalletTransactionType = (typeof WalletTransactionType)[keyof typeof WalletTransactionType]
+
+
+export const WithdrawalStatus = {
+  PENDING: 'PENDING',
+  REJECTED: 'REJECTED',
+  PAID: 'PAID'
+} as const
+
+export type WithdrawalStatus = (typeof WithdrawalStatus)[keyof typeof WithdrawalStatus]
+
+
+export const WithdrawalMethod = {
+  CREDIT_CARD: 'CREDIT_CARD',
+  PAYPAL: 'PAYPAL',
+  USDT_TRC20: 'USDT_TRC20'
+} as const
+
+export type WithdrawalMethod = (typeof WithdrawalMethod)[keyof typeof WithdrawalMethod]

@@ -7,6 +7,7 @@ const allowedMimeTypes = [
 	'application/zip',
 	'text/plain',
 	'image/svg+xml',
+	'application/pdf',
 ]
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5 МБ для всех файлов кроме zip

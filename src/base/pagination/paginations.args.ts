@@ -14,4 +14,12 @@ export class PaginationArgsWithSearchTerm extends PaginationArgs {
    @IsString()
    @IsOptional()
    searchTerm?: string
+
+   @IsString()
+   @IsOptional()
+   from_date?: string
+
+   @IsString()
+   @IsOptional()
+   to_date?: string
 }

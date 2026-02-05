@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import * as dayjs from 'dayjs'
 import { PrismaService } from 'src/prisma.service'
+import { WalletTransactionType } from 'prisma/generated/enums'
 
 @Injectable()
 export class StatisticsService {
@@ -160,5 +161,135 @@ export class StatisticsService {
 			country: item.country,
 			count: item._count.country,
 		}))
+	}
+
+	private isBinaryEnabled() {
+		const envValue = process.env.MLM_ENABLED || ''
+		return envValue
+			.split(',')
+			.map((item) => item.trim())
+			.includes('binary')
+	}
+
+	async getDashboardSummary(userId: string) {
+		const now = new Date()
+		const since30 = new Date(now)
+		since30.setDate(now.getDate() - 30)
+		const since7 = new Date(now)
+		since7.setDate(now.getDate() - 7)
+		const since60 = new Date(now)
+		since60.setDate(now.getDate() - 60)
+
+		const isBinary = this.isBinaryEnabled()
+		const [wallet, totalPartners, newPartners, prevPartners, newPartners7] =
+			await Promise.all([
+				this.prisma.wallet.findUnique({
+					where: { userId },
+					select: { id: true, currency: true }
+				}),
+				isBinary
+					? this.prisma.mlmBinaryNode.count({
+							where: { parentUserId: userId }
+						})
+					: this.prisma.user.count({ where: { referrerId: userId } }),
+				isBinary
+					? this.prisma.mlmBinaryNode.count({
+							where: {
+								parentUserId: userId,
+								user: { createdAt: { gte: since30 } }
+							}
+						})
+					: this.prisma.user.count({
+							where: { referrerId: userId, createdAt: { gte: since30 } }
+						}),
+				isBinary
+					? this.prisma.mlmBinaryNode.count({
+							where: {
+								parentUserId: userId,
+								user: { createdAt: { gte: since60, lt: since30 } }
+							}
+						})
+					: this.prisma.user.count({
+							where: {
+								referrerId: userId,
+								createdAt: { gte: since60, lt: since30 }
+							}
+						}),
+				isBinary
+					? this.prisma.mlmBinaryNode.count({
+							where: {
+								parentUserId: userId,
+								user: { createdAt: { gte: since7 } }
+							}
+						})
+					: this.prisma.user.count({
+							where: { referrerId: userId, createdAt: { gte: since7 } }
+						})
+			])
+
+		const activePartners = isBinary
+			? await this.prisma.mlmBinaryNode.count({
+					where: {
+						parentUserId: userId,
+						user: { activePlanId: { not: null } }
+					}
+				})
+			: await this.prisma.user.count({
+					where: { referrerId: userId, activePlanId: { not: null } }
+				})
+
+		const [creditTotal, debitTotal] = wallet
+			? await Promise.all([
+					this.prisma.walletTransaction.aggregate({
+						where: {
+							walletId: wallet.id,
+							type: WalletTransactionType.CREDIT
+						},
+						_sum: { amount: true }
+					}),
+					this.prisma.walletTransaction.aggregate({
+						where: {
+							walletId: wallet.id,
+							type: WalletTransactionType.DEBIT
+						},
+						_sum: { amount: true }
+					})
+				])
+			: [
+					{ _sum: { amount: 0 } },
+					{ _sum: { amount: 0 } }
+				]
+
+		const totalRevenue = creditTotal._sum.amount ?? 0
+		const totalPayouts = debitTotal._sum.amount ?? 0
+		const netRevenue = totalRevenue - totalPayouts
+
+		const growthRate =
+			prevPartners === 0
+				? newPartners > 0
+					? 100
+					: 0
+				: ((newPartners - prevPartners) / prevPartners) * 100
+
+		const conversionRate =
+			totalPartners === 0 ? 0 : (activePartners / totalPartners) * 100
+		const avgRevenuePerPartner =
+			totalPartners === 0 ? 0 : totalRevenue / totalPartners
+		const payoutRatio = totalRevenue === 0 ? 0 : (totalPayouts / totalRevenue) * 100
+
+		return {
+			totalRevenue: totalRevenue / 100,
+			netRevenue: netRevenue / 100,
+			currency: wallet?.currency ?? 'USD',
+			newPartners,
+			totalPartners,
+			growthRate,
+			activePartners,
+			conversionRate,
+			avgRevenuePerPartner: avgRevenuePerPartner / 100,
+			topLineGrowth7d: newPartners7,
+			topLineGrowth30d: newPartners,
+			payoutRatio
+		}
 	}
 }

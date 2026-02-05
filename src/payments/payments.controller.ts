@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Headers, HttpCode, Post, Req, Sse, UsePipes, ValidationPipe } from '@nestjs/common'
+import {
+	Body,
+	Controller,
+	Get,
+	Headers,
+	HttpCode,
+	Post,
+	Query,
+	Req,
+	Sse,
+	UsePipes,
+	ValidationPipe
+} from '@nestjs/common'
 import { Auth } from '@/auth/decorators/auth.decorator'
 import { CurrentUser } from '@/auth/decorators/user.decorator'
 import type { Request } from 'express'
@@ -11,6 +23,7 @@ import { CreatePayPalOrderDto } from './dto/create-paypal-order.dto'
 import { CapturePayPalOrderDto } from './dto/capture-paypal-order.dto'
 import { CancelPayPalOrderDto } from './dto/cancel-paypal-order.dto'
 import { ConfirmStripePaymentDto } from './dto/confirm-stripe-payment.dto'
+import { GetBillingHistoryDto } from './dto/get-billing-history.dto'
 
 @Controller('payments')
 export class PaymentsController {
@@ -23,6 +36,15 @@ export class PaymentsController {
 	@Get('plans')
 	getPlans() {
 		return this.paymentsService.getPlans()
+	}
+
+	@Auth()
+	@Get('history')
+	async getBillingHistory(
+		@CurrentUser('id') userId: string,
+		@Query() query: GetBillingHistoryDto
+	) {
+		return this.paymentsService.getBillingHistory(userId, query)
 	}
 
 	@Auth()

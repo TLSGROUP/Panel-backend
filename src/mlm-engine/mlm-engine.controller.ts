@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post } from '@nestjs/common'
 import { Auth } from '@/auth/decorators/auth.decorator'
 import { MlmEngineService } from './mlm-engine.service'
 import type { MlmSettingValue } from './mlm-engine.types'
@@ -17,6 +17,12 @@ export class MlmEngineController {
 	@Get('enabled')
 	getEnabledModules() {
 		return this.mlmEngineService.getEnabledModuleKeys()
+	}
+
+	@Auth()
+	@Get('modules/:key')
+	getModuleSettings(@Param('key') key: string) {
+		return this.mlmEngineService.getModuleSettingsByKey(key)
 	}
 
 	@Auth('ADMIN')

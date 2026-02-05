@@ -10,6 +10,7 @@ import { MediaModule } from './media/media.module'
 import { PaymentsModule } from './payments/payments.module'
 import { MlmEngineModule } from './mlm-engine/mlm-engine.module'
 import { WalletModule } from './wallet/wallet.module'
+import { WithdrawalsModule } from './withdrawals/withdrawals.module'
 
 @Module({
 	imports: [
@@ -28,7 +29,8 @@ import { WalletModule } from './wallet/wallet.module'
 		MediaModule,
 		PaymentsModule,
 		MlmEngineModule,
-		WalletModule
+		WalletModule,
+		WithdrawalsModule
 	]
 })
 export class AppModule {}

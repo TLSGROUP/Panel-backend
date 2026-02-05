@@ -1,5 +1,5 @@
 import { SUPPORTED_LANGUAGES } from '@/language/language.constants'
-import { IsArray, IsEmail, IsIn, IsOptional, IsString, MinLength } from 'class-validator'
+import { IsArray, IsBoolean, IsEmail, IsIn, IsOptional, IsString, MinLength } from 'class-validator'
 import { Role } from 'prisma/generated/enums'
 import { PartialType } from '@nestjs/mapped-types'
 
@@ -44,6 +44,10 @@ export class AdminUserDto {
 	@IsOptional()
 	@IsIn(SUPPORTED_LANGUAGES)
 	language?: string
+
+	@IsOptional()
+	@IsBoolean()
+	isVerified?: boolean
 }
 
 export class UpdateAdminUserDto extends PartialType(AdminUserDto) {}

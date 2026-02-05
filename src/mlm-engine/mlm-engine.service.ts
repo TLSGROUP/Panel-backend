@@ -32,6 +32,20 @@ export class MlmEngineService {
 		return this.getEnabledKeys()
 	}
 
+	async getModuleSettingsByKey(key: string) {
+		const moduleMap = this.getModuleMap()
+		const module = moduleMap.get(key)
+		if (!module) {
+			throw new BadRequestException('Unknown module')
+		}
+		const settings = await this.getModuleSettings(module)
+		return {
+			key: module.key,
+			label: module.label,
+			settings
+		}
+	}
+
 	private async getModuleSettings(module: MlmModuleDefinition) {
 		const persisted = await this.prisma.mlmEngineSetting.findUnique({
 			where: { moduleKey: module.key }

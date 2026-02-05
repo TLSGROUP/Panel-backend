@@ -9,6 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/WithdrawalRequest'
 export type * from './models/Payment'
 export type * from './models/Setting'
 export type * from './models/MlmEngineSetting'

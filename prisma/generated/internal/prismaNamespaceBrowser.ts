@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  WithdrawalRequest: 'WithdrawalRequest',
   Payment: 'Payment',
   Setting: 'Setting',
   MlmEngineSetting: 'MlmEngineSetting',
@@ -108,6 +109,26 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const WithdrawalRequestScalarFieldEnum = {
+  id: 'id',
+  sequence: 'sequence',
+  requestId: 'requestId',
+  userId: 'userId',
+  amount: 'amount',
+  currency: 'currency',
+  method: 'method',
+  details: 'details',
+  status: 'status',
+  txHash: 'txHash',
+  receiptUrl: 'receiptUrl',
+  rejectReason: 'rejectReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WithdrawalRequestScalarFieldEnum = (typeof WithdrawalRequestScalarFieldEnum)[keyof typeof WithdrawalRequestScalarFieldEnum]
 
 
 export const PaymentScalarFieldEnum = {

@@ -3,6 +3,9 @@ import { SettingsService } from '@/settings/settings.service'
 import { PrismaService } from '@/prisma.service'
 import Stripe from 'stripe'
 import { MlmEngineService } from '@/mlm-engine/mlm-engine.service'
+import { Prisma } from 'prisma/generated/client'
+import { PaymentProvider, PaymentStatus } from 'prisma/generated/enums'
+import { GetBillingHistoryDto } from './dto/get-billing-history.dto'
 
 const SETTINGS_KEYS = {
 	STRIPE_SECRET_KEY: 'stripe.secret_key',
@@ -24,6 +27,17 @@ type PlanCatalogItem = {
 	description?: string
 	features?: string[]
 	color?: string
+}
+
+type BillingHistoryItem = {
+	id: string
+	type: 'Payment' | 'Payout'
+	amount: number
+	currency: string
+	plan: string
+	status: string
+	source: string
+	createdAt: Date
 }
 
 @Injectable()
@@ -74,6 +88,210 @@ export class PaymentsService {
 			currency: normalizedCurrency,
 			color: colorMap[plan.id]
 		}))
+	}
+
+	private formatPaymentStatus(status: PaymentStatus) {
+		if (status === 'SUCCEEDED') return 'PAID'
+		return status
+	}
+
+	private parseDate(value?: string | null, endOfDay = false) {
+		if (!value) return null
+		const iso = `${value}T${endOfDay ? '23:59:59.999' : '00:00:00.000'}`
+		const parsed = new Date(iso)
+		return Number.isNaN(parsed.getTime()) ? null : parsed
+	}
+
+	async getBillingHistory(userId: string, params: GetBillingHistoryDto) {
+		const page = Math.max(Number(params.page) || 1, 1)
+		const limit = Math.min(Math.max(Number(params.limit) || 10, 1), 100)
+		const take = page * limit
+		const search = params.search?.trim()
+		const fromDate = this.parseDate(params.from_date, false)
+		const toDate = this.parseDate(params.to_date, true)
+		const hasValidFrom = Boolean(fromDate)
+		const hasValidTo = Boolean(toDate)
+		const dateFilter =
+			hasValidFrom && hasValidTo
+				? { gte: fromDate as Date, lte: toDate as Date }
+				: hasValidFrom
+					? { gte: fromDate as Date }
+					: hasValidTo
+						? { lte: toDate as Date }
+						: undefined
+
+		const searchUpper = search?.toUpperCase()
+		const paymentStatusMatch = searchUpper?.includes('PAID')
+			? PaymentStatus.SUCCEEDED
+			: searchUpper?.includes('PENDING')
+				? PaymentStatus.PENDING
+				: searchUpper?.includes('FAILED')
+					? PaymentStatus.FAILED
+					: searchUpper?.includes('CANCELED')
+						? PaymentStatus.CANCELED
+						: null
+
+		const paymentProviderMatch = searchUpper?.includes('PAYPAL')
+			? PaymentProvider.PAYPAL
+			: searchUpper?.includes('STRIPE') ||
+				searchUpper?.includes('CARD') ||
+				searchUpper?.includes('CREDIT')
+				? PaymentProvider.STRIPE
+				: null
+
+		const paymentWhere: Prisma.PaymentWhereInput = {
+			userId,
+			...(dateFilter ? { createdAt: dateFilter } : {}),
+			...(search
+				? {
+						OR: [
+							{
+								planName: {
+									contains: search,
+									mode: Prisma.QueryMode.insensitive
+								}
+							},
+							...(paymentStatusMatch ? [{ status: paymentStatusMatch }] : []),
+							...(paymentProviderMatch ? [{ provider: paymentProviderMatch }] : [])
+						]
+					}
+				: {})
+		}
+
+		const payoutWhere: Prisma.MlmPayoutWhereInput = {
+			receiverId: userId,
+			...(dateFilter ? { createdAt: dateFilter } : {}),
+			...(search
+				? {
+						OR: [
+							{
+								payment: {
+									planName: {
+										contains: search,
+										mode: Prisma.QueryMode.insensitive
+									}
+								}
+							},
+							{
+								sourceUser: {
+									name: {
+										contains: search,
+										mode: Prisma.QueryMode.insensitive
+									}
+								}
+							},
+							{
+								sourceUser: {
+									lastName: {
+										contains: search,
+										mode: Prisma.QueryMode.insensitive
+									}
+								}
+							},
+							{
+								sourceUser: {
+									email: {
+										contains: search,
+										mode: Prisma.QueryMode.insensitive
+									}
+								}
+							}
+						]
+					}
+				: {})
+		}
+
+		const [payments, payouts, paymentsCount, payoutsCount] = await Promise.all([
+			this.prisma.payment.findMany({
+				where: paymentWhere,
+				orderBy: { createdAt: 'desc' },
+				take,
+				select: {
+					id: true,
+					planName: true,
+					amount: true,
+					currency: true,
+					status: true,
+					provider: true,
+					createdAt: true
+				}
+			}),
+			this.prisma.mlmPayout.findMany({
+				where: payoutWhere,
+				orderBy: { createdAt: 'desc' },
+				take,
+				select: {
+					id: true,
+					amount: true,
+					currency: true,
+					level: true,
+					percent: true,
+					createdAt: true,
+					planId: true,
+					payment: { select: { planName: true } },
+					sourceUser: {
+						select: { id: true, name: true, lastName: true, email: true }
+					}
+				}
+			}),
+			this.prisma.payment.count({ where: paymentWhere }),
+			this.prisma.mlmPayout.count({ where: payoutWhere })
+		])
+
+		const paymentItems: BillingHistoryItem[] = payments.map((payment) => ({
+			id: payment.id,
+			type: 'Payment',
+			amount: payment.amount / 100,
+			currency: payment.currency,
+			plan: payment.planName,
+			status: this.formatPaymentStatus(payment.status),
+			source: payment.provider === 'STRIPE' ? 'Credit Card' : 'PayPal',
+			createdAt: payment.createdAt
+		}))
+
+		const payoutItems: BillingHistoryItem[] = payouts.map((payout) => {
+			const sourceName = [payout.sourceUser?.name, payout.sourceUser?.lastName]
+				.filter(Boolean)
+				.join(' ')
+			const source =
+				sourceName.trim() ||
+				payout.sourceUser?.email ||
+				payout.sourceUser?.id ||
+				'—'
+			return {
+				id: payout.id,
+				type: 'Payout',
+				amount: payout.amount / 100,
+				currency: payout.currency,
+				plan: payout.payment?.planName || payout.planId,
+				status: 'PAID',
+				source,
+				createdAt: payout.createdAt
+			}
+		})
+
+		const sortBy = params.sort_by || 'createdAt'
+		const sortOrder = params.sort_order === 'asc' ? 1 : -1
+		const merged = [...paymentItems, ...payoutItems].sort((a, b) => {
+			if (sortBy === 'amount') {
+				return (a.amount - b.amount) * sortOrder
+			}
+			return (a.createdAt.getTime() - b.createdAt.getTime()) * sortOrder
+		})
+		const start = (page - 1) * limit
+		const data = merged.slice(start, start + limit)
+		const totalItems = paymentsCount + payoutsCount
+
+		return {
+			success: true,
+			data,
+			pagination: {
+				page,
+				limit,
+				total_pages: Math.max(1, Math.ceil(totalItems / limit)),
+				total_items: totalItems
+			}
+		}
 	}
 
 	async getPublicKey(): Promise<string> {

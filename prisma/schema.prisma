@@ -36,6 +36,7 @@ model User {
   mlmPayoutsSource MlmPayout[] @relation("MlmPayoutSource")
   wallet Wallet?
   binaryNode MlmBinaryNode?
+  withdrawalRequests WithdrawalRequest[]
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -48,6 +49,27 @@ model User {
   language String @default("en")
 
   @@map("users")
+}
+
+model WithdrawalRequest {
+  id String @id @default(cuid())
+  sequence Int @unique @default(autoincrement())
+  requestId String @unique @map("request_id")
+  userId String @map("user_id")
+  user User @relation(fields: [userId], references: [id])
+  amount Int
+  currency String
+  method WithdrawalMethod
+  details String
+  status WithdrawalStatus @default(PENDING)
+  txHash String? @map("tx_hash")
+  receiptUrl String? @map("receipt_url")
+  rejectReason String? @map("reject_reason")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@map("withdrawal_requests")
 }
 
 model Payment {
@@ -186,4 +208,16 @@ enum PaymentProvider {
 enum WalletTransactionType {
   CREDIT
   DEBIT
+}
+
+enum WithdrawalStatus {
+  PENDING
+  REJECTED
+  PAID
+}
+
+enum WithdrawalMethod {
+  CREDIT_CARD
+  PAYPAL
+  USDT_TRC20
 }
