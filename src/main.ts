@@ -17,11 +17,13 @@ async function bootstrap() {
 
 	app.use(cookieParser())
 	app.use('/api/payments/webhook', raw({ type: 'application/json' }))
+	const corsOrigins = (process.env.CLIENT_APP_URL ||
+		'http://localhost:3000,http://127.0.0.1:3000')
+		.split(',')
+		.map((origin) => origin.trim())
+		.filter(Boolean)
 	app.enableCors({
-		origin: [
-			'http://localhost:3000',
-			'https://e61b-106-249-226-194.ngrok-free.app'
-		],
+		origin: corsOrigins,
 		credentials: true,
 		exposedHeaders: 'set-cookie'
 	})

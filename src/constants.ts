@@ -1,4 +1,5 @@
-export const API_URL = 'http://localhost:4200'
+const RAW_BACKEND_URL = process.env.BACKEND_PUBLIC_URL || 'http://localhost:4200'
+export const API_URL = RAW_BACKEND_URL.replace(/\/$/, '')
 export const VERIFY_EMAIL_URL = `${API_URL}/verify-email?token=`
 
 const DEFAULT_CLIENT_APP_URL = process.env.CLIENT_APP_URL || 'http://localhost:3000'

@@ -26,6 +26,15 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Production Env
+
+Set production variables by copying `backend/.env.example` to `.env` and updating values. Required for auth cookies and email links:
+- `BACKEND_PUBLIC_URL=https://panel.lunadesire.com`
+- `CLIENT_APP_URL=https://panel.lunadesire.com`
+- `COOKIE_DOMAIN=panel.lunadesire.com`
+- `COOKIE_SECURE=true`
+- `COOKIE_SAMESITE=lax`
+
 ## Installation
 
 ```bash
