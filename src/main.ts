@@ -6,6 +6,7 @@ import { AppModule } from './app.module'
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
+	console.log('BACKEND_PUBLIC_URL:', process.env.BACKEND_PUBLIC_URL)
 
 	app.setGlobalPrefix('api', {
 		exclude: [
