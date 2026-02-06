@@ -22,8 +22,20 @@ async function bootstrap() {
 		.split(',')
 		.map((origin) => origin.trim())
 		.filter(Boolean)
+	const corsOriginSet = new Set(corsOrigins)
+
 	app.enableCors({
-		origin: corsOrigins,
+		origin: (origin, callback) => {
+			if (!origin) {
+				return callback(null, true)
+			}
+
+			if (corsOriginSet.has(origin)) {
+				return callback(null, true)
+			}
+
+			return callback(null, false)
+		},
 		credentials: true,
 		exposedHeaders: 'set-cookie'
 	})
